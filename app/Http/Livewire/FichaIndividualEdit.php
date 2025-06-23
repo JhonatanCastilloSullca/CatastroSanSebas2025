@@ -912,7 +912,7 @@ class FichaIndividualEdit extends Component
     {
         if($this->cont2 > 0){
             $this->cont2--;
-            array_splice($this->bloque, $this->cont2);
+            // array_splice($this->bloque, $this->cont2);
             array_splice($this->num_piso, $this->cont2);
             array_splice($this->fecha, $this->cont2);
             array_splice($this->mep, $this->cont2);

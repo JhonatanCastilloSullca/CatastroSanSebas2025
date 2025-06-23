@@ -310,6 +310,7 @@ class FichaCotitularidadEdit extends Component
 
     public function updatednumedoc3($value, $nested)
     {
+        
 
         $ruc=$value;
         $token= config('services.apisunat.token');
@@ -858,7 +859,7 @@ class FichaCotitularidadEdit extends Component
                         }
                         $domicilio->save();
                     }else{
-                        $persona= new Persona();
+                        $persona= new Persona();                        
                         if($this->numedoc3[$cont]==""){
                             $cantidadpersona=Persona::where('tipo_persona',1)->count()+1;
                             $persona->id_persona=str_pad($cantidadpersona,11,'0',STR_PAD_LEFT).'1200';
