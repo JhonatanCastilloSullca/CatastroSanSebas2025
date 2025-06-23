@@ -100,6 +100,10 @@ class FichaCotitularidadCreate extends Component
         $this->departamentos=Ubiges::where('cod_pro','00')->where('codi_dis','00')->get();
         $this->provincias=Ubiges::where('cod_pro','!=','00')->where('codi_dis','00')->get();
         $this->distritos=Ubiges::where('codi_dis','!=','00')->get();
+        for($i = 0; $i < $total; $i++)
+        {
+                $this->numedoc3[$i] = '';
+        }
     }
 
 
@@ -834,6 +838,7 @@ class FichaCotitularidadCreate extends Component
 
                 }
                 if($this->tipoTitular[$cont]==2){
+                   
 
                     if(isset($this->numedoc3[$cont])){
                         $buscarruc=Persona::where('tipo_persona',2)->where('tipo_funcion',1)->where('nume_doc',$this->numedoc3[$cont])->first();
@@ -971,7 +976,7 @@ class FichaCotitularidadCreate extends Component
                         }else{
                             $persona= new Persona();
                             if($this->numedoc3[$cont]==""){
-                                $cantidadpersona=Persona::where('tipo_persona',1)->count()+1;
+                                $cantidadpersona=Persona::where('tipo_persona',2)->count()+1;
                                 $persona->id_persona=str_pad($cantidadpersona,11,'0',STR_PAD_LEFT).'1200';
                                 $persona->nume_doc="";
                             }else{

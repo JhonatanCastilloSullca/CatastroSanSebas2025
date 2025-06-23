@@ -101,6 +101,11 @@ class FichaCotitularidadEdit extends Component
         $this-> nume_ficha_lote = $separarnume_ficha[0];
         $this-> nume_ficha_lote2 = $separarnume_ficha[1];
 
+        for($i = 0; $i < $this->total; $i++)
+        {
+                $this->numedoc3[$i] = '';
+        }
+
 
         for($i=0;$i<$this->total;$i++)
         {
@@ -860,7 +865,7 @@ class FichaCotitularidadEdit extends Component
                     }else{
                         $persona= new Persona();
                         if($this->numedoc3[$cont]==""){
-                            $cantidadpersona=Persona::where('tipo_persona',1)->count()+1;
+                            $cantidadpersona=Persona::where('tipo_persona',2)->count()+1;
                             $persona->id_persona=str_pad($cantidadpersona,11,'0',STR_PAD_LEFT).'1200';
                             $persona->nume_doc="";
                         }else{
