@@ -40,7 +40,7 @@
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label class="form-label d-inline-flex" > <div class="divcuadro">1</div> CÓDIGO ÚNICO CATASTRAL - CUC</label>
-                                <input type="text" class="form-control" placeholder="" name="cuc" wire:model="cuc" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="12" tabindex="4">
+                                <input type="text" class="form-control" placeholder="" name="cuc" wire:model.defer="cuc" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="12" tabindex="4">
                                 @error('cuc')
                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                 @enderror
