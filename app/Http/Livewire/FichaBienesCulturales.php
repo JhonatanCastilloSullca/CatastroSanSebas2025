@@ -478,7 +478,7 @@ class FichaBienesCulturales extends Component
                 'area_monu'                => 'nullable|numeric',
                 'perimetro_monumento'        => 'nullable|numeric',
                 'fil_crono'                => 'required',
-                'observacion'                => 'nullable|max:500',
+                'observacion'                => 'nullable|max:3000',
                 'presencia_arquitectura'                => 'nullable',
 
                 'tipo_partida'                  => 'nullable',

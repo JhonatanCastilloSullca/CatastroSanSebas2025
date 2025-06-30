@@ -815,7 +815,7 @@ class FichaIndividualCreate extends Component
                         'nume_familias'                 => 'nullable|numeric|min:0',
 
                         'mantenimiento'                 => 'nullable',
-                        'observacion'                   => 'nullable|max:500',
+                        'observacion'                   => 'nullable|max:3000',
 
                         'numdocumentodeclarante'        => 'nullable|max:8',
                         'nombres_declarante'            => 'nullable|max:150',
@@ -900,7 +900,7 @@ class FichaIndividualCreate extends Component
                         'nume_familias'                 => 'nullable|numeric|min:0',
                         'mantenimiento'                 => 'nullable',
 
-                        'observacion'                 => 'nullable|max:500',
+                        'observacion'                 => 'nullable|max:3000',
 
                         'numdocumentodeclarante'        => 'nullable|max:8',
                         'nombres_declarante'            => 'nullable|max:150',
@@ -1007,7 +1007,7 @@ class FichaIndividualCreate extends Component
                         'nume_familias'                 => 'nullable|numeric|min:0',
 
                         'mantenimiento'                 => 'nullable',
-                        'observacion'                   => 'nullable|max:500',
+                        'observacion'                   => 'nullable|max:3000',
 
                         'numdocumentodeclarante'        => 'nullable|max:8',
                         'nombres_declarante'            => 'nullable|max:150',
@@ -1092,7 +1092,7 @@ class FichaIndividualCreate extends Component
                         'nume_familias'                 => 'nullable|numeric|min:0',
                         'mantenimiento'                 => 'nullable',
 
-                        'observacion'                 => 'nullable|max:500',
+                        'observacion'                 => 'nullable|max:3000',
 
                         'numdocumentodeclarante'        => 'nullable|max:8',
                         'nombres_declarante'            => 'nullable|max:150',

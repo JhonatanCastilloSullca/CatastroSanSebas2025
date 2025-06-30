@@ -516,7 +516,7 @@ class FichaBienesComunes extends Component
                 'esta_llenado'                  => 'required',
 
                 'mantenimiento'                 => 'nullable',
-                'observacion'                   => 'nullable|max:500',
+                'observacion'                   => 'nullable|max:3000',
 
                 'numdocumentodeclarante'        => 'nullable|max:8',
                 'nombres_declarante'            => 'nullable|max:150',

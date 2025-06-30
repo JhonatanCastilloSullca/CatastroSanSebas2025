@@ -1193,7 +1193,7 @@ class FichaIndividualEdit extends Component
                         'nume_familias'                 => 'nullable|numeric|min:0',
 
                         'mantenimiento'                 => 'nullable',
-                        'observacion'                   => 'nullable|max:500',
+                        'observacion'                   => 'nullable|max:3000',
 
                         'numdocumentodeclarante'        => 'nullable|max:8',
                         'nombres_declarante'            => 'nullable|max:150',
@@ -1280,7 +1280,7 @@ class FichaIndividualEdit extends Component
                         'nume_familias'                 => 'nullable|numeric|min:0',
                         'mantenimiento'                 => 'nullable',
 
-                        'observacion'                 => 'nullable|max:500',
+                        'observacion'                 => 'nullable|max:3000',
 
                         'numdocumentodeclarante'        => 'nullable|max:8',
                         'nombres_declarante'            => 'nullable|max:150',
@@ -1389,7 +1389,7 @@ class FichaIndividualEdit extends Component
                         'nume_familias'                 => 'nullable|numeric|min:0',
 
                         'mantenimiento'                 => 'nullable',
-                        'observacion'                   => 'nullable|max:500',
+                        'observacion'                   => 'nullable|max:3000',
 
                         'numdocumentodeclarante'        => 'nullable|max:8',
                         'nombres_declarante'            => 'nullable|max:150',
@@ -1476,7 +1476,7 @@ class FichaIndividualEdit extends Component
                         'nume_familias'                 => 'nullable|numeric|min:0',
                         'mantenimiento'                 => 'nullable',
 
-                        'observacion'                 => 'nullable|max:500',
+                        'observacion'                 => 'nullable|max:3000',
 
                         'numdocumentodeclarante'        => 'nullable|max:8',
                         'nombres_declarante'            => 'nullable|max:150',
@@ -1812,7 +1812,7 @@ class FichaIndividualEdit extends Component
             $ficha->zonificacion=$this->zonificacion;
             $ficha->cuc= substr($cuclote, 0, 8);
             $ficha->zona_dist=$this->zona_dist;
-            
+
             $ficha->save();
 
 

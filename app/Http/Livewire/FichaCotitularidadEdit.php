@@ -366,7 +366,7 @@ class FichaCotitularidadEdit extends Component
                 'cond_declarante'               => 'nullable',
                 'esta_llenado'                  => 'required',
 
-                'observacion'                 => 'nullable|max:600',
+                'observacion'                 => 'nullable|max:3000',
 
                 'numdocumentodeclarante'        => 'nullable|max:8',
                 'nombres_declarante'            => 'nullable|max:150',

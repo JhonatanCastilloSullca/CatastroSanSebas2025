@@ -540,7 +540,7 @@ class FichaRuralCreate extends Component
                 'codi_uso'       =>'required',
                 'uso_actual'     =>'required',
 
-                'observacion'                 => 'nullable|max:500',
+                'observacion'                 => 'nullable|max:3000',
 
                 'numdocumentodeclarante'        => 'nullable|max:8',
                 'nombres_declarante'            => 'nullable|max:150',
