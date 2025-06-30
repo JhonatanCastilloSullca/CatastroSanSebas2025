@@ -699,13 +699,13 @@
           {{$ficha?->unicat?->edificacion?->lote?->zona_dist}} 
         </div>
         <div style="width: 93px;height: 16px;float:left;" class="texto2 fz8 lh14">
-          {{$ficha?->unicat?->edificacion?->lote?->mzna_dist}} 
+          {{$ficha?->mzna_dist}} 
         </div>
         <div style="width: 80px;height: 16px;float:left;" class="texto2 fz8 lh14">
-          {{$ficha?->unicat?->edificacion?->lote?->lote_dist}} 
+          {{$ficha?->lote_dist}} 
         </div>
         <div style="width: 74px;height: 16px;float:left;" class="texto2 fz8 lh14">
-          {{$ficha?->unicat?->edificacion?->lote?->sub_lote_dist}} 
+          {{$ficha?->sub_lote_dist}} 
         </div>        
       </div>
       <!-- 18 AL 23-->

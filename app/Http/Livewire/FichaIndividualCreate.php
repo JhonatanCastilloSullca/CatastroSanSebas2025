@@ -1366,7 +1366,20 @@ class FichaIndividualCreate extends Component
             $ficha->id_uni_cat=$unicat->id_uni_cat;
             $ficha->id_usuario=\Auth::user()->id_usuario;
             $ficha->fecha_grabado=$mytime->toDateTimeString();
+
             $ficha->activo=1;
+
+            //CAMPOS DE LOTE AGREGADO A FICHAS
+            
+
+            $cuclote = str_pad($this->cuc,12,'0',STR_PAD_LEFT);
+            $ficha->mzna_dist=strtoupper($this->mzna_dist);
+            $ficha->lote_dist=$this->lote_dist;
+            $ficha->sub_lote_dist=$this->sub_lote_dist;
+            $ficha->zonificacion=$this->zonificacion;
+            $ficha->cuc= substr($cuclote, 0, 8);
+            $ficha->zona_dist=$this->zona_dist;
+
             $ficha->save();
 
             $contpuertas=0;
