@@ -15,6 +15,7 @@ use App\Models\Institucion;
 use App\Models\Conductor;
 use App\Models\DomicilioTitular;
 use App\Models\AutorizacionAnuncio;
+use App\Models\Sectore;
 use DB;
 
 
@@ -191,6 +192,20 @@ class FichaEconomicaCreate extends Component
     {
         try
         {
+            DB::beginTransaction();
+
+            $ubigeo=Institucion::first();
+
+            $sectorbloqueo=$this->fichaanterior->lote->manzana->id_sector;
+
+            $sectorblqueoo=Sectore::where('id_sector',$sectorbloqueo)->first();
+
+            if($sectorblqueoo->bloqueo == 1 )
+            {
+                $this->addError('sectorbloqueo', 'Este sector está bloqueado y no se puede guardar.');
+                return;
+            }
+
             if($this->esta_llenado=="4")
             {
                 $this->validate([
@@ -364,9 +379,7 @@ class FichaEconomicaCreate extends Component
 
 
 
-            DB::beginTransaction();
-
-            $ubigeo=Institucion::first();
+            
 
             $mytime= Carbon::now('America/Lima');
 

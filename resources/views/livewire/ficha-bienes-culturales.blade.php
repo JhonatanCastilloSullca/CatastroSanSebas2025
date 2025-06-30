@@ -1688,6 +1688,9 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" wire:click.prevent="register">Guardar</button>
+                        @error('sectorbloqueo')
+                            <span class="error-message" style="color:red">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
             </div>

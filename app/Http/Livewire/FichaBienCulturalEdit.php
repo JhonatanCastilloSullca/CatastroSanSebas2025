@@ -22,6 +22,7 @@ use App\Models\Sunarp;
 use App\Models\NormaLegal;
 use App\Models\EstadoElemento;
 use App\Models\Litigante;
+use App\Models\Sectore;
 use DB;
 use Illuminate\Validation\Rule;
 
@@ -741,6 +742,16 @@ class FichaBienCulturalEdit extends Component
             $ubigeo = Institucion::first();
             $mytime = Carbon::now('America/Lima');
             $date = $mytime->format('Y');
+
+            $sectorbloqueo=$this->fichaanterior->lote->manzana->id_sector;
+
+            $sectorblqueoo=Sectore::where('id_sector',$sectorbloqueo)->first();
+
+            if($sectorblqueoo->bloqueo == 1 )
+            {
+                $this->addError('sectorbloqueo', 'Este sector está bloqueado y no se puede guardar.');
+                return;
+            }
 
             $id = $this->fichaanterior->fichabiencultural->id_ficha;
             $this->validate([

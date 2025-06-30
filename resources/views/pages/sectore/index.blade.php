@@ -68,6 +68,17 @@
                       <i data-feather="trash-2"></i>
                     </button>
                     @endcan
+                    @can('sectore.destroy')
+                      @if($sector->bloqueo == 1 )
+                        <button type="button" class="btn btn-danger btn-icon" data-bs-toggle="modal" data-bs-target="#Bloqueo" data-id="{{$sector->id_sector}}">
+                          <i data-feather="lock"></i>
+                        </button>
+                      @else
+                        <button type="button" class="btn btn-success btn-icon" data-bs-toggle="modal" data-bs-target="#Bloqueo" data-id="{{$sector->id_sector}}">
+                          <i data-feather="unlock"></i>
+                        </button>
+                      @endif
+                    @endcan
                   </td>
                 </tr>
                 @endforeach
@@ -130,6 +141,27 @@
             <p>Estas seguro de cambiar el estado?</p>
             <div class="modal-footer">
               <input type="hidden" name="id_sectore_2" class="id_sectore_2">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Aceptar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="Bloqueo" tabindex="-1"  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Bloquear Sector</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('sectore.bloqueo','test')}}" method="GET" autocomplete="off">
+            <p>¿Estas seguro de de bloquear Sector?</p>
+            <div class="modal-footer">
+              <input type="hidden" name="id_sectore_4" class="id_sectore_4">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
               <button type="submit" class="btn btn-primary">Aceptar</button>
             </div>
@@ -215,6 +247,19 @@ eliminar.addEventListener('show.bs.modal', function (event) {
 
   idModal.value = id;
 });
+
+var bloqueo = document.getElementById('Bloqueo');
+
+bloqueo.addEventListener('show.bs.modal', function (event) {
+  var button = event.relatedTarget
+
+  var id = button.getAttribute('data-id')
+
+  var idModal = bloqueo.querySelector('.id_sectore_4')
+
+  idModal.value = id;
+});
+
 
 $(function() {
   'use strict';

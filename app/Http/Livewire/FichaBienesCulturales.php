@@ -22,6 +22,7 @@ use App\Models\Sunarp;
 use App\Models\NormaLegal;
 use App\Models\EstadoElemento;
 use App\Models\Litigante;
+use App\Models\Sectore;
 use DB;
 
 class FichaBienesCulturales extends Component
@@ -465,6 +466,17 @@ class FichaBienesCulturales extends Component
     {
         try
         {
+
+            $sectorbloqueo=$this->fichaanterior->lote->manzana->id_sector;
+
+            $sectorblqueoo=Sectore::where('id_sector',$sectorbloqueo)->first();
+
+            if($sectorblqueoo->bloqueo == 1 )
+            {
+                $this->addError('sectorbloqueo', 'Este sector está bloqueado y no se puede guardar.');
+                return;
+            }
+
             $this->validate([
 
                 'numeficha'                     => 'required|max:7|unique:tf_ficha_bien_cultural,nume_ficha',

@@ -765,6 +765,19 @@ class FichaBienComunEdit extends Component
     {
         try
         {
+            DB::beginTransaction();
+            $ubigeo=Institucion::first();
+            /*VALIDACIONES*/
+            $sectorbloqueo=str_pad($ubigeo->id_institucion,6,'0',STR_PAD_LEFT).''.str_pad($this->sector,2,'0',STR_PAD_LEFT);
+
+            $sectorblqueoo=Sectore::where('id_sector',$sectorbloqueo)->first();
+
+            if($sectorblqueoo->bloqueo == 1 )
+            {
+                $this->addError('sectorbloqueo', 'Este sector está bloqueado y no se puede guardar.');
+                return;
+            }
+            
             $id=$this->fichaanterior?->fichabiencomun->id_ficha;
             $this->validate([
                 'numeficha'                    => ['required','max:7',
@@ -918,10 +931,7 @@ class FichaBienComunEdit extends Component
                 ]);
             }
 
-
-
-            DB::beginTransaction();
-            $ubigeo=Institucion::first();
+            
             $mytime= Carbon::now('America/Lima');
 
             $date = $mytime->format('Y');
@@ -1138,37 +1148,21 @@ class FichaBienComunEdit extends Component
             $contpuertas=0;
             while($contpuertas<$this->cont)
             {
-                $contadorpuertas=$ficha->puertas()->where('tipo_puerta',$this->tipopuerta[$contpuertas])->count()+1;
-                $buscarpuerta=$lote->id_lote.''.$this->tipopuerta[$contpuertas].''.$contadorpuertas;
-                $encontrarpuerta=Puerta::where('id_puerta',$buscarpuerta)->first();
-                if($encontrarpuerta!=""){
-                    $puerta=$encontrarpuerta;
-                    $puerta->id_lote=$lote->id_lote;
-                    $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
-                    $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
-                    if(isset($this->nume_muni[$contpuertas])){
-                        $puerta->nume_muni=$this->nume_muni[$contpuertas];
-                    }
-                    if(isset($this->cond_nume[$contpuertas])){
-                        $puerta->cond_nume=$this->cond_nume[$contpuertas];
-                    }
-                    $puerta->id_via=$this->tipoVia[$contpuertas];
-                    $puerta->save();
-                }else{
-                    $puerta= new Puerta();
-                    $puerta->id_puerta=$lote->id_lote.''.$this->tipopuerta[$contpuertas].''.$contadorpuertas;
-                    $puerta->id_lote=$lote->id_lote;
-                    $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
-                    $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
-                    if(isset($this->nume_muni[$contpuertas])){
-                        $puerta->nume_muni=$this->nume_muni[$contpuertas];
-                    }
-                    if(isset($this->cond_nume[$contpuertas])){
-                        $puerta->cond_nume=$this->cond_nume[$contpuertas];
-                    }
-                    $puerta->id_via=$this->tipoVia[$contpuertas];
-                    $puerta->save();
+                $buscarpuertas=0;
+                $idpuerta=$this->buscarpuerta($buscarpuertas,$this->tipopuerta[$contpuertas],$lote->id_lote);
+                $puerta= new Puerta();
+                $puerta->id_puerta=$idpuerta;
+                $puerta->id_lote=$lote->id_lote;
+                $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
+                $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
+                if(isset($this->nume_muni[$contpuertas])){
+                    $puerta->nume_muni=$this->nume_muni[$contpuertas];
                 }
+                if(isset($this->cond_nume[$contpuertas])){
+                    $puerta->cond_nume=$this->cond_nume[$contpuertas];
+                }
+                $puerta->id_via=$this->tipoVia[$contpuertas];
+                $puerta->save();
 
                 $contpuertas++;
                 $puerta->fichas()->attach(str_pad($ficha->id_ficha,19,'0',STR_PAD_LEFT));
@@ -1603,5 +1597,19 @@ class FichaBienComunEdit extends Component
     public function render()
     {
         return view('livewire.ficha-bien-comun-edit');
+    }
+
+    public function buscarpuerta($cont,$idpuerta,$idlote)
+    {
+        $id=$idlote.''.$idpuerta.''.$cont;
+        $buscarpuertaexiste=Puerta::where('id_puerta',$id)->first();
+        if($buscarpuertaexiste!=""){
+            $cont=$cont+1;
+            $id=$this->buscarpuerta($cont,$idpuerta,$idlote);
+        }else{
+            return $id;
+        }
+
+        return $id;
     }
 }

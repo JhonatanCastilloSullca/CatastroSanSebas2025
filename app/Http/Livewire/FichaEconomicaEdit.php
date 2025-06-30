@@ -380,6 +380,17 @@ class FichaEconomicaEdit extends Component
         {
             DB::beginTransaction();
             $ubigeo=Institucion::first();
+
+            $sectorbloqueo=str_pad($ubigeo->id_institucion,6,'0',STR_PAD_LEFT).''.str_pad($this->sector,2,'0',STR_PAD_LEFT);
+
+            $sectorblqueoo=Sectore::where('id_sector',$sectorbloqueo)->first();
+
+            if($sectorblqueoo->bloqueo == 1 )
+            {
+                $this->addError('sectorbloqueo', 'Este sector está bloqueado y no se puede guardar.');
+                return;
+            }
+            
             $mytime= Carbon::now('America/Lima');
             $date = $mytime->format('Y');
 

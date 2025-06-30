@@ -35,7 +35,8 @@ Route::group(['middleware'=>['auth']], function () {
 
     Route::resource('mantenimiento/manzana', App\Http\Controllers\ManzanaController::class)->except('show,edit,create')->names('manzana');
     Route::resource('mantenimiento/tablacodigo', App\Http\Controllers\tablaCodigoController::class)->except('show,edit,create')->names('tablacodigo');
-    Route::resource('mantenimiento/sectore', App\Http\Controllers\SectoreController::class)->except('show,edit,create')->names('sectore');
+    Route::get('mantenimiento/sectore/bloqueo', 'App\Http\Controllers\SectoreController@bloqueo')->name('sectore.bloqueo');
+    Route::resource('mantenimiento/sectore', App\Http\Controllers\SectoreController::class)->except(['show,edit,create'])->names('sectore');
     Route::resource('mantenimiento/haburbana', App\Http\Controllers\HabUrbanaController::class)->except('show,edit,create')->names('haburbana');
     Route::resource('mantenimiento/vias', App\Http\Controllers\ViaController::class)->except('show,edit')->names('vias');
     Route::resource('ficha', App\Http\Controllers\FichaController::class)->except('show');

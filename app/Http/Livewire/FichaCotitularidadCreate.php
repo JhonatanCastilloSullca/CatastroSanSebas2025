@@ -12,7 +12,7 @@ use App\Models\Titular;
 use App\Models\FichaCotitularidad;
 use App\Models\ExoneracionTitular;
 use App\Models\DomicilioTitular;
-
+use App\Models\Sectore;
 use Illuminate\Support\Facades\Http;
 use DB;
 use Carbon\Carbon;
@@ -240,6 +240,16 @@ class FichaCotitularidadCreate extends Component
             DB::beginTransaction();
 
             $ubigeo=Institucion::first();
+
+            $sectorbloqueo=$this->fichaanterior->lote->manzana->id_sector;
+
+            $sectorblqueoo=Sectore::where('id_sector',$sectorbloqueo)->first();
+
+            if($sectorblqueoo->bloqueo == 1 )
+            {
+                $this->addError('sectorbloqueo', 'Este sector está bloqueado y no se puede guardar.');
+                return;
+            }
 
             $mytime= Carbon::now('America/Lima');
             $date = $mytime->format('Y');
