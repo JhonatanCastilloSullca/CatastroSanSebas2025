@@ -1770,6 +1770,9 @@
                     </div><!-- Row -->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" tabindex="162">Guardar</button>
+                        @error('sectorbloqueo')
+                            <span class="error-message" style="color:red">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
             </div>            

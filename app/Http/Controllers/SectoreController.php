@@ -82,4 +82,18 @@ class SectoreController extends Controller
             return redirect()->back()->with('success','Sectore Eliminado Correctamente!');
         }
     }
+
+    public function bloqueo(Request $request)
+    {
+        $sectore= Sectore::findOrFail($request->id_sectore_4);
+        if($sectore->bloqueo=="1"){
+            $sectore->bloqueo= '0';
+            $sectore->save();
+            return redirect()->back()->with('success','Sectore Desbloqueado Correctamente!');
+        }else{
+            $sectore->bloqueo= '1';
+            $sectore->save();
+            return redirect()->back()->with('success','Sectore Bloqueado Correctamente!');
+        }
+    }
 }
