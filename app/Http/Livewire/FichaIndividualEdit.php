@@ -252,6 +252,7 @@ class FichaIndividualEdit extends Component
     {
         $this-> numeficha = $fichaanterior->fichaindividual->nume_ficha;
 
+
         $separarnume_ficha = explode('-',$fichaanterior->nume_ficha_lote);
 
         $this-> nume_ficha_lote = $separarnume_ficha[0];
@@ -541,9 +542,26 @@ class FichaIndividualEdit extends Component
             $this->fecha_levantamiento=$fichaanterior->fecha_levantamiento;
         }
 
-        if($fichaanterior->verificador!=""){
-            $this->verificador=$fichaanterior->verificador->id_persona;
+        if($fichaanterior->mzna_dist!=""){
+            $this->mzna_dist=$fichaanterior->mzna_dist;
         }
+        if($fichaanterior->lote_dist!=""){
+            $this->lote_dist=$fichaanterior->lote_dist;
+        }
+        if($fichaanterior->sub_lote_dist!=""){
+            $this->sub_lote_dist=$fichaanterior->sub_lote_dist;
+        }
+        if($fichaanterior->zonificacion!=""){
+            $this->zonificacion=$fichaanterior->zonificacion;
+        }
+        if($fichaanterior->cuc!=""){
+            $this->cuc=$fichaanterior->cuc;
+        }
+        if($fichaanterior->zona_dist!=""){
+            $this->zona_dist=$fichaanterior->zona_dist;
+        }
+
+
         $this->nume_registro=$fichaanterior->nume_registro;
         if($fichaanterior->fecha_verificacion != "1969-12-31"){
             $this->fecha_verificacion=$fichaanterior->fecha_verificacion;
@@ -624,15 +642,15 @@ class FichaIndividualEdit extends Component
                 if($this->zona_dist!=""){
                     $this->zonaootros=$this->zona_dist;
                 }
-                if($this->mzna_dist!=""){
-                    $this->manzanaotros=$this->mzna_dist;
-                }
-                if($this->lote_dist!=""){
-                    $this->loteotros=$this->lote_dist;
-                }
-                if($this->sub_lote_dist!=""){
-                    $this->subloteotros=$this->sub_lote_dist;
-                }
+                // if($this->mzna_dist!=""){
+                //     $this->manzanaotros=$this->mzna_dist;
+                // }
+                // if($this->lote_dist!=""){
+                //     $this->loteotros=$this->lote_dist;
+                // }
+                // if($this->sub_lote_dist!=""){
+                //     $this->subloteotros=$this->sub_lote_dist;
+                // }
             }
         }
 
@@ -1594,6 +1612,7 @@ class FichaIndividualEdit extends Component
                 $puerta->fichas()->detach($this->fichaanterior->id_ficha);
             }
             $usuario=$this->fichaanterior->id_usuario;
+            
             $fechaanterior=$this->fichaanterior->fecha_grabado;
             $this->fichaanterior->delete();
 
@@ -1790,8 +1809,22 @@ class FichaIndividualEdit extends Component
             $ficha->id_uni_cat=$unicat->id_uni_cat;
             $ficha->id_usuario=$usuario;
             $ficha->fecha_grabado=$fechaanterior;
+            
             $ficha->activo=1;
+
+            //CAMPOS DE LOTE AGREGADO A FICHAS
+            
+
+            $cuclote = str_pad($this->cuc,12,'0',STR_PAD_LEFT);
+            $ficha->mzna_dist=strtoupper($this->mzna_dist);
+            $ficha->lote_dist=$this->lote_dist;
+            $ficha->sub_lote_dist=$this->sub_lote_dist;
+            $ficha->zonificacion=$this->zonificacion;
+            $ficha->cuc= substr($cuclote, 0, 8);
+            $ficha->zona_dist=$this->zona_dist;
+            
             $ficha->save();
+
 
             $contpuertas=0;
             while($contpuertas<$this->cont)

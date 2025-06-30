@@ -36,6 +36,16 @@ class FichaIndividual extends Model
         'mantenimiento',
         'observaciones',
         'nume_ficha',
+        
+        'mzna_dist',
+        'lote_dist',
+        'sub_lote_dist',
+        'estructuracion',
+        'zonificacion',
+        'cuc',
+        'zona_dist',
+
+
     ];
     public $incrementing = false;
     protected $keyType = 'string';
