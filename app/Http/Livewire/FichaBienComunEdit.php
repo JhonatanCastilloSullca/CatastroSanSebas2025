@@ -222,7 +222,7 @@ class FichaBienComunEdit extends Component
         $this->nume_ficha_lote= $separarnume_ficha[0];
         $this->nume_ficha_lote2= $separarnume_ficha[1];
 
-        $this->cuc =$fichaanterior->unicat->cuc;
+        $this->cuc =$fichaanterior->cuc;
         $this->sector=$fichaanterior->unicat->edificacion->lote->manzana->sectore->codi_sector;
         $this->mzna=$fichaanterior->unicat->edificacion->lote->manzana->codi_mzna;
         $this->lote=$fichaanterior->lote->codi_lote;
@@ -1143,6 +1143,7 @@ class FichaBienComunEdit extends Component
             $ficha->id_usuario=$usuario;
             $ficha->fecha_grabado=$fechaanterior;
             $ficha->activo=1;
+            $ficha->cuc=str_pad($this->cuc,12,'0',STR_PAD_LEFT);
             $ficha->save();
 
             $contpuertas=0;

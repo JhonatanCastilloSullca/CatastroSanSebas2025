@@ -1386,7 +1386,7 @@ class FichaIndividualCreate extends Component
             $ficha->lote_dist=$this->lote_dist;
             $ficha->sub_lote_dist=$this->sub_lote_dist;
             $ficha->zonificacion=$this->zonificacion;
-            $ficha->cuc= substr($cuclote, 0, 8);
+            $ficha->cuc= $cuclote;
             $ficha->zona_dist=$this->zona_dist;
 
             $ficha->save();

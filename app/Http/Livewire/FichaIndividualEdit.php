@@ -258,7 +258,7 @@ class FichaIndividualEdit extends Component
         $this-> nume_ficha_lote = $separarnume_ficha[0];
         $this-> nume_ficha_lote2 = $separarnume_ficha[1];
         $this-> lote = $fichaanterior->lote->codi_lote;
-        $this->cuc=$fichaanterior->unicat->cuc;
+        $this->cuc=$fichaanterior->cuc;
 
         #$id_mzna = $fichaanterior->lote->id_mzna;
         #$mznab = Manzana::where('id_mzna',$id_mzna)->get();
@@ -1820,7 +1820,7 @@ class FichaIndividualEdit extends Component
             $ficha->lote_dist=$this->lote_dist;
             $ficha->sub_lote_dist=$this->sub_lote_dist;
             $ficha->zonificacion=$this->zonificacion;
-            $ficha->cuc= substr($cuclote, 0, 8);
+            $ficha->cuc= $cuclote;
             $ficha->zona_dist=$this->zona_dist;
 
             $ficha->save();

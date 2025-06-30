@@ -801,6 +801,7 @@ class FichaBienesComunes extends Component
             $ficha->id_usuario=\Auth::user()->id_usuario;
             $ficha->fecha_grabado=$mytime->toDateTimeString();
             $ficha->activo=1;
+            $ficha->cuc=str_pad($this->cuc,12,'0',STR_PAD_LEFT);
             $ficha->save();
 
             $contpuertas=0;
