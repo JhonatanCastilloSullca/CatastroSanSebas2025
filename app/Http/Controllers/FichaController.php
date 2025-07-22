@@ -1138,15 +1138,15 @@ class FichaController extends Controller
                 ->on('tf_uni_cat.codi_piso', '=', 'area_por_lote.codi_piso')
                 ->on('tf_uni_cat.id_edificacion', '=', 'area_por_lote.id_edificacion');
         })
-        ->leftJoin('tf_fichas', 'tf_uni_cat.id', '=', 'tf_fichas.id_uni_cat')
+        ->leftJoin('tf_lotes', 'tf_uni_cat.id_lote', '=', 'tf_lotes.id_lote')
         ->select(
             'tf_uni_cat.*',
             'area_por_lote.area_seleccionada',
             'area_por_lote.total_construcciones'
         )
         ->distinct()
-        ->orderBy('tf_fichas.cuc', 'asc')
-        ->orderBy('tf_uni_cat.cuc', 'asc')
+        ->orderBy('tf_lotes.id_mzna', 'asc')
+        ->orderBy('tf_lotes.cuc', 'asc')
         ->get();
 
         $numero = count($titulares);
@@ -1286,15 +1286,15 @@ class FichaController extends Controller
                 ->on('tf_uni_cat.codi_piso', '=', 'area_por_lote.codi_piso')
                 ->on('tf_uni_cat.id_edificacion', '=', 'area_por_lote.id_edificacion');
         })
-        ->leftJoin('tf_fichas', 'tf_uni_cat.id', '=', 'tf_fichas.id_uni_cat')
+        ->leftJoin('tf_lotes', 'tf_uni_cat.id_lote', '=', 'tf_lotes.id_lote')
         ->select(
             'tf_uni_cat.*',
             'area_por_lote.area_seleccionada',
             'area_por_lote.total_construcciones'
         )
         ->distinct()
-        ->orderBy('tf_fichas.cuc', 'asc')
-        ->orderBy('tf_uni_cat.cuc', 'asc')
+        ->orderBy('tf_lotes.id_mzna', 'asc')
+        ->orderBy('tf_lotes.cuc', 'asc')
         ->get();
 
         $numero = count($titulares);
