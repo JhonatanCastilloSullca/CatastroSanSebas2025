@@ -1142,11 +1142,13 @@ class FichaController extends Controller
         ->select(
             'tf_uni_cat.*',
             'area_por_lote.area_seleccionada',
-            'area_por_lote.total_construcciones'
+            'area_por_lote.total_construcciones',
+            'tf_lotes.id_mzna',
+            'tf_lotes.codi_lote'
         )
         ->distinct()
         ->orderBy('tf_lotes.id_mzna', 'asc')
-        ->orderBy('tf_lotes.cuc', 'asc')
+        ->orderBy('tf_lotes.codi_lote', 'asc')
         ->get();
 
         $numero = count($titulares);
@@ -1290,11 +1292,13 @@ class FichaController extends Controller
         ->select(
             'tf_uni_cat.*',
             'area_por_lote.area_seleccionada',
-            'area_por_lote.total_construcciones'
+            'area_por_lote.total_construcciones',
+            'tf_lotes.id_mzna',
+            'tf_lotes.codi_lote'
         )
         ->distinct()
         ->orderBy('tf_lotes.id_mzna', 'asc')
-        ->orderBy('tf_lotes.cuc', 'asc')
+        ->orderBy('tf_lotes.codi_lote', 'asc')
         ->get();
 
         $numero = count($titulares);
