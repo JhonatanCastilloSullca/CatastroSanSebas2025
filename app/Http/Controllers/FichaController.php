@@ -1138,14 +1138,14 @@ class FichaController extends Controller
                 ->on('tf_uni_cat.codi_piso', '=', 'area_por_lote.codi_piso')
                 ->on('tf_uni_cat.id_edificacion', '=', 'area_por_lote.id_edificacion');
         })
-        ->leftJoin('fichas', 'tf_uni_cat.id', '=', 'fichas.id_uni_cat')
+        ->leftJoin('tf_fichas', 'tf_uni_cat.id', '=', 'tf_fichas.id_uni_cat')
         ->select(
             'tf_uni_cat.*',
             'area_por_lote.area_seleccionada',
             'area_por_lote.total_construcciones'
         )
         ->distinct()
-        ->orderBy('fichas.cuc', 'asc')
+        ->orderBy('tf_fichas.cuc', 'asc')
         ->orderBy('tf_uni_cat.cuc', 'asc')
         ->get();
 
@@ -1286,14 +1286,14 @@ class FichaController extends Controller
                 ->on('tf_uni_cat.codi_piso', '=', 'area_por_lote.codi_piso')
                 ->on('tf_uni_cat.id_edificacion', '=', 'area_por_lote.id_edificacion');
         })
-        ->leftJoin('fichas', 'tf_uni_cat.id', '=', 'fichas.id_uni_cat')
+        ->leftJoin('tf_fichas', 'tf_uni_cat.id', '=', 'tf_fichas.id_uni_cat')
         ->select(
             'tf_uni_cat.*',
             'area_por_lote.area_seleccionada',
             'area_por_lote.total_construcciones'
         )
         ->distinct()
-        ->orderBy('fichas.cuc', 'asc')
+        ->orderBy('tf_fichas.cuc', 'asc')
         ->orderBy('tf_uni_cat.cuc', 'asc')
         ->get();
 
