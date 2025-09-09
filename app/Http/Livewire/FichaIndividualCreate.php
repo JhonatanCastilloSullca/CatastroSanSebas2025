@@ -575,6 +575,41 @@ class FichaIndividualCreate extends Component
         $this->cont2--;
     }
 
+    public function eliminarConstruccion($i)
+    {
+        unset($this->num_piso[$i]);
+        $this->num_piso = array_values($this->num_piso);
+        unset($this->fecha[$i]);
+        $this->fecha = array_values($this->fecha);
+        unset($this->mep[$i]);
+        $this->mep = array_values($this->mep);
+        unset($this->ecs[$i]);
+        $this->ecs = array_values($this->ecs);
+        unset($this->ecc[$i]);
+        $this->ecc = array_values($this->ecc);
+        unset($this->estr_muro_col[$i]);
+        $this->estr_muro_col = array_values($this->estr_muro_col);
+        unset($this->estr_techo[$i]);
+        $this->estr_techo = array_values($this->estr_techo);
+        unset($this->acab_piso[$i]);
+        $this->acab_piso = array_values($this->acab_piso);
+        unset($this->acab_puerta_ven[$i]);
+        $this->acab_puerta_ven = array_values($this->acab_puerta_ven);
+        unset($this->acab_revest[$i]);
+        $this->acab_revest = array_values($this->acab_revest);
+        unset($this->acab_bano[$i]);
+        $this->acab_bano = array_values($this->acab_bano);
+        unset($this->inst_elect_sanita[$i]);
+        $this->inst_elect_sanita = array_values($this->inst_elect_sanita);
+        unset($this->area_verificada[$i]);
+        $this->area_verificada = array_values($this->area_verificada);
+        unset($this->uca[$i]);
+        $this->uca = array_values($this->uca);
+        if($this->cont2 > 0){
+            $this->cont2--;
+        }
+    }
+
     /* CONSTRUCCIONES */
 
     /* OBRAS COMPLEMENTARIAS */
@@ -587,6 +622,30 @@ class FichaIndividualCreate extends Component
     public function reducirObras()
     {
         $this->cont3--;
+    }
+
+    public function eliminarObras($i)
+    {
+        unset($this->codiinstalacion[$i]);
+        $this->codiinstalacion = array_values($this->codiinstalacion);
+        unset($this->inst_fecha[$i]);
+        $this->inst_fecha = array_values($this->inst_fecha);
+        unset($this->inst_mep[$i]);
+        $this->inst_mep = array_values($this->inst_mep);
+        unset($this->inst_ecs[$i]);
+        $this->inst_ecs = array_values($this->inst_ecs);
+        unset($this->inst_ecc[$i]);
+        $this->inst_ecc = array_values($this->inst_ecc);
+        unset($this->inst_prod_total[$i]);
+        $this->inst_prod_total = array_values($this->inst_prod_total);
+        unset($this->inst_uni_med[$i]);
+        $this->inst_uni_med = array_values($this->inst_uni_med);
+        unset($this->inst_uca[$i]);
+        $this->inst_uca = array_values($this->inst_uca);
+        $this->uca = array_values($this->uca);
+        if($this->cont3 > 0){
+            $this->cont3--;
+        }
     }
 
     /* OBRAS COMPLEMENTARIAS */

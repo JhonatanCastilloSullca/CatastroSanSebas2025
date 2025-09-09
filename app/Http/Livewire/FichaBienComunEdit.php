@@ -235,9 +235,9 @@ class FichaBienComunEdit extends Component
         $nomb_hab_urba2 = $nomb_hab_urba1->nomb_hab_urba;
 
         $this->nomb_hab_urba=$nomb_hab_urba2;
-        $this->zona_dist=$fichaanterior->lote->zona_dist;
-        $this->mzna_dist=$fichaanterior->lote->mzna_dist;
-        $this->lote_dist=$fichaanterior->lote->lote_dist;
+        $this->zona_dist=$fichaanterior->zona_dist;
+        $this->mzna_dist=$fichaanterior->mzna_dist;
+        $this->lote_dist=$fichaanterior->lote_dist;
         $this->sub_lote_dist=$fichaanterior->sub_lote_dist;
 
         $this->cont = count($fichaanterior->puertas);
@@ -1143,7 +1143,14 @@ class FichaBienComunEdit extends Component
             $ficha->id_usuario=$usuario;
             $ficha->fecha_grabado=$fechaanterior;
             $ficha->activo=1;
-            $ficha->cuc=str_pad($this->cuc,12,'0',STR_PAD_LEFT);
+
+            $cuclote = str_pad($this->cuc,12,'0',STR_PAD_LEFT);
+            $ficha->mzna_dist=strtoupper($this->mzna_dist);
+            $ficha->lote_dist=$this->lote_dist;
+            $ficha->sub_lote_dist=$this->sub_lote_dist;
+            $ficha->zonificacion=$this->zonificacion;
+            $ficha->cuc= $cuclote;
+            $ficha->zona_dist=$this->zona_dist;
             $ficha->save();
 
             $contpuertas=0;

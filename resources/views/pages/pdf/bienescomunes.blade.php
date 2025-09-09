@@ -222,7 +222,7 @@
           <div style="width: 230px;height:16px;margin: auto;">
             <div style="width: 230px;height: 16px;float:left;">
               <div class="texto fz8 lh14">
-                {{$ficha?->unicat?->cuc}}
+                {{$ficha?->cuc}}
               </div>
                 
             </div>
@@ -672,16 +672,16 @@
           {{$ficha?->unicat?->edificacion?->lote?->hab_urbana?->nomb_hab_urba}} 
         </div>
         <div style="width: 130px;height: 16px;float:left;" class="texto2 fz8 lh14">
-          {{$ficha?->unicat?->edificacion?->lote?->zona_dist}} 
+          {{$ficha?->zona_dist}} 
         </div>
         <div style="width: 93px;height: 16px;float:left;" class="texto2 fz8 lh14">
-          {{$ficha?->unicat?->edificacion?->lote?->mzna_dist}} 
+          {{$ficha?->mzna_dist}} 
         </div>
         <div style="width: 80px;height: 16px;float:left;" class="texto2 fz8 lh14">
-          {{$ficha?->unicat?->edificacion?->lote?->lote_dist}} 
+          {{$ficha?->lote_dist}} 
         </div>
         <div style="width: 74px;height: 16px;float:left;" class="texto2 fz8 lh14">
-          {{$ficha?->unicat?->edificacion?->lote?->sub_lote_dist}} 
+          {{$ficha?->sub_lote_dist}} 
         </div>        
       </div>
 
@@ -2288,7 +2288,7 @@
             @endif    
           </div> 
           <div style="width: 128.9px;height: 16px;float:left;" class="texto2 fz8 lh14"> 
-            @if($ficha?->sunarp!="")
+            @if($ficha?->sunarp->fecha_inscripcion!="")
               {{date("d-m-Y", strtotime($ficha?->sunarp?->fecha_inscripcion))}}
             @endif    
           </div> 
@@ -2336,12 +2336,12 @@
             @endif      
           </div> 
           <div style="width: 42PX;height: 16px;float:left;" class="texto2 fz8 lh14">
-            @if($ficha?->sunarp!="")
+            @if($ficha?->sunarp->asie_fabrica!="")
               {{$ficha?->sunarp?->asie_fabrica}}
             @endif       
           </div> 
           <div style="width: 128.9px;height: 16px;float:left;" class="texto2 fz8 lh14">
-            @if($ficha?->sunarp!="")
+            @if($ficha?->sunarp->fecha_fabrica!="")
               {{date("d-m-Y", strtotime($ficha?->sunarp?->fecha_fabrica))}}
             @endif        
           </div> 

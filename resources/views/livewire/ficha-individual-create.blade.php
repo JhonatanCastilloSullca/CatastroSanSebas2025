@@ -1023,8 +1023,6 @@
                                                 
                                             @else
                                                 @if($cont2>0)
-                                                    
-                                                    <button type="button" class="btn btn-danger btn-icon" wire:click="reducirConstruccion" tabindex="90">-</button>
                                                 @else
                                                     <button type="button" class="btn btn-success btn-icon" wire:click="aumentarConstruccion" tabindex="90">{{$codi_uso}}</button>
                                                 @endif
@@ -1142,13 +1140,10 @@
                                             </td>
                                             
                                             <td>
-                                                
-
-
                                                 @if($i==$cont2-1)
                                                     <button type="button" class="btn btn-success btn-icon" wire:click="aumentarConstruccion" tabindex="90">+</button>
-                                                
                                                 @endif
+                                                <button type="button" class="btn btn-danger btn-icon" wire:click="eliminarConstruccion({{$i}})" tabindex="22">X</button>
                                             </td>
                                         </tr>
                                         @endfor
@@ -1221,7 +1216,6 @@
                                             <th><label class="form-label d-inline-flex" > <div class="divcuadro">69</div> UCA </label></th>
                                             <th>
                                             @if($cont3>0)
-                                                <button type="button" class="btn btn-danger btn-icon" wire:click="reducirObras" tabindex="109">-</button>
                                             @else
                                                 <button type="button" class="btn btn-success btn-icon" wire:click="aumentarObras" tabindex="108">+</button>
                                             @endif
@@ -1310,7 +1304,7 @@
                                                 @if($i==$cont3-1)
                                                     <button type="button" class="btn btn-success btn-icon" wire:click="aumentarObras" tabindex="109">+</button>
                                                 @endif
-
+                                                <button type="button" class="btn btn-danger btn-icon" wire:click="eliminarObras({{$i}})" tabindex="117">X</button>
 
                                             </td>
                                         </tr>
