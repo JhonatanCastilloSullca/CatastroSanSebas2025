@@ -1,0 +1,83 @@
+{
+  "assets/fonts/feather-font/fonts/feather.eot": {
+    "file": "assets/feather-B6uk7rDz.eot",
+    "src": "assets/fonts/feather-font/fonts/feather.eot"
+  },
+  "assets/fonts/feather-font/fonts/feather.svg": {
+    "file": "assets/feather-CJHuDf5s.svg",
+    "src": "assets/fonts/feather-font/fonts/feather.svg"
+  },
+  "assets/fonts/feather-font/fonts/feather.ttf": {
+    "file": "assets/feather-DJLJ3y0Y.ttf",
+    "src": "assets/fonts/feather-font/fonts/feather.ttf"
+  },
+  "assets/fonts/feather-font/fonts/feather.woff": {
+    "file": "assets/feather-BBViPOsB.woff",
+    "src": "assets/fonts/feather-font/fonts/feather.woff"
+  },
+  "assets/images/conectar_serv_wms_rest.svg": {
+    "file": "assets/conectar_serv_wms_rest-C2uuEZ7Q.svg",
+    "src": "assets/images/conectar_serv_wms_rest.svg"
+  },
+  "assets/images/favicon.ico": {
+    "file": "assets/favicon-DT5j3Ed1.ico",
+    "src": "assets/images/favicon.ico"
+  },
+  "assets/images/graficar_mapa.svg": {
+    "file": "assets/graficar_mapa-CxbUEI_-.svg",
+    "src": "assets/images/graficar_mapa.svg"
+  },
+  "assets/images/logo-mdss.png": {
+    "file": "assets/logo-mdss-BCNtFRif.png",
+    "src": "assets/images/logo-mdss.png"
+  },
+  "assets/images/obtener_coordenadas.svg": {
+    "file": "assets/obtener_coordenadas-DJUqycB3.svg",
+    "src": "assets/images/obtener_coordenadas.svg"
+  },
+  "assets/images/photo_init.png": {
+    "file": "assets/photo_init-DqE2eDiF.png",
+    "src": "assets/images/photo_init.png"
+  },
+  "assets/images/proyecto-catastro.jpg": {
+    "file": "assets/proyecto-catastro-4ldM_N-O.jpg",
+    "src": "assets/images/proyecto-catastro.jpg"
+  },
+  "assets/images/ubicar_coordenadas.svg": {
+    "file": "assets/ubicar_coordenadas-CTeEQEtv.svg",
+    "src": "assets/images/ubicar_coordenadas.svg"
+  },
+  "index.html": {
+    "file": "assets/index-DykUIJev.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "css": [
+      "assets/index-DAZnPGqQ.css"
+    ],
+    "assets": [
+      "assets/feather-B6uk7rDz.eot",
+      "assets/feather-BBViPOsB.woff",
+      "assets/feather-DJLJ3y0Y.ttf",
+      "assets/feather-CJHuDf5s.svg",
+      "assets/photo_init-DqE2eDiF.png",
+      "assets/bootstrap-icons-mSm7cUeB.woff2",
+      "assets/bootstrap-icons-BeopsB42.woff",
+      "assets/ubicar_coordenadas-CTeEQEtv.svg",
+      "assets/graficar_mapa-CxbUEI_-.svg",
+      "assets/conectar_serv_wms_rest-C2uuEZ7Q.svg",
+      "assets/obtener_coordenadas-DJUqycB3.svg",
+      "assets/favicon-DT5j3Ed1.ico",
+      "assets/logo-mdss-BCNtFRif.png",
+      "assets/proyecto-catastro-4ldM_N-O.jpg"
+    ]
+  },
+  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
+    "file": "assets/bootstrap-icons-BeopsB42.woff",
+    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
+  },
+  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2": {
+    "file": "assets/bootstrap-icons-mSm7cUeB.woff2",
+    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
+  }
+}

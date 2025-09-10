@@ -357,7 +357,7 @@
       @endcan
 
       <li class="nav-item">
-        <a href="http://191.97.53.146:1234/visor_mdss/index.html" target="_blank" class="nav-link">
+        <a href="http://192.168.101.201/visor" target="_blank" class="nav-link">
           <i class="link-icon mdi mdi-google-maps" ></i>
           <span class="link-title">Visor de Mapas</span>
         </a>
