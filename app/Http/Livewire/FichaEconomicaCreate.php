@@ -904,7 +904,7 @@ class FichaEconomicaCreate extends Component
         $this->cont2--;
     }
 
-    public function updatednumedoc1()
+    public function buscarTitular()
     {
         if($this->tipo_doc1=="02")
         {
@@ -942,9 +942,9 @@ class FichaEconomicaCreate extends Component
         }
     }
 
-    public function updatednumedoc3($value)
+    public function buscarTitularRuc()
     {
-        $ruc=$value;
+        $ruc=$this->numedoc3;
         $token= config('services.apisunat.token');
         $urlruc=config('services.apisunat.urlruc');
         $response=Http::withHeaders([
@@ -958,7 +958,7 @@ class FichaEconomicaCreate extends Component
             $this->numedoc3=$ruc;
             if($persona['error']=="RUC invalido")
             {
-                session()->flash('warning'.$nested, 'RUC invalido');
+                session()->flash('warning', 'RUC invalido');
             }
             if($persona['error']=="RUC debe contener 11 digitos")
             {
@@ -970,7 +970,7 @@ class FichaEconomicaCreate extends Component
         }
     }
 
-    public function updatednumdocumentodeclarante()
+    public function buscarDeclarante()
     {
         $dni=$this->numdocumentodeclarante;
         if($dni!=""){

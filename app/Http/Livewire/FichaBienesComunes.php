@@ -226,6 +226,9 @@ class FichaBienesComunes extends Component
         for($i=0;$i<$this->cont;$i++){
             $this->tipoVianombre[$i]="";
             $this->tipoViatipo[$i]="";
+            $this->tipopuerta[$i] = null;
+            $this->nume_muni[$i] = null;
+            $this->cond_nume[$i] = null;
         }
     }
 
@@ -348,6 +351,9 @@ class FichaBienesComunes extends Component
     {
         $this->tipoViatipo[$this->cont]="";
         $this->tipoVianombre[$this->cont]="";
+        $this->tipopuerta[$this->cont] = null;
+        $this->nume_muni[$this->cont] = null;
+        $this->cond_nume[$this->cont] = null;
         $this->cont++;
 
     }
@@ -400,7 +406,7 @@ class FichaBienesComunes extends Component
     /* RECAP EDIFICIOS */
 
     /* INFORMACION FINAL*/
-    public function updatednumdocumentodeclarante()
+    public function buscarDeclarante()
     {
         $dni=$this->numdocumentodeclarante;
         if($dni!=""){
@@ -495,23 +501,23 @@ class FichaBienesComunes extends Component
                 'area_verificada1'              => 'required|numeric|regex:/^[\d]{0,7}(\.[\d]{1,2})?$/',
                 'area_declarada'                => 'nullable|numeric|regex:/^[\d]{0,7}(\.[\d]{1,2})?$/',
                 'area_verificada1'              => 'nullable|numeric|regex:/^[\d]{0,7}(\.[\d]{1,2})?$/',
-                'fren_campo'                    => 'nullable|max:200',
-                'dere_campo'                    => 'nullable|max:200',
-                'izqu_campo'                    => 'nullable|max:200',
-                'fond_campo'                    => 'nullable|max:200',
-                'fren_colinda_campo'            => 'nullable|max:200',
-                'dere_colinda_campo'            => 'nullable|max:200',
-                'izqu_colinda_campo'            => 'nullable|max:200',
-                'fond_colinda_campo'            => 'nullable|max:200',
+                'fren_campo'                    => 'nullable|max:500',
+                'dere_campo'                    => 'nullable|max:500',
+                'izqu_campo'                    => 'nullable|max:500',
+                'fond_campo'                    => 'nullable|max:500',
+                'fren_colinda_campo'            => 'nullable|max:500',
+                'dere_colinda_campo'            => 'nullable|max:500',
+                'izqu_colinda_campo'            => 'nullable|max:500',
+                'fond_colinda_campo'            => 'nullable|max:500',
 
-                'fren_titulo'                  => 'nullable|max:200',
-                'dere_titulo'                  => 'nullable|max:200',
-                'izqu_titulo'                  => 'nullable|max:200',
-                'fond_titulo'                  => 'nullable|max:200',
-                'fren_colinda_titulo'          => 'nullable|max:200',
-                'dere_colinda_titulo'          => 'nullable|max:200',
-                'izqu_colinda_titulo'          => 'nullable|max:200',
-                'fond_colinda_titulo'          => 'nullable|max:200',
+                'fren_titulo'                  => 'nullable|max:500',
+                'dere_titulo'                  => 'nullable|max:500',
+                'izqu_titulo'                  => 'nullable|max:500',
+                'fond_titulo'                  => 'nullable|max:500',
+                'fren_colinda_titulo'          => 'nullable|max:500',
+                'dere_colinda_titulo'          => 'nullable|max:500',
+                'izqu_colinda_titulo'          => 'nullable|max:500',
+                'fond_colinda_titulo'          => 'nullable|max:500',
 
                 'tipo_partida'                  => 'nullable',
                 'nume_partida'                  => 'nullable|max:18',
@@ -815,20 +821,23 @@ class FichaBienesComunes extends Component
             while($contpuertas<$this->cont)
             {
                 $buscarpuertas=0;
-                $idpuerta=$this->buscarpuerta($buscarpuertas,$this->tipopuerta[$contpuertas],$lote->id_lote);
-                $puerta= new Puerta();
-                $puerta->id_puerta=$idpuerta;
-                $puerta->id_lote=$lote->id_lote;
-                $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
-                $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
-                if(isset($this->nume_muni[$contpuertas])){
-                    $puerta->nume_muni=$this->nume_muni[$contpuertas];
+                $puerta = Puerta::where('id_lote',$lote->id_lote)->where('tipo_puerta',$this->tipopuerta[$contpuertas])->where('nume_muni',$this->nume_muni[$contpuertas])->where('cond_nume',$this->cond_nume[$contpuertas])->first();
+                if(!$puerta){
+                    $idpuerta=$this->buscarpuerta($buscarpuertas,$this->tipopuerta[$contpuertas],$lote->id_lote);
+                    $puerta= new Puerta();
+                    $puerta->id_puerta=$idpuerta;
+                    $puerta->id_lote=$lote->id_lote;
+                    $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
+                    $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
+                    if(isset($this->nume_muni[$contpuertas])){
+                        $puerta->nume_muni=$this->nume_muni[$contpuertas];
+                    }
+                    if(isset($this->cond_nume[$contpuertas])){
+                        $puerta->cond_nume=$this->cond_nume[$contpuertas];
+                    }
+                    $puerta->id_via=$this->tipoVia[$contpuertas];
+                    $puerta->save();
                 }
-                if(isset($this->cond_nume[$contpuertas])){
-                    $puerta->cond_nume=$this->cond_nume[$contpuertas];
-                }
-                $puerta->id_via=$this->tipoVia[$contpuertas];
-                $puerta->save();
 
                 $contpuertas++;
                 $puerta->fichas()->attach(str_pad($ficha->id_ficha,19,'0',STR_PAD_LEFT));
@@ -880,19 +889,19 @@ class FichaBienesComunes extends Component
 
             $lindero=new Lindero();
             $lindero->id_ficha=$ficha->id_ficha;
-            $lindero->fren_campo=$this->fren_campo;
+            $lindero->fren_campo=$this->formatearLindero($this->fren_campo);
             $lindero->fren_colinda_campo=$this->fren_colinda_campo;
-            $lindero->dere_campo=$this->dere_campo;
+            $lindero->dere_campo=$this->formatearLindero($this->dere_campo);
             $lindero->dere_colinda_campo=$this->dere_colinda_campo;
-            $lindero->izqu_campo=$this->izqu_campo;
+            $lindero->izqu_campo=$this->formatearLindero($this->izqu_campo);
             $lindero->izqu_colinda_campo=$this->izqu_colinda_campo;
-            $lindero->fond_campo=$this->fond_campo;
+            $lindero->fond_campo=$this->formatearLindero($this->fond_campo);
             $lindero->fond_colinda_campo=$this->fond_colinda_campo;
 
-            $lindero->fren_titulo=$this->fren_titulo;
-            $lindero->dere_titulo=$this->dere_titulo;
-            $lindero->izqu_titulo=$this->izqu_titulo;
-            $lindero->fond_titulo=$this->fond_titulo;
+            $lindero->fren_titulo=$this->formatearLindero($this->fren_titulo);
+            $lindero->dere_titulo=$this->formatearLindero($this->dere_titulo);
+            $lindero->izqu_titulo=$this->formatearLindero($this->izqu_titulo);
+            $lindero->fond_titulo=$this->formatearLindero($this->fond_titulo);
             $lindero->fren_colinda_titulo=$this->fren_colinda_titulo;
             $lindero->dere_colinda_titulo=$this->dere_colinda_titulo;
             $lindero->izqu_colinda_titulo=$this->izqu_colinda_titulo;
@@ -1254,5 +1263,20 @@ class FichaBienesComunes extends Component
         }
 
         return $id;
+    }
+
+    function formatearLindero(string $s): string
+    {
+        // Colapsa espacios múltiples
+        $s = preg_replace('/\s+/', ' ', $s);
+
+        // Quita espacios y ';' de extremos (por si viene " ;  A ; B ;; ")
+        $s = trim($s, " \t\n\r\0\x0B;");
+
+        // Separa aceptando cualquier cantidad de espacios alrededor del ';'
+        $parts = preg_split('/\s*;\s*/', $s, -1, PREG_SPLIT_NO_EMPTY);
+
+        // Normaliza: "item; item; item" -> sin ';' final
+        return $parts ? implode('; ', $parts) : '';
     }
 }

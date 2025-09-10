@@ -160,11 +160,16 @@
                                 
                                 <td>
                                     @can('ficha.editcotitularidad')
-                                    <a href="{{route('ficha.editcotitularidad',$ficha)}}" target="_blank">
-                                        <button type="button" class="btn btn-info btn-icon " >
-                                        <i data-feather="edit"></i>
-                                        </button>
-                                    </a>
+                                        <a href="{{route('ficha.editcotitularidad',$ficha)}}" target="_blank">
+                                            <button type="button" class="btn btn-info btn-icon " >
+                                            <i data-feather="edit"></i>
+                                            </button>
+                                        </a>
+                                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Editar Cod. Ref.">
+                                            <button type="button" class="btn btn-warning btn-icon edit" data-bs-toggle="modal" data-bs-target="#EditarCodRef" data-id="{{$ficha->id_ficha}}" data-unicat="{{$ficha->id_uni_cat}}">
+                                                <i data-feather="edit"></i>
+                                            </button>
+                                        </a>
                                     @endcan
                                 </td>
                                 <td>
@@ -220,11 +225,16 @@
                                 </td>
                                 <td>
                                     @can('ficha.editeconomica')
-                                    <a href="{{route('ficha.editeconomica',$ficha)}}"  target="_blank" >
-                                        <button type="button" class="btn btn-info btn-icon " >
-                                        <i data-feather="edit"></i>
-                                        </button>
-                                    </a>
+                                        <a href="{{route('ficha.editeconomica',$ficha)}}"  target="_blank" >
+                                            <button type="button" class="btn btn-info btn-icon " >
+                                            <i data-feather="edit"></i>
+                                            </button>
+                                        </a>
+                                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Editar Cod. Ref.">
+                                            <button type="button" class="btn btn-warning btn-icon edit" data-bs-toggle="modal" data-bs-target="#EditarCodRef" data-id="{{$ficha->id_ficha}}" data-unicat="{{$ficha->id_uni_cat}}">
+                                                <i data-feather="edit"></i>
+                                            </button>
+                                        </a>
                                     @endcan
                                 </td>
                                 <td>
@@ -256,13 +266,11 @@
                                     </a>
                                 </td>
                                 <td>
-                                    
                                     <a onclick="return confirm('Seguro que desea eliminar la ficha')"  href="{{route('ficha.destroybiencultural',$ficha)}}">
                                         <button type="button" class="btn btn-danger btn-icon " >
                                         <i data-feather="trash-2"></i>
                                         </button>
                                     </a>
-                                    
                                 </td>
                                 @elseif($ficha->tipo_ficha=="06")
                                     RURAL
@@ -292,11 +300,65 @@
     </div>
 </div>
 
+<div class="modal fade" id="EditarCodRef" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Cod. de Referencial Catastral</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('ficha.updateCod','test')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+            {{csrf_field()}}
+            <input type="hidden" name="id_ficha_eco" id="id_ficha_eco" class="id_ficha_eco" value="{{old('id_ficha_eco')}}">
+            <div class="mb-3">
+                <label for="unicat_eco" class="form-label">Codigo Antiguo:</label>
+                <input type="text" class="form-control" id="unicat_eco" name="unicat_eco" value="{{old('unicat_eco')}}">
+            </div>
+            <div class="mb-3">
+                <label for="unicat_eco" class="form-label">Codigo Nuevo:</label>
+                <input type="text" class="form-control" id="unicat_eco_nuevo" name="unicat_eco_nuevo" value="{{old('unicat_eco_nuevo')}}">
+                @error('unicat_eco_nuevo')
+                    <span class="error-message" style="color:red">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 
 
 @push('custom-scripts')
+<script>
+    var editarEconomica = document.getElementById('EditarCodRef');
+
+    editarEconomica.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget
+
+        var id = button.getAttribute('data-id')
+        var unicat = button.getAttribute('data-unicat')
+
+        var idModal = editarEconomica.querySelector('#id_ficha_eco')
+        var unicatModal = editarEconomica.querySelector('#unicat_eco')
+
+        idModal.value = id;
+        unicatModal.value = unicat;
+    });
+</script>
+@if(count($errors)>0)
+<script>
+  $(function() {
+    $('#EditarCodRef').modal('show');
+  });
+</script>
+@endif
 @if($manzana2==0)
     @if($sector2==0)
         <script>

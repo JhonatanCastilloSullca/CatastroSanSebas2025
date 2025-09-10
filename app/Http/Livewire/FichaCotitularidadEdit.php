@@ -237,7 +237,7 @@ class FichaCotitularidadEdit extends Component
 
 
     /* INFORMACION FINAL*/
-    public function updatednumdocumentodeclarante()
+    public function buscarDeclarante()
     {
         $dni=$this->numdocumentodeclarante;
         if($dni!=""){
@@ -273,13 +273,13 @@ class FichaCotitularidadEdit extends Component
     }
     /* INFORMACION FINAL*/
 
-    public function updatednumedoc1($value,$nested)
+    public function buscarTitular($i)
     {
-        if(isset($this->tipo_doc1[$nested]))
+        if(isset($this->tipo_doc1[$i]))
         {
-            if($this->tipo_doc1[$nested]=="02")
+            if($this->tipo_doc1[$i]=="02")
             {
-                $dni=$this->numedoc1[$nested];
+                $dni=$this->numedoc1[$i];
                 if($dni!=""){
                     $token= config('services.apisunat.token');
                     $urldni=config('services.apisunat.urldni');
@@ -291,34 +291,33 @@ class FichaCotitularidadEdit extends Component
                     $persona=($response->json());
 
                     if(isset($persona['error']) || $persona==""){
-                        $this->nombres1[$nested]="";
-                        $this->ape_paterno1[$nested]="";
-                        $this->ape_materno1[$nested]="";
-                        $this->numedoc1[$nested]=$dni;
+                        $this->nombres1[$i]="";
+                        $this->ape_paterno1[$i]="";
+                        $this->ape_materno1[$i]="";
+                        $this->numedoc1[$i]=$dni;
                         if(isset($persona['error']))
                         {
-                            session()->flash('info.'.$nested, 'Se necesita 8 digitos');
+                            session()->flash('info.'.$i, 'Se necesita 8 digitos');
                         }
                         if($persona=="")
                         {
-                            session()->flash('info.'.$nested, 'No se encontro datos');
+                            session()->flash('info.'.$i, 'No se encontro datos');
                         }
                     }else{
-                        $this->nombres1[$nested]=$persona['nombres'];
-                        $this->ape_paterno1[$nested]=$persona['apellidoPaterno'];
-                        $this->ape_materno1[$nested]=$persona['apellidoMaterno'];
-                        $this->numedoc1[$nested]=$dni;
+                        $this->nombres1[$i]=$persona['nombres'];
+                        $this->ape_paterno1[$i]=$persona['apellidoPaterno'];
+                        $this->ape_materno1[$i]=$persona['apellidoMaterno'];
+                        $this->numedoc1[$i]=$dni;
                     }
                 }
             }
         }
     }
 
-    public function updatednumedoc3($value, $nested)
+    public function buscarTitularRuc($i)
     {
-        
 
-        $ruc=$value;
+        $ruc=$this->numedoc3[$i];
         $token= config('services.apisunat.token');
         $urlruc=config('services.apisunat.urlruc');
         $response=Http::withHeaders([
@@ -328,19 +327,19 @@ class FichaCotitularidadEdit extends Component
 
         $persona=($response->json());
         if($persona==""||isset($persona['error'])){
-            $this->razon_social[$nested]="";
-            $this->numedoc3[$nested]=$ruc;
+            $this->razon_social[$i]="";
+            $this->numedoc3[$i]=$ruc;
             if($persona['error']=="RUC invalido")
             {
-                session()->flash('warning.'.$nested, 'RUC invalido');
+                session()->flash('warning.'.$i, 'RUC invalido');
             }
             if($persona['error']=="RUC debe contener 11 digitos")
             {
-                session()->flash('warning.'.$nested, 'RUC debe contener 11 digitos');
+                session()->flash('warning.'.$i, 'RUC debe contener 11 digitos');
             }
         }else{
-            $this->razon_social[$nested]=$persona['nombre'];
-            $this->numedoc3[$nested]=$ruc;
+            $this->razon_social[$i]=$persona['nombre'];
+            $this->numedoc3[$i]=$ruc;
         }
     }
 
@@ -365,7 +364,6 @@ class FichaCotitularidadEdit extends Component
             }
 
             $mytime= Carbon::now('America/Lima');
-            $date = $mytime->format('Y');
             $id=$this->fichaanterior->fichacotitular->id_ficha;
 
             $this->validate([
@@ -455,6 +453,8 @@ class FichaCotitularidadEdit extends Component
             $fechaanterior=$this->fichaanterior->fecha_grabado;
             $usuario=$this->fichaanterior->id_usuario;
             $this->fichaanterior->delete();
+
+            $date = date("Y",strtotime($fechaanterior));
 
             if($this->numdocumentodeclarante!=''){
                 $iddd=$this->numdocumentodeclarante.'5102';
