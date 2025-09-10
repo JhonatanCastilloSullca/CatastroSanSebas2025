@@ -399,7 +399,10 @@
                             <div class="mb-3">
                                 <div wire:ignore>
                                     <label class="form-label d-inline-flex" > <div class="divcuadrorequired">23</div> N° DOC.</label>
-                                    <input type="text" class="form-control" placeholder="" name="nume_doc1" id="nume_doc1" wire:model.lazy="numedoc1" tabindex="35">
+                                    <div class="btn-group">
+                                        <input type="text" class="form-control" placeholder="" name="nume_doc1" id="nume_doc1" wire:model.defer="numedoc1" tabindex="35">
+                                        <button type="button" class="btn btn-info btn-icon" wire:click="buscarTitular" ><i class="fa fa-search"></i></button>
+                                    </div>
                                 </div>
                                 @error('numedoc1')
                                     <span class="error-message" style="color:red">{{ $message }}</span>
@@ -458,7 +461,10 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label d-inline-flex" > <div class="divcuadrorequired">23</div> N° DOC.</label>
-                                    <input type="text" class="form-control" placeholder="" name="nume_doc2" id="nume_doc2" wire:model.lazy="numedoc2" tabindex="40">
+                                    <div class="btn-group">
+                                        <input type="text" class="form-control" placeholder="" name="nume_doc2" id="nume_doc2" wire:model.lazy="numedoc2" tabindex="40">
+                                        <button type="button" class="btn btn-info btn-icon" wire:click="buscarTitularEsposa"><i class="fa fa-search"></i></button>
+                                    </div>
                                     @error('numedoc2')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
@@ -502,7 +508,10 @@
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label class="form-label d-inline-flex" > <div class="divcuadrorequired">27</div> Nº DE R.U.C.</label>
-                                <input type="text" class="form-control" placeholder="" name="nume_doc3" wire:model.lazy="numedoc3"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="11" tabindex="44">
+                                <div class="btn-group">
+                                    <input type="text" class="form-control" placeholder="" name="nume_doc3" wire:model.lazy="numedoc3"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="11" tabindex="44">
+                                    <button type="button" class="btn btn-info btn-icon" wire:click="buscarTitularRuc"><i class="fa fa-search"></i></button>
+                                </div>
                                 @error('numedoc3')
                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                 @enderror
@@ -867,25 +876,25 @@
                                 <label class="form-label d-inline-flex" > <div class="divcuadro">47</div> MEDIDA EN CAMPO</label>                                
                             </div><!-- Col -->    
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="" name="fren_campo" wire:model="fren_campo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="74">
+                                <input type="text" class="form-control" placeholder="" name="fren_campo" wire:model="fren_campo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="74">
                                 @error('fren_campo')
                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                 @enderror
                             </div><!-- Col -->                                        
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="" name="dere_campo" wire:model="dere_campo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="76">
+                                <input type="text" class="form-control" placeholder="" name="dere_campo" wire:model="dere_campo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="76">
                                 @error('dere_campo')
                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                 @enderror
                             </div><!-- Col -->                                        
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="" name="izqu_campo" wire:model="izqu_campo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="78">
+                                <input type="text" class="form-control" placeholder="" name="izqu_campo" wire:model="izqu_campo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="78">
                                 @error('izqu_campo')
                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                 @enderror
                             </div><!-- Col -->                                        
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="" name="fond_campo" wire:model="fond_campo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="80">
+                                <input type="text" class="form-control" placeholder="" name="fond_campo" wire:model="fond_campo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="80">
                                 @error('fond_campo')
                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                 @enderror
@@ -1023,8 +1032,6 @@
                                                 
                                             @else
                                                 @if($cont2>0)
-                                                    
-                                                    <button type="button" class="btn btn-danger btn-icon" wire:click="reducirConstruccion" tabindex="90">-</button>
                                                 @else
                                                     <button type="button" class="btn btn-success btn-icon" wire:click="aumentarConstruccion" tabindex="90">{{$codi_uso}}</button>
                                                 @endif
@@ -1142,13 +1149,10 @@
                                             </td>
                                             
                                             <td>
-                                                
-
-
                                                 @if($i==$cont2-1)
                                                     <button type="button" class="btn btn-success btn-icon" wire:click="aumentarConstruccion" tabindex="90">+</button>
-                                                
                                                 @endif
+                                                <button type="button" class="btn btn-danger btn-icon" wire:click="eliminarConstruccion({{$i}})" tabindex="22">X</button>
                                             </td>
                                         </tr>
                                         @endfor
@@ -1221,7 +1225,6 @@
                                             <th><label class="form-label d-inline-flex" > <div class="divcuadro">69</div> UCA </label></th>
                                             <th>
                                             @if($cont3>0)
-                                                <button type="button" class="btn btn-danger btn-icon" wire:click="reducirObras" tabindex="109">-</button>
                                             @else
                                                 <button type="button" class="btn btn-success btn-icon" wire:click="aumentarObras" tabindex="108">+</button>
                                             @endif
@@ -1310,7 +1313,7 @@
                                                 @if($i==$cont3-1)
                                                     <button type="button" class="btn btn-success btn-icon" wire:click="aumentarObras" tabindex="109">+</button>
                                                 @endif
-
+                                                <button type="button" class="btn btn-danger btn-icon" wire:click="eliminarObras({{$i}})" tabindex="117">X</button>
 
                                             </td>
                                         </tr>
@@ -1630,7 +1633,10 @@
                                                 @enderror
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control"  name="nume_doclitigante[]" placeholder="NUMERO DE DOCUMENTO" id="nume_doc{{$i}}" wire:model.lazy="numedoc.{{$i}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" tabindex="142">
+                                                <div class="btn-group">
+                                                    <input type="text" class="form-control"  name="nume_doclitigante[]" placeholder="NUMERO DE DOCUMENTO" id="nume_doc{{$i}}" wire:model.defer="numedoc.{{$i}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" tabindex="142">
+                                                    <button type="button" class="btn btn-info btn-icon" wire:click="buscarLitigante({{$i}})"><i class="fa fa-search"></i></button>
+                                                </div>
                                                 @if ($message = Session::get('info.'.$i))
                                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                                 @endif
@@ -1678,7 +1684,7 @@
                     <h4 class="mb-5"> OBSERVACION</h4>
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <textarea type="textarea" class="form-control" rows="5" name="observacion" wire:model="observacion" tabindex="149"></textarea>
+                                <textarea type="textarea" class="form-control" rows="5" name="observacion" wire:model.defer="observacion" tabindex="149"></textarea>
                             </div>
                             @error('observacion')
                                 <span class="error-message" style="color:red">{{ $message }}</span>
@@ -1690,7 +1696,10 @@
                             <label class="form-label d-inline-flex" > <div class="divcuadro">94</div>DECLARANTE</label>
                             <div class="col-md-2 mb-3">
                                 <label class="form-label d-inline-flex" >DNI</label>
-                                <input type="number" class="form-control" name="num_documento_declarante" wire:model.lazy="numdocumentodeclarante" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" tabindex="150">
+                                <div class="btn-group">
+                                    <input type="number" class="form-control" name="num_documento_declarante" wire:model.defer="numdocumentodeclarante" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" tabindex="150">
+                                    <button type="button" class="btn btn-info btn-icon" wire:click="buscarDeclarante"><i class="fa fa-search"></i></button>
+                                </div>
                                 @error('numdocumentodeclarante')
                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                 @enderror

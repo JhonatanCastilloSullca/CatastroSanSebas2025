@@ -43,6 +43,8 @@ Route::group(['middleware'=>['auth']], function () {
     #Route::resource('fichaeconomica', App\Http\Controllers\FichaEconomicaController::class)->except('show');
     #Route::resource('fichacotitularidad', App\Http\Controllers\FichaCotitularidadController::class)->except('show');
     Route::resource('mantenimiento/notaria', App\Http\Controllers\NotariasController::class)->except('show,edit,create')->names('notaria');
+    Route::get('mantenimiento/lista-lote', 'App\Http\Controllers\LoteController@lista')->name('lote.lista');
+    Route::post('mantenimiento/guardar-lote', 'App\Http\Controllers\LoteController@editar')->name('lote.editar');
     Route::resource('persona', App\Http\Controllers\PersonaController::class)->except('show,edit,create')->names('persona');
     
 
@@ -134,6 +136,7 @@ Route::group(['middleware'=>['auth']], function () {
     Route::resource('imagenes', App\Http\Controllers\ImagenesController::class)->names('imagenes');
 
     Route::get('reporte/fichasmasivas', 'App\Http\Controllers\ReporteController@fichasmasivas')->name('reporte.fichasmasivas');
+    Route::post('editar-ficha-cod-refefencia', 'App\Http\Controllers\FichaController@updateCod')->name('ficha.updateCod');
 
 
     

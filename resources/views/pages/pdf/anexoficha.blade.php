@@ -419,39 +419,37 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($titulares as $titular)
+                @foreach($titulares as $t)
                     <tr>
-                        <td>{{$titular->lote->cuc}}</td>
-                        <td>{{$titular->cuc}}</td>
-                        <td>
-                            @foreach($titular->titularesPersonalizados() as $titular1)
-                                {{ $titular1->nombres }}<br>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach($titular->titularesPersonalizados() as $titular1)
-                                {{ $titular1->porc_cotitular }}<br>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach($titular->titularesPersonalizados() as $titular1)
-                                {{ $titular1->nume_doc }}<br>
-                            @endforeach
-                        </td>
-                        <td>{{$titular->puertaPersonalizada?->tipo_via}}</td>
-                        <td>{{$titular->puertaPersonalizada?->nomb_via}}</td>
-                        <td>{{$titular->puertaPersonalizada?->nume_muni}}</td>
-                        <td>{{$titular->tipo_interior}}</td>
-                        <td>{{$titular->nume_interior}}</td>
-                        <td>{{$titular->lote->manzana->codi_mzna}}</td>
-                        <td>{{$titular->lote->codi_lote}}</td>
-                        <td>{{$titular->lote?->hab_urbana?->nomb_hab_urba}}</td>
-                        <td>{{$titular->area_seleccionada}}</td>
-                        <td>{{$titular->total_construcciones}}</td>
-                        <td>{{$titular->usoUniCat()?->desc_uso}}</td>
+                        <td>{{ $t->lote_cuc ?? $t->cuc_lote ?? $t->id_lote }}</td> {{-- ajusta si tienes el CUC de lote en l --}}
+                        <td>{{ $t->cuc }}</td>
+
+                        {{-- Titulares (cada uno en línea separada) --}}
+                        <td>{!! nl2br(e($t->titulares_nombres)) !!}</td>
+                        <td>{!! nl2br(e($t->titulares_porcentajes)) !!}</td>
+                        <td>{!! nl2br(e($t->titulares_documentos)) !!}</td>
+
+                        {{-- Puerta/Vía --}}
+                        <td>{{ $t->tipo_via }}</td>
+                        <td>{{ $t->nomb_via }}</td>
+                        <td>{{ $t->nume_muni }}</td>
+
+                        {{-- Datos de unidad/lote --}}
+                        <td>{{ $t->tipo_interior }}</td>
+                        <td>{{ $t->nume_interior }}</td>
+                        <td>{{ $t->id_mzna }}</td>       {{-- o codi_mzna si lo tienes en l --}}
+                        <td>{{ $t->codi_lote }}</td>
+                        <td>{{ $t->nomb_hab_urba ?? '' }}</td> {{-- si quieres este dato, añade otro subselect similar --}}
+
+                        {{-- Áreas --}}
+                        <td>{{ $t->area_seleccionada }}</td>
+                        <td>{{ $t->total_construcciones }}</td>
+
+                        {{-- Uso --}}
+                        <td>{{ $t->desc_uso }}</td>
                     </tr>
                 @endforeach
-            </tbody>
+            </tbody>
         </table>
     </div>
 

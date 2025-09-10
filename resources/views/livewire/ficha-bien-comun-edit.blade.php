@@ -433,25 +433,25 @@
                                     <label class="form-label d-inline-flex" > <div class="divcuadro">63</div> MEDIDA EN CAMPO</label>
                                 </div><!-- Col -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="" name="fren_campo" wire:model="fren_campo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="34">
+                                    <input type="text" class="form-control" placeholder="" name="fren_campo" wire:model="fren_campo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="34">
                                     @error('fren_campo')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div><!-- Col -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="" name="dere_campo" wire:model="dere_campo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="38">
+                                    <input type="text" class="form-control" placeholder="" name="dere_campo" wire:model="dere_campo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="38">
                                     @error('dere_campo')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div><!-- Col -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="" name="izqu_campo" wire:model="izqu_campo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="42">
+                                    <input type="text" class="form-control" placeholder="" name="izqu_campo" wire:model="izqu_campo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="42">
                                     @error('izqu_campo')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div><!-- Col -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="" name="fond_campo" wire:model="fond_campo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="46">
+                                    <input type="text" class="form-control" placeholder="" name="fond_campo" wire:model="fond_campo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');" maxlength="200" tabindex="46">
                                     @error('fond_campo')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
@@ -462,25 +462,25 @@
                                     <label class="form-label d-inline-flex" > <div class="divcuadro">64</div>MEDIDA SEGUN TITULO</label>
                                 </div><!-- Col -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="" name="fren_titulo" wire:model="fren_titulo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');"  maxlength="200" tabindex="35">
+                                    <input type="text" class="form-control" placeholder="" name="fren_titulo" wire:model="fren_titulo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');"  maxlength="200" tabindex="35">
                                     @error('fren_titulo')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div><!-- Col -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="" name="dere_titulo" wire:model="dere_titulo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');"  maxlength="200" tabindex="39">
+                                    <input type="text" class="form-control" placeholder="" name="dere_titulo" wire:model="dere_titulo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');"  maxlength="200" tabindex="39">
                                     @error('dere_titulo')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div><!-- Col -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="" name="izqu_titulo" wire:model="izqu_titulo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');"  maxlength="200" tabindex="43">
+                                    <input type="text" class="form-control" placeholder="" name="izqu_titulo" wire:model="izqu_titulo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');"  maxlength="200" tabindex="43">
                                     @error('izqu_titulo')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div><!-- Col -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="" name="fond_titulo" wire:model="fond_titulo" oninput="this.value = this.value.replace(/[^0-9.,; ]/g, '').replace(/(\.*?)\*/g, '$1');"  maxlength="200" tabindex="47">
+                                    <input type="text" class="form-control" placeholder="" name="fond_titulo" wire:model="fond_titulo" oninput="this.value = this.value.replace(/[^0-9.; ]/g, '').replace(/(\.*?)\*/g, '$1');"  maxlength="200" tabindex="47">
                                     @error('fond_titulo')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
@@ -1328,7 +1328,10 @@
                             </label>
 
                             <label class="form-label d-inline-flex"></label>
-                            <input type="number" class="form-control" name="numdocumentodeclarante" wire:model.lazy="numdocumentodeclarante" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" placeholder="DNI declarante">
+                            <div class="btn-group">
+                                    <input type="number" class="form-control" name="num_documento_declarante" wire:model.defer="numdocumentodeclarante" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" >
+                                    <button type="button" class="btn btn-info btn-icon" wire:click="buscarDeclarante"><i class="fa fa-search"></i></button>
+                                </div>
                             @error('numdocumentodeclarante')
                                 <span class="error-message" style="color:red">{{ $message }}</span>
                             @enderror

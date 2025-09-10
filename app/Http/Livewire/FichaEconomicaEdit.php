@@ -392,7 +392,7 @@ class FichaEconomicaEdit extends Component
             }
             
             $mytime= Carbon::now('America/Lima');
-            $date = $mytime->format('Y');
+            
 
             $id=$this->fichaanterior->fichaeconomica->id_ficha;
             if($this->esta_llenado=="4")
@@ -604,6 +604,7 @@ class FichaEconomicaEdit extends Component
             }
             $usuario=$this->fichaanterior->id_usuario;
             $fechaanterior=$this->fichaanterior->fecha_grabado;
+            $date = date("Y",strtotime($fechaanterior));
 
             $this->fichaanterior->delete();
 
@@ -1250,7 +1251,7 @@ class FichaEconomicaEdit extends Component
         }
     }
 
-    public function updatednumedoc1()
+    public function buscarTitular()
     {
         if($this->tipo_doc1=="02")
         {
@@ -1288,7 +1289,7 @@ class FichaEconomicaEdit extends Component
         }
     }
 
-    public function updatednumedoc3($value)
+    public function buscarTitularRuc($value)
     {
         $ruc=$value;
         $token= config('services.apisunat.token');
@@ -1304,7 +1305,7 @@ class FichaEconomicaEdit extends Component
             $this->numedoc3=$ruc;
             if($persona['error']=="RUC invalido")
             {
-                session()->flash('warning'.$nested, 'RUC invalido');
+                session()->flash('warning', 'RUC invalido');
             }
             if($persona['error']=="RUC debe contener 11 digitos")
             {
@@ -1316,7 +1317,7 @@ class FichaEconomicaEdit extends Component
         }
     }
 
-    public function updatednumdocumentodeclarante()
+    public function buscarDeclarante()
     {
         $dni=$this->numdocumentodeclarante;
         if($dni!=""){

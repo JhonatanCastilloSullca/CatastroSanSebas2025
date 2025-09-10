@@ -107,6 +107,13 @@
                   </a>
               </li>
               @endcan
+              @if(Auth::user()->roles[0]->name == 'ADMINISTRADOR')
+                <li class="nav-item ">
+                  <a href="{{url('mantenimiento/lista-lote') }}" class="nav-link {{ active_class(['mantenimiento/lista-lote']) }}">
+                        Lotes
+                  </a>
+                </li>
+              @endif
           </ul>
         </div>
       </li>

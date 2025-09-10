@@ -201,7 +201,10 @@
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label class="form-label d-inline-flex" > <div class="divcuadro">27</div> N° DOC.</label>
-                                    <input type="text" class="form-control" placeholder="" name="nume_doc1" id="nume_doc1" wire:model.lazy="numedoc1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17">
+                                    <div class="btn-group">
+                                        <input type="text" class="form-control" placeholder="" name="nume_doc1" id="nume_doc1" wire:model.defer="numedoc1"  maxlength="17">
+                                        <button type="button" class="btn btn-info btn-icon" wire:click="buscarTitular"><i class="fa fa-search"></i></button>
+                                    </div>
                                     @error('nume_doc1')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
@@ -242,7 +245,10 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label class="form-label d-inline-flex" > <div class="divcuadro">31</div> Nº DE R.U.C.</label>
-                                    <input type="text" class="form-control" placeholder="" name="nume_doc3" wire:model.lazy="numedoc3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17">
+                                    <div class="btn-group">
+                                        <input type="text" class="form-control" placeholder="" name="nume_doc3" wire:model.defer="numedoc3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17">
+                                        <button type="button" class="btn btn-info btn-icon" wire:click="buscarTitularRuc"><i class="fa fa-search"></i></button>
+                                    </div>
                                     @error('numedoc3')
                                         <span class="error-message" style="color:red">{{ $message }}</span>
                                     @enderror
@@ -806,7 +812,10 @@
                             <label class="form-label d-inline-flex" > <div class="divcuadro">94</div>DECLARANTE</label>
                             <div class="col-md-2 mb-3">
                                 <label class="form-label d-inline-flex" >DNI</label>
-                                <input type="number" class="form-control" name="num_documento_declarante" wire:model.lazy="numdocumentodeclarante" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" >
+                                <div class="btn-group">
+                                    <input type="number" class="form-control" name="num_documento_declarante" wire:model.defer="numdocumentodeclarante" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" >
+                                    <button type="button" class="btn btn-info btn-icon" wire:click="buscarDeclarante"><i class="fa fa-search"></i></button>
+                                </div>
                                 @error('numdocumentodeclarante')
                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                 @enderror

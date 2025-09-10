@@ -7,6 +7,7 @@ use App\Models\Manzana;
 use App\Models\Sectore;
 use App\Models\Lote;
 use App\Models\Edificaciones;
+use App\Models\Ficha;
 use App\Models\UniCat;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -86,6 +87,13 @@ class ManzanaController extends Controller
                     $unicat->id_edificacion = $edificacion->id_edificacion;
                     $unicat->id_lote = $lote->id_lote;
                     $unicat->save();
+
+                    $suma = array_sum(str_split($unicat->id_uni_cat)); 
+                    $dc   = $suma % 9;
+
+                    Ficha::where('id_uni_cat', $unicat->id_uni_cat)->update([
+                        'dc' => $dc,
+                    ]);
                 }
             }
         }
