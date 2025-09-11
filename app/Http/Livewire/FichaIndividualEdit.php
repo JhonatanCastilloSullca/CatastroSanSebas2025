@@ -2921,30 +2921,47 @@ class FichaIndividualEdit extends Component
         return $id;
     }
 
-    function normalizaLindero(string $s, int $dec = 2, ?string &$error = null): ?string
+    function normalizaLindero(?string $s, int $dec = 2, ?string &$error = null): ?string
     {
-        // 1) normaliza separadores y espacios
+        $error = null;
+
+        // 0) null => null (no valida)
+        if ($s === null) {
+            return null;
+        }
+
+        // 1) normaliza espacios extremos
+        $s = trim($s);
+
+        // 2) vacío => '' (cadena vacía)
+        if ($s === '') {
+            return '';
+        }
+
+        // 3) normaliza separadores y espacios
         $s = str_replace(',', '.', $s);
-        $s = preg_replace('/\s+/', ' ', trim($s));
+        $s = preg_replace('/\s+/', ' ', $s);
         $s = trim($s, " ;"); // quita ; y espacios de extremos
 
-        // 2) separa por ; o por espacios
+        // 4) separa por ';' o por espacios
         $parts = preg_split('/\s*;\s*|\s+/', $s, -1, PREG_SPLIT_NO_EMPTY);
-        if (!$parts) return '';
+        if (!$parts) {
+            return '';
+        }
 
-        // 3) valida y normaliza decimales
-        $re = '/^\d+(?:\.\d{1,'.$dec.'})?$/'; // una sola coma decimal, hasta $dec
+        // 5) valida y normaliza decimales (una sola coma decimal, hasta $dec)
+        $re = '/^\d+(?:\.\d{1,'.$dec.'})?$/';
         foreach ($parts as $i => $p) {
             if (!preg_match($re, $p)) {
-                $error = 'Error Lindero Valor inválido en la posición '.($i+1).': "'.$p.
+                $error = 'Error Lindero: valor inválido en la posición '.($i+1).': "'.$p.
                         '". Usa números con hasta '.$dec.' decimales (ej. 3.25), separados por ";".';
                 return null;
             }
-            // fuerza formato (exactamente $dec decimales)
+            // fuerza exactamente $dec decimales
             $parts[$i] = number_format((float)$p, $dec, '.', '');
         }
 
-        // 4) une como "a; b; c" (sin ; final)
+        // 6) une como "a; b; c" (sin ';' final)
         return implode('; ', $parts);
     }
 }
