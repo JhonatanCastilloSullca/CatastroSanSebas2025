@@ -399,7 +399,7 @@
                             <div class="mb-3">
                                 <div wire:ignore>
                                     <label class="form-label d-inline-flex" > <div class="divcuadrorequired">23</div> N° DOC.</label>
-                                    <div class="btn-group">
+                                    <div class="btn-group w-100">
                                         <input type="text" class="form-control" placeholder="" name="nume_doc1" id="nume_doc1" wire:model.defer="numedoc1" tabindex="35">
                                         <button type="button" class="btn btn-info btn-icon" wire:click="buscarTitular" ><i class="fa fa-search"></i></button>
                                     </div>
@@ -461,7 +461,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label d-inline-flex" > <div class="divcuadrorequired">23</div> N° DOC.</label>
-                                    <div class="btn-group">
+                                    <div class="btn-group w-100">
                                         <input type="text" class="form-control" placeholder="" name="nume_doc2" id="nume_doc2" wire:model.lazy="numedoc2" tabindex="40">
                                         <button type="button" class="btn btn-info btn-icon" wire:click="buscarTitularEsposa"><i class="fa fa-search"></i></button>
                                     </div>
@@ -508,7 +508,7 @@
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label class="form-label d-inline-flex" > <div class="divcuadrorequired">27</div> Nº DE R.U.C.</label>
-                                <div class="btn-group">
+                                <div class="btn-group w-100">
                                     <input type="text" class="form-control" placeholder="" name="nume_doc3" wire:model.lazy="numedoc3"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="11" tabindex="44">
                                     <button type="button" class="btn btn-info btn-icon" wire:click="buscarTitularRuc"><i class="fa fa-search"></i></button>
                                 </div>
@@ -1633,7 +1633,7 @@
                                                 @enderror
                                             </td>
                                             <td>
-                                                <div class="btn-group">
+                                                <div class="btn-group w-100">
                                                     <input type="text" class="form-control"  name="nume_doclitigante[]" placeholder="NUMERO DE DOCUMENTO" id="nume_doc{{$i}}" wire:model.defer="numedoc.{{$i}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" tabindex="142">
                                                     <button type="button" class="btn btn-info btn-icon" wire:click="buscarLitigante({{$i}})"><i class="fa fa-search"></i></button>
                                                 </div>
@@ -1696,7 +1696,7 @@
                             <label class="form-label d-inline-flex" > <div class="divcuadro">94</div>DECLARANTE</label>
                             <div class="col-md-2 mb-3">
                                 <label class="form-label d-inline-flex" >DNI</label>
-                                <div class="btn-group">
+                                <div class="btn-group w-100">
                                     <input type="number" class="form-control" name="num_documento_declarante" wire:model.defer="numdocumentodeclarante" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" tabindex="150">
                                     <button type="button" class="btn btn-info btn-icon" wire:click="buscarDeclarante"><i class="fa fa-search"></i></button>
                                 </div>

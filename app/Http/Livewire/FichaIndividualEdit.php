@@ -1028,7 +1028,6 @@ class FichaIndividualEdit extends Component
         $this->inst_uni_med = array_values($this->inst_uni_med);
         unset($this->inst_uca[$i]);
         $this->inst_uca = array_values($this->inst_uca);
-        $this->uca = array_values($this->uca);
         if($this->cont3 > 0){
             $this->cont3--;
         }

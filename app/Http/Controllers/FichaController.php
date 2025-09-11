@@ -32,7 +32,10 @@ use DB;
 use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LotesPropietariosExports;
+use App\Http\Requests\DuplicarFichaRequest;
 use App\Http\Requests\FichaCodigoRequest;
+use App\Models\ExoneracionTitular;
+use App\Models\FichaCotitularidad;
 
 class FichaController extends Controller
 {
@@ -1398,6 +1401,101 @@ class FichaController extends Controller
         $ficha->id_lote = $unicat->id_lote;
         $ficha->dc = $dc;
         $ficha->save();
+
+        return redirect()->back()->with('success', 'Modificado Correctamente!');
+    }
+
+    public function duplicarCotitular(DuplicarFichaRequest $request)
+    {
+        $suma = array_sum(str_split($request->unicat_coti_nuevo)); 
+        $dc   = $suma % 9;
+
+        $ubigeo=Institucion::first();
+        $mytime= Carbon::now('America/Lima');
+        $fichaAnterior = Ficha::find($request->id_ficha_cotitular);
+
+        $unicat = UniCat::find($request->unicat_coti_nuevo);
+
+        $date = $mytime->format('Y');
+
+        $ficha=new Ficha();
+        $ficha->id_ficha=$date.''.str_pad($ubigeo->id_institucion,6,'0',STR_PAD_LEFT).'02'.str_pad($request->n_ficha_nuevo,7,'0',STR_PAD_LEFT);
+        $ficha->tipo_ficha="02";
+        $ficha->nume_ficha=str_pad($request->n_ficha_nuevo,7,'0',STR_PAD_LEFT);
+        $ficha->id_lote=$unicat->id_lote;
+        $ficha->dc=$dc;
+        $ficha->nume_ficha_lote=$request->ficha_lote.'-'.$request->ficha_lote2;
+        $ficha->id_declarante=$fichaAnterior->id_declarante;
+        $ficha->fecha_declarante=$fichaAnterior->fecha_declarante;
+        $ficha->id_supervisor=$fichaAnterior->id_supervisor;
+        $ficha->fecha_supervision=$fichaAnterior->fecha_supervision;
+        $ficha->id_tecnico=$fichaAnterior->id_tecnico;
+        $ficha->fecha_levantamiento=$fichaAnterior->fecha_levantamiento;
+        $ficha->id_verificador=$fichaAnterior->id_verificador;
+        $ficha->fecha_verificacion=$fichaAnterior->fecha_verificacion;
+        $ficha->nume_registro=$fichaAnterior->nume_registro;
+        $ficha->id_uni_cat=$request->unicat_coti_nuevo;
+        $ficha->id_usuario=\Auth::user()->id_usuario;
+        $ficha->fecha_grabado=$mytime->toDateTimeString();
+        $ficha->activo=1;
+        $ficha->save();
+
+        foreach($fichaAnterior->titulars as $titularAnterior)
+        {
+            $titular=new Titular();
+            $titular->id_ficha=$ficha->id_ficha;
+            $titular->id_persona=$titularAnterior->id_persona;
+            $titular->form_adquisicion=$titularAnterior->form_adquisicion;
+            $titular->fecha_adquisicion=$titularAnterior->fecha_adquisicion;
+            $titular->porc_cotitular=$titularAnterior->porc_cotitular;
+            $titular->fax=$titularAnterior->faxconductor;
+            $titular->telf=$titularAnterior->telefonoconductor;
+            $titular->anexo=$titularAnterior->anexoconductor;
+            $titular->email=$titularAnterior->emailconductor;
+            $titular->codi_contribuyente=$titularAnterior->codi_contribuyente;
+            $titular->cond_titular=$titularAnterior->condicion;
+            $titular->save();
+
+            $exoneracion= new ExoneracionTitular();
+            $exoneracion->id_ficha=$ficha->id_ficha;
+            $exoneracion->id_persona=$titularAnterior->id_persona;
+            $exoneracion->condicion=$titularAnterior->exoneraciontitular->condicion;
+            $exoneracion->nume_resolucion=$titularAnterior->exoneraciontitular->nume_resolucion;
+            $exoneracion->fecha_inicio=$titularAnterior->exoneraciontitular->fecha_inicio;
+            $exoneracion->fecha_vencimiento=$titularAnterior->exoneraciontitular->fecha_vencimiento;
+            $exoneracion->save();
+
+            $domicilioAnterior = $titularAnterior->persona->domiciliotitular($titularAnterior->id_ficha);
+
+            $domicilio=new DomicilioTitular();
+            $domicilio->id_ficha=$ficha->id_ficha;
+            $domicilio->id_persona=$titularAnterior->id_persona;
+            $domicilio->codi_via=$domicilioAnterior->codigoviaconductor;
+            $domicilio->tipo_via=$domicilioAnterior->tipoviaconductor;
+            $domicilio->nomb_via=$domicilioAnterior->nombreviaconductor;
+            $domicilio->nume_muni=$domicilioAnterior->nmunicipalconductor;
+            $domicilio->nomb_edificacion=$domicilioAnterior->nomb_edificacionconductor;
+            $domicilio->nume_interior=$domicilioAnterior->ninteriorconductor;
+            $domicilio->codi_hab_urba=$domicilioAnterior->codigohurbanoconductor;
+            $domicilio->nomb_hab_urba=$domicilioAnterior->nombrehhurbanaconductor;
+            $domicilio->sector=$domicilioAnterior->zonaconductor;
+            $domicilio->mzna=$domicilioAnterior->manzanaconductor;
+            $domicilio->lote=$domicilioAnterior->loteconductor;
+            $domicilio->sublote=$domicilioAnterior->sublote;
+            $domicilio->codi_dep=$domicilioAnterior->codi_dep;
+            $domicilio->codi_pro=$domicilioAnterior->codi_pro;
+            $domicilio->codi_dis=$domicilioAnterior->codi_dis;
+            $domicilio->save();
+        }
+
+        $fichaecotitularidad=new FichaCotitularidad();
+        $fichaecotitularidad->id_ficha=$ficha->id_ficha;
+        $fichaecotitularidad->cond_declarante=$fichaAnterior->fichacotitular->cond_declarante;
+        $fichaecotitularidad->esta_llenado=$fichaAnterior->fichacotitular->esta_llenado;
+        $fichaecotitularidad->observaciones=$fichaAnterior->fichacotitular->observaciones;
+        $fichaecotitularidad->nume_ficha=str_pad($request->n_ficha_nuevo,7,'0',STR_PAD_LEFT);
+        $fichaecotitularidad->save();
+
 
         return redirect()->back()->with('success', 'Modificado Correctamente!');
     }
