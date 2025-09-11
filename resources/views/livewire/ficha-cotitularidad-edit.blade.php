@@ -176,7 +176,7 @@
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label class="form-label d-inline-flex" > <div class="divcuadro">27</div> N° DOC.</label>
-                            <div class="btn-group">
+                            <div class="btn-group w-100">
                                 <input type="text" class="form-control" placeholder="" name="numedoc1[]" id="numedoc1.{{$i}}" wire:model.defer="numedoc1.{{$i}}" >
                                 <button type="button" class="btn btn-info btn-icon" wire:click="buscarTitular({{$i}})"><i class="fa fa-search"></i></button>
                             </div>
@@ -222,7 +222,7 @@
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label class="form-label d-inline-flex" > <div class="divcuadro">31</div> Nº DE R.U.C.</label>
-                            <div class="btn-group">
+                            <div class="btn-group w-100">
                                 <input type="text" class="form-control" placeholder="" name="numedoc3[]" id="numedoc3{{$i}}" wire:model.defer="numedoc3.{{$i}}" >
                                 <button type="button" class="btn btn-info btn-icon" wire:click="buscarTitularRuc({{$i}})"><i class="fa fa-search"></i></button>
                             </div>
@@ -547,7 +547,7 @@
                     <label class="form-label d-inline-flex" > <div class="divcuadro">94</div>DECLARANTE</label>
                     <div class="col-md-2 mb-3">
                         <label class="form-label d-inline-flex" >DNI</label>
-                        <div class="btn-group">
+                        <div class="btn-group w-100">
                             <input type="number" class="form-control" name="numdocumentodeclarante" wire:model.defer="numdocumentodeclarante" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" >
                             <button type="button" class="btn btn-info btn-icon" wire:click="buscarDeclarante"><i class="fa fa-search"></i></button>
                         </div>

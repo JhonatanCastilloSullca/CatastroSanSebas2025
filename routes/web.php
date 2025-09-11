@@ -137,6 +137,7 @@ Route::group(['middleware'=>['auth']], function () {
 
     Route::get('reporte/fichasmasivas', 'App\Http\Controllers\ReporteController@fichasmasivas')->name('reporte.fichasmasivas');
     Route::post('editar-ficha-cod-refefencia', 'App\Http\Controllers\FichaController@updateCod')->name('ficha.updateCod');
+    Route::post('duplicar-cotitular', 'App\Http\Controllers\FichaController@duplicarCotitular')->name('ficha.duplicarCotitular');
 
 
     

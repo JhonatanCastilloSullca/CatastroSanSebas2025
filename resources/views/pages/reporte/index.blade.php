@@ -98,6 +98,7 @@
                             <th>Tipo Ficha</th>
                             <th>Ver Ficha</th>
                             <th>Editar</th>
+                            <th>Duplicar</th>
                             <th>Eliminar</th>
                         </tr>
                     </thead>
@@ -134,6 +135,7 @@
                                     </a>
                                     @endcan
                                 </td>
+                                <td></td>
                                 <td>
                                     @can('ficha.destroyindividual')
                                     <a onclick="return confirm('Seguro que desea eliminar la ficha')" href="{{route('ficha.destroyindividual',$ficha)}}" >
@@ -173,6 +175,13 @@
                                     @endcan
                                 </td>
                                 <td>
+                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="Duplicar Cotitular">
+                                        <button type="button" class="btn btn-info btn-icon edit" data-bs-toggle="modal" data-bs-target="#Duplicar" data-id="{{$ficha->id_ficha}}" data-unicat="{{$ficha->id_uni_cat}}">
+                                            <i data-feather="check"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>
                                     @can('ficha.destroycotitularidad')
                                     <a onclick="return confirm('Seguro que desea eliminar la ficha')" href="{{route('ficha.destroycotitularidad',$ficha)}}" >
                                         <button type="button" class="btn btn-danger btn-icon " >
@@ -193,6 +202,7 @@
                                     </a>
                                     @endcan
                                 </td>
+                                <td></td>
                                  <td>
                                     @can('ficha.editbiencomun')
                                         <a href="{{route('ficha.editbiencomun',$ficha)}}" target="_blank">
@@ -237,6 +247,7 @@
                                         </a>
                                     @endcan
                                 </td>
+                                <td></td>
                                 <td>
                                     @can('ficha.destroyeconomica')
                                     <a onclick="return confirm('Seguro que desea eliminar la ficha')"  href="{{route('ficha.destroyeconomica',$ficha)}}">
@@ -265,6 +276,7 @@
                                         </button>
                                     </a>
                                 </td>
+                                <td></td>
                                 <td>
                                     <a onclick="return confirm('Seguro que desea eliminar la ficha')"  href="{{route('ficha.destroybiencultural',$ficha)}}">
                                         <button type="button" class="btn btn-danger btn-icon " >
@@ -286,6 +298,7 @@
                                 </td>
                                 <td>
                                 </td>
+                                <td></td>
                                 <td>
                                 </td>
                                 @endif
@@ -313,7 +326,7 @@
             <input type="hidden" name="id_ficha_eco" id="id_ficha_eco" class="id_ficha_eco" value="{{old('id_ficha_eco')}}">
             <div class="mb-3">
                 <label for="unicat_eco" class="form-label">Codigo Antiguo:</label>
-                <input type="text" class="form-control" id="unicat_eco" name="unicat_eco" value="{{old('unicat_eco')}}">
+                <input type="text" class="form-control" id="unicat_eco" name="unicat_eco" value="{{old('unicat_eco')}}" readonly>
             </div>
             <div class="mb-3">
                 <label for="unicat_eco" class="form-label">Codigo Nuevo:</label>
@@ -321,6 +334,61 @@
                 @error('unicat_eco_nuevo')
                     <span class="error-message" style="color:red">{{ $message }}</span>
                 @enderror
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="Duplicar" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Duplicar Cotitular</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('ficha.duplicarCotitular','test')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+            {{csrf_field()}}
+            <div class="row">
+                <input type="hidden" name="id_ficha_cotitular" id="id_ficha_cotitular" class="id_ficha_cotitular" value="{{old('id_ficha_cotitular')}}">
+                <div class="col-md-12 mb-3">
+                    <label for="unicat_cotitular" class="form-label">Codigo Antiguo:</label>
+                    <input type="text" class="form-control" id="unicat_cotitular" name="unicat_cotitular" value="{{old('unicat_cotitular')}}" readonly>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label for="unicat_coti_nuevo" class="form-label">Codigo Nuevo:</label>
+                    <input type="text" class="form-control" id="unicat_coti_nuevo" name="unicat_coti_nuevo" value="{{old('unicat_coti_nuevo')}}">
+                    @error('unicat_coti_nuevo')
+                        <span class="error-message" style="color:red">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="n_ficha_nuevo" class="form-label">Nº Ficha:</label>
+                    <input type="text" class="form-control" id="n_ficha_nuevo" name="n_ficha_nuevo" value="{{old('n_ficha_nuevo')}}">
+                    @error('n_ficha_nuevo')
+                        <span class="error-message" style="color:red">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="ficha_lote" class="form-label">Ficha por </label>
+                    <input type="text" class="form-control" id="ficha_lote" name="ficha_lote" value="{{old('ficha_lote')}}">
+                    @error('ficha_lote')
+                        <span class="error-message" style="color:red">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="ficha_lote2" class="form-label">lote:</label>
+                    <input type="text" class="form-control" id="ficha_lote2" name="ficha_lote2" value="{{old('ficha_lote2')}}">
+                    @error('ficha_lote2')
+                        <span class="error-message" style="color:red">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -347,6 +415,21 @@
 
         var idModal = editarEconomica.querySelector('#id_ficha_eco')
         var unicatModal = editarEconomica.querySelector('#unicat_eco')
+
+        idModal.value = id;
+        unicatModal.value = unicat;
+    });
+
+    var duplicarCotitular = document.getElementById('Duplicar');
+
+    duplicarCotitular.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget
+
+        var id = button.getAttribute('data-id')
+        var unicat = button.getAttribute('data-unicat')
+
+        var idModal = duplicarCotitular.querySelector('#id_ficha_cotitular')
+        var unicatModal = duplicarCotitular.querySelector('#unicat_cotitular')
 
         idModal.value = id;
         unicatModal.value = unicat;

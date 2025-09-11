@@ -1320,7 +1320,7 @@
                             <label class="form-label d-inline-flex"><div class="divcuadro">120</div>DECLARANTE DNI</label>                            
                             <div class="col-md-2 mb-3">
                                 <label class="form-label d-inline-flex" >DNI</label>
-                                <div class="btn-group">
+                                <div class="btn-group w-100">
                                     <input type="number" class="form-control" name="num_documento_declarante" wire:model.defer="numdocumentodeclarante" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="17" >
                                     <button type="button" class="btn btn-info btn-icon" wire:click="buscarDeclarante"><i class="fa fa-search"></i></button>
                                 </div>
