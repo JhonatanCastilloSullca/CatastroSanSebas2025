@@ -30,6 +30,7 @@ use App\Models\FichaIndividual;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\ValidationException;
 
 class FichaBienesComunes extends Component
 {
@@ -887,21 +888,71 @@ class FichaBienesComunes extends Component
             $fichabiencomun->nume_ficha=str_pad($this->numeficha,7,'0',STR_PAD_LEFT);
             $fichabiencomun->save();
 
+            $err = null;
+            $fmt = $this->normalizaLindero($this->fren_campo, 2, $err);
+            if ($fmt === null) {
+                throw ValidationException::withMessages([
+                    'error-lindero' => $err
+                ]);
+            }
+            $fmt2 = $this->normalizaLindero($this->dere_campo, 2, $err);
+            if ($fmt2 === null) {
+                throw ValidationException::withMessages([
+                    'error-lindero' => $err
+                ]);
+            }
+            $fmt3 = $this->normalizaLindero($this->izqu_campo, 2, $err);
+            if ($fmt3 === null) {
+                throw ValidationException::withMessages([
+                    'error-lindero' => $err
+                ]);
+            }
+            $fmt4 = $this->normalizaLindero($this->fond_campo, 2, $err);
+            if ($fmt4 === null) {
+                throw ValidationException::withMessages([
+                    'error-lindero' => $err
+                ]);
+            }
+            $fmt5 = $this->normalizaLindero($this->fren_campo, 2, $err);
+            if ($fmt5 === null) {
+                throw ValidationException::withMessages([
+                    'error-lindero' => $err
+                ]);
+            }
+            $fmt6 = $this->normalizaLindero($this->dere_campo, 2, $err);
+            if ($fmt6 === null) {
+                throw ValidationException::withMessages([
+                    'error-lindero' => $err
+                ]);
+            }
+            $fmt7 = $this->normalizaLindero($this->izqu_campo, 2, $err);
+            if ($fmt7 === null) {
+                throw ValidationException::withMessages([
+                    'error-lindero' => $err
+                ]);
+            }
+            $fmt8 = $this->normalizaLindero($this->fond_campo, 2, $err);
+            if ($fmt8 === null) {
+                throw ValidationException::withMessages([
+                    'error-lindero' => $err
+                ]);
+            }
+
             $lindero=new Lindero();
             $lindero->id_ficha=$ficha->id_ficha;
-            $lindero->fren_campo=$this->formatearLindero($this->fren_campo);
+            $lindero->fren_campo=$fmt;
             $lindero->fren_colinda_campo=$this->fren_colinda_campo;
-            $lindero->dere_campo=$this->formatearLindero($this->dere_campo);
+            $lindero->dere_campo=$fmt2;
             $lindero->dere_colinda_campo=$this->dere_colinda_campo;
-            $lindero->izqu_campo=$this->formatearLindero($this->izqu_campo);
+            $lindero->izqu_campo=$fmt3;
             $lindero->izqu_colinda_campo=$this->izqu_colinda_campo;
-            $lindero->fond_campo=$this->formatearLindero($this->fond_campo);
+            $lindero->fond_campo=$fmt4;
             $lindero->fond_colinda_campo=$this->fond_colinda_campo;
 
-            $lindero->fren_titulo=$this->formatearLindero($this->fren_titulo);
-            $lindero->dere_titulo=$this->formatearLindero($this->dere_titulo);
-            $lindero->izqu_titulo=$this->formatearLindero($this->izqu_titulo);
-            $lindero->fond_titulo=$this->formatearLindero($this->fond_titulo);
+            $lindero->fren_titulo=$fmt5;
+            $lindero->dere_titulo=$fmt6;
+            $lindero->izqu_titulo=$fmt7;
+            $lindero->fond_titulo=$fmt8;
             $lindero->fren_colinda_titulo=$this->fren_colinda_titulo;
             $lindero->dere_colinda_titulo=$this->dere_colinda_titulo;
             $lindero->izqu_colinda_titulo=$this->izqu_colinda_titulo;
@@ -1265,18 +1316,30 @@ class FichaBienesComunes extends Component
         return $id;
     }
 
-    function formatearLindero(string $s): string
+    function normalizaLindero(string $s, int $dec = 2, ?string &$error = null): ?string
     {
-        // Colapsa espacios múltiples
-        $s = preg_replace('/\s+/', ' ', $s);
+        // 1) normaliza separadores y espacios
+        $s = str_replace(',', '.', $s);
+        $s = preg_replace('/\s+/', ' ', trim($s));
+        $s = trim($s, " ;"); // quita ; y espacios de extremos
 
-        // Quita espacios y ';' de extremos (por si viene " ;  A ; B ;; ")
-        $s = trim($s, " \t\n\r\0\x0B;");
+        // 2) separa por ; o por espacios
+        $parts = preg_split('/\s*;\s*|\s+/', $s, -1, PREG_SPLIT_NO_EMPTY);
+        if (!$parts) return '';
 
-        // Separa aceptando cualquier cantidad de espacios alrededor del ';'
-        $parts = preg_split('/\s*;\s*/', $s, -1, PREG_SPLIT_NO_EMPTY);
+        // 3) valida y normaliza decimales
+        $re = '/^\d+(?:\.\d{1,'.$dec.'})?$/'; // una sola coma decimal, hasta $dec
+        foreach ($parts as $i => $p) {
+            if (!preg_match($re, $p)) {
+                $error = 'Error Lindero Valor inválido en la posición '.($i+1).': "'.$p.
+                        '". Usa números con hasta '.$dec.' decimales (ej. 3.25), separados por ";".';
+                return null;
+            }
+            // fuerza formato (exactamente $dec decimales)
+            $parts[$i] = number_format((float)$p, $dec, '.', '');
+        }
 
-        // Normaliza: "item; item; item" -> sin ';' final
-        return $parts ? implode('; ', $parts) : '';
+        // 4) une como "a; b; c" (sin ; final)
+        return implode('; ', $parts);
     }
 }

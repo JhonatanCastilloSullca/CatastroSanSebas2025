@@ -1774,6 +1774,9 @@
                         @error('sectorbloqueo')
                             <span class="error-message" style="color:red">{{ $message }}</span>
                         @enderror
+                        @error('error-lindero')
+                            <span class="error-message" style="color:red">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
             </div>            
