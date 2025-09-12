@@ -1227,49 +1227,49 @@ class FichaBienComunEdit extends Component
 
             $err = null;
             $fmt = $this->normalizaLindero($this->fren_campo, 2, $err);
-            if ($fmt === null) {
+            if ($fmt === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
             }
             $fmt2 = $this->normalizaLindero($this->dere_campo, 2, $err);
-            if ($fmt2 === null) {
+            if ($fmt2 === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
             }
             $fmt3 = $this->normalizaLindero($this->izqu_campo, 2, $err);
-            if ($fmt3 === null) {
+            if ($fmt3 === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
             }
             $fmt4 = $this->normalizaLindero($this->fond_campo, 2, $err);
-            if ($fmt4 === null) {
+            if ($fmt4 === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
             }
             $fmt5 = $this->normalizaLindero($this->fren_titulo, 2, $err);
-            if ($fmt5 === null) {
+            if ($fmt5 === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
             }
             $fmt6 = $this->normalizaLindero($this->dere_titulo, 2, $err);
-            if ($fmt6 === null) {
+            if ($fmt6 === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
             }
             $fmt7 = $this->normalizaLindero($this->izqu_titulo, 2, $err);
-            if ($fmt7 === null) {
+            if ($fmt7 === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
             }
             $fmt8 = $this->normalizaLindero($this->fond_titulo, 2, $err);
-            if ($fmt8 === null) {
+            if ($fmt8 === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);

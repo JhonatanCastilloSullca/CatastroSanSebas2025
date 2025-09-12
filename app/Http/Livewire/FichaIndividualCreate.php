@@ -2016,25 +2016,25 @@ class FichaIndividualCreate extends Component
 
             $err = null;
             $fmt = $this->normalizaLindero($this->fren_campo, 2, $err);
-            if ($fmt === null) {
+            if ($fmt === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
             }
             $fmt2 = $this->normalizaLindero($this->dere_campo, 2, $err);
-            if ($fmt2 === null) {
+            if ($fmt2 === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
             }
             $fmt3 = $this->normalizaLindero($this->izqu_campo, 2, $err);
-            if ($fmt3 === null) {
+            if ($fmt3 === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
             }
             $fmt4 = $this->normalizaLindero($this->fond_campo, 2, $err);
-            if ($fmt4 === null) {
+            if ($fmt4 === null && $err !== null) {
                 throw ValidationException::withMessages([
                     'error-lindero' => $err
                 ]);
