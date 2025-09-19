@@ -824,7 +824,7 @@ class FichaIndividualEdit extends Component
             $urldni=config('services.apisunat.urldni');
             $response=Http::withHeaders([
                 'Referer' => 'http://apis.net.pe/api-ruc',
-                'Authorization' => 'Bearer ' . $token
+                
             ])->get($urldni.$dni);
 
             $persona=($response->json());
@@ -861,7 +861,7 @@ class FichaIndividualEdit extends Component
             $urldni=config('services.apisunat.urldni');
             $response=Http::withHeaders([
                 'Referer' => 'http://apis.net.pe/api-ruc',
-                'Authorization' => 'Bearer ' . $token
+                
             ])->get($urldni.$dni);
 
             $persona=($response->json());
@@ -897,7 +897,7 @@ class FichaIndividualEdit extends Component
             $urlruc=config('services.apisunat.urlruc');
             $response=Http::withHeaders([
                 'Referer' => 'http://apis.net.pe/api-ruc',
-                'Authorization' => 'Bearer ' . $token
+                
             ])->get($urlruc.$ruc);
 
             $persona=($response->json());
@@ -1066,7 +1066,7 @@ class FichaIndividualEdit extends Component
             $urldni=config('services.apisunat.urldni');
             $response=Http::withHeaders([
                 'Referer' => 'http://apis.net.pe/api-ruc',
-                'Authorization' => 'Bearer ' . $token
+                
             ])->get($urldni.$dni);
 
             $persona=($response->json());
@@ -1124,7 +1124,7 @@ class FichaIndividualEdit extends Component
             $urldni=config('services.apisunat.urldni');
             $response=Http::withHeaders([
                 'Referer' => 'http://apis.net.pe/api-ruc',
-                'Authorization' => 'Bearer ' . $token
+                
             ])->get($urldni.$dni);
 
             $persona=($response->json());
