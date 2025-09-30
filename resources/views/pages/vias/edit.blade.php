@@ -44,26 +44,17 @@
                                 <span class="error-message" style="color:red">{{ $message }}</span>
                             @enderror
                         </div>
-                        {{-- <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6">
                             <label class="form-label">Habilitación Urbana</label>
                             <select class="form-select"  data-width="100%" data-live-search="true" name="hab_urb_id[]" id="hab_urb_id" multiple >
                                 @foreach($hab_urbanas as $hab_urb)
-                                    @php $ii=0 @endphp
-                                    @foreach($via->hab_urbanas as $hab_urba)
-                                        @if($hab_urba->id == $hab_urb->id)
-                                            <option value="{{str_pad($hab_urb->id_hab_urba,10,'0',STR_PAD_LEFT)}}" selected >{{$hab_urb->nomb_hab_urba}}</option>
-                                            @php $ii=1 @endphp
-                                        @endif
-                                    @endforeach
-                                    @if($ii != 1)
-                                        <option value="{{str_pad($hab_urb->id_hab_urba,10,'0',STR_PAD_LEFT)}}" >{{$hab_urb->nomb_hab_urba}}</option>
-                                    @endif
+                                    <option value="{{str_pad($hab_urb->id_hab_urba,10,'0',STR_PAD_LEFT)}}" @selected($via->hab_urbanas->contains($hab_urb) ) >{{$hab_urb->nomb_hab_urba}}</option>
                                 @endforeach
                             </select>
                             @error('hab_urb_id')
                                 <span class="error-message" style="color:red">{{ $message }}</span>
                             @enderror
-                        </div> --}}
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn btn-primary">Guardar</button>

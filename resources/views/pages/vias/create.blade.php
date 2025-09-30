@@ -47,7 +47,7 @@
                                 <span class="error-message" style="color:red">{{ $message }}</span>
                             @enderror
                         </div>
-                        {{-- <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6">
                             <label class="form-label">Habilitación Urbana</label>
                             <select class="form-select"  data-width="100%" data-live-search="true" name="hab_urb_id[]" id="hab_urb_id" multiple >
                                 @foreach($hab_urbanas as $hab_urb)
@@ -57,7 +57,7 @@
                             @error('hab_urb_id')
                                 <span class="error-message" style="color:red">{{ $message }}</span>
                             @enderror
-                        </div> --}}
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn btn-primary">Guardar</button>
