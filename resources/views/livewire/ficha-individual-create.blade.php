@@ -174,7 +174,12 @@
                     </div><!-- Row --> 
                     
                     <div class="row form-group">
-                        <h4 class="mb-4"> UBICACION DEL PREDIO CATASTRAL</h4>
+                        <div>
+                            <span class="mb-2 h4"> UBICACION DEL PREDIO CATASTRAL</span>
+                            <button type="button" class="btn btn-primary btn-icon mt-3" wire:click="buscarPuertas()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                         <div class="col-md-12 mb-5">
                             <div class="table-responsive">
                                 <table id="vias" class="table">
@@ -186,10 +191,24 @@
                                             <th><label class="form-label d-inline-flex" > <div class="divcuadrorequired">8</div>PUERTA</label></th>
                                             <th><label class="form-label d-inline-flex" > <div class="divcuadro">9</div> N° MUNICIPAL</label></th>                
                                             <th><label class="form-label d-inline-flex" > <div class="divcuadro">10</div> COND. NUMER. </label></th>
-                                            <th></th>
+                                            <th>
+                                                @if($cont==0)
+                                                    <button type="button" class="btn btn-success btn-icon" wire:click="aumentarUbicacion" tabindex="18">+</button>
+                                                @endif
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($puertass as $i => $puerta)
+                                        <tr>
+                                            <td>{{$puerta['id_puerta']}}</td>
+                                            <td>{{$puerta['tipoVianombre']}}</td>
+                                            <td>{{$puerta['tipoViatipo']}}</td>
+                                            <td>{{$puerta['tipo_puerta']}}</td>
+                                            <td>{{$puerta['nume_muni']}} / {{$puerta['cond_nume']}}</td>
+                                            <td><button type="button" class="btn btn-danger btn-icon" wire:click="eliminarPuertas({{$i}})">x</button></td>
+                                        </tr>
+                                        @endforeach
                                         @for($i=0;$i<$cont;$i++)
                                         <tr >
                                             <td>
@@ -238,11 +257,8 @@
                                                 @enderror
                                             </td>
                                             <td>
-                                                @if($i==$cont-1)
-                                                    <button type="button" class="btn btn-success btn-icon" wire:click="aumentarUbicacion" tabindex="18">+</button>
-                                                @else
-                                                    <button type="button" class="btn btn-danger btn-icon" wire:click="reducirUbicacion" tabindex="18">-</button>
-                                                @endif
+                                                <button type="button" class="btn btn-success btn-icon" wire:click="aumentarUbicacion" tabindex="18">+</button>
+                                                <button type="button" class="btn btn-danger btn-icon" wire:click="reducirUbicacion" tabindex="18">-</button>
                                             </td>
                                         </tr>
                                         @endfor

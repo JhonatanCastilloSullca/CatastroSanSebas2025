@@ -67,7 +67,7 @@ class FichaIndividualCreate extends Component
     public $hab_urbanas;
     public $hab_urbanas2;
     public $hab_urbana2;
-    public $cont=1;
+    public $cont=0;
     public $via2=array([]);
     public $tipoVia;
     public $tipoVianombre;
@@ -247,7 +247,7 @@ class FichaIndividualCreate extends Component
     public $distritos=[];
     public $vias;
 
-    public $puertass;
+    public $puertass=[];
 
 
     public function mount()
@@ -275,8 +275,29 @@ class FichaIndividualCreate extends Component
     public function buscarPuertas()
     {
         $ubigeo=Institucion::first();
-        $idLote = $ubigeo.$this->sector.$this->mzna.$this->lote;
-        $this->puertass = Puerta::where('id_lote',$idLote)->get();
+        $idLote = $ubigeo->id_institucion.$this->sector.$this->mzna.$this->lote;
+        if($this->sector && $this->mzna && $this->lote){
+            $puertas = Puerta::with('via')->where('id_lote',$idLote)->get();
+            $this->puertass = [];
+            foreach($puertas as $puerta)
+            {
+                $this->puertass[] = [
+                    'id_puerta' => $puerta->id_puerta,
+                    'tipoVianombre' => $puerta->via->nomb_via,
+                    'tipoViatipo' => $puerta->via->tipo_via,
+                    'tipo_puerta' => $puerta->tipo_puerta,
+                    'nume_muni' => $puerta->nume_muni,
+                    'cond_nume' => $puerta->cond_nume,
+                ];
+            }
+        }
+        
+    }
+
+    public function eliminarPuertas($i)
+    {
+        unset($this->puertass[$i]);
+        $this->puertass = array_values($this->puertass);
     }
 
     public function mostrardc()
@@ -1487,28 +1508,28 @@ class FichaIndividualCreate extends Component
 
             $ficha->save();
 
+            foreach($this->puertass as $puerta){
+                $puerta->fichas()->attach(str_pad($ficha->id_ficha,19,'0',STR_PAD_LEFT));
+            }
+
             $contpuertas=0;
             while($contpuertas<$this->cont)
             {
                 $buscarpuertas=0;
-                $puerta = Puerta::where('id_lote',$lote->id_lote)->where('tipo_puerta',$this->tipopuerta[$contpuertas])->where('nume_muni',$this->nume_muni[$contpuertas])->where('cond_nume',$this->cond_nume[$contpuertas])->first();
-                if(!$puerta){
-                    $idpuerta=$this->buscarpuerta($buscarpuertas,$this->tipopuerta[$contpuertas],$lote->id_lote);
-                    $puerta= new Puerta();
-                    $puerta->id_puerta=$idpuerta;
-                    $puerta->id_lote=$lote->id_lote;
-                    $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
-                    $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
-                    if(isset($this->nume_muni[$contpuertas])){
-                        $puerta->nume_muni=$this->nume_muni[$contpuertas];
-                    }
-                    if(isset($this->cond_nume[$contpuertas])){
-                        $puerta->cond_nume=$this->cond_nume[$contpuertas];
-                    }
-                    $puerta->id_via=$this->tipoVia[$contpuertas];
-                    $puerta->save();
-                } 
-
+                $idpuerta=$this->buscarpuerta($buscarpuertas,$this->tipopuerta[$contpuertas],$lote->id_lote);
+                $puerta= new Puerta();
+                $puerta->id_puerta=$idpuerta;
+                $puerta->id_lote=$lote->id_lote;
+                $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
+                $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
+                if(isset($this->nume_muni[$contpuertas])){
+                    $puerta->nume_muni=$this->nume_muni[$contpuertas];
+                }
+                if(isset($this->cond_nume[$contpuertas])){
+                    $puerta->cond_nume=$this->cond_nume[$contpuertas];
+                }
+                $puerta->id_via=$this->tipoVia[$contpuertas];
+                $puerta->save();
                 $contpuertas++;
                 $puerta->fichas()->attach(str_pad($ficha->id_ficha,19,'0',STR_PAD_LEFT));
             }

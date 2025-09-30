@@ -72,11 +72,35 @@ class Ficha extends Model
 
     public function titular()
     {
-        return $this->belongsTo('App\Models\Titular','id_ficha','id_ficha')->orderByRaw('nume_titular::INT ASC');
+        return $this->belongsTo('App\Models\Titular','id_ficha','id_ficha')->orderByRaw("
+            CASE 
+                WHEN nume_titular ~ '^[0-9]+$' THEN 1 ELSE 2
+            END, 
+            CASE 
+                WHEN nume_titular ~ '^[0-9]+$' THEN nume_titular::INT 
+                ELSE NULL 
+            END,
+            CASE 
+                WHEN nume_titular !~ '^[0-9]+$' THEN nume_titular 
+                ELSE NULL 
+            END
+        ");
     }
     public function titulars()
     {
-        return $this->hasMany('App\Models\Titular','id_ficha','id_ficha')->orderByRaw('nume_titular::INT ASC');
+        return $this->hasMany('App\Models\Titular','id_ficha','id_ficha')->orderByRaw("
+            CASE 
+                WHEN nume_titular ~ '^[0-9]+$' THEN 1 ELSE 2
+            END, 
+            CASE 
+                WHEN nume_titular ~ '^[0-9]+$' THEN nume_titular::INT 
+                ELSE NULL 
+            END,
+            CASE 
+                WHEN nume_titular !~ '^[0-9]+$' THEN nume_titular 
+                ELSE NULL 
+            END
+        ");
     }
 
     public function conductors()
