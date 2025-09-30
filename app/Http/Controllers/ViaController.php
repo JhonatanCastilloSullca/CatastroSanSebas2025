@@ -61,6 +61,8 @@ class ViaController extends Controller
             return Redirect::back()->with('error_code', 5)->withErrors($requ->errors())->withInput();
 
         }
+        $ubigeo=Institucion::first();
+        $via->id_via=str_pad($ubigeo->id_institucion,6,'0',STR_PAD_LEFT)."".str_pad($request->codi_via,6,'0',STR_PAD_LEFT);
         $via->nomb_via=strtoupper($request->nomb_via);
         $via->tipo_via=strtoupper($request->tipo_via);
         $via->codi_via=strtoupper($request->codi_via);

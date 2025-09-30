@@ -2288,7 +2288,7 @@
             @endif    
           </div> 
           <div style="width: 128.9px;height: 16px;float:left;" class="texto2 fz8 lh14"> 
-            @if($ficha?->sunarp->fecha_inscripcion!="")
+            @if($ficha?->sunarp?->fecha_inscripcion!="")
               {{date("d-m-Y", strtotime($ficha?->sunarp?->fecha_inscripcion))}}
             @endif    
           </div> 
@@ -2336,12 +2336,12 @@
             @endif      
           </div> 
           <div style="width: 42PX;height: 16px;float:left;" class="texto2 fz8 lh14">
-            @if($ficha?->sunarp->asie_fabrica!="")
+            @if($ficha?->sunarp?->asie_fabrica!="")
               {{$ficha?->sunarp?->asie_fabrica}}
             @endif       
           </div> 
           <div style="width: 128.9px;height: 16px;float:left;" class="texto2 fz8 lh14">
-            @if($ficha?->sunarp->fecha_fabrica!="")
+            @if($ficha?->sunarp?->fecha_fabrica!="")
               {{date("d-m-Y", strtotime($ficha?->sunarp?->fecha_fabrica))}}
             @endif        
           </div> 

@@ -1135,7 +1135,7 @@ class FichaController extends Controller
         })
         // Lotes para ordenar
         ->leftJoin('tf_lotes as l', 'tf_uni_cat.id_lote', '=', 'l.id_lote')
-
+        ->leftJoin('tf_edificaciones as e', 'e.id_edificacion', '=', 'tf_uni_cat.id_edificacion')
         // ===== Subselects para PUERTA/VÍA =====
         ->addSelect([
             'tf_uni_cat.*',
@@ -1228,6 +1228,23 @@ class FichaController extends Controller
         ])
         ->orderBy('l.id_mzna')
         ->orderBy('l.codi_lote')
+        ->orderByRaw("CASE WHEN e.codi_edificacion = '99' THEN 0 ELSE 1 END")
+        ->orderByRaw("
+            CASE WHEN e.codi_edificacion <> '99'
+                THEN LPAD(BTRIM(tf_uni_cat.codi_entrada), 2, '0')
+            END ASC NULLS LAST
+        ")
+        ->orderByRaw("
+            CASE WHEN e.codi_edificacion <> '99'
+                THEN LPAD(BTRIM(tf_uni_cat.codi_piso), 2, '0')
+            END ASC NULLS LAST
+        ")
+        ->orderByRaw("
+            CASE WHEN e.codi_edificacion <> '99'
+                THEN LPAD(BTRIM(tf_uni_cat.codi_unidad), 3, '0')
+            END ASC NULLS LAST
+        ")
+
         ->get();
 
         $numero = count($titulares);
@@ -1286,7 +1303,7 @@ class FichaController extends Controller
         })
         // Lotes para ordenar
         ->leftJoin('tf_lotes as l', 'tf_uni_cat.id_lote', '=', 'l.id_lote')
-
+        ->leftJoin('tf_edificaciones as e', 'e.id_edificacion', '=', 'tf_uni_cat.id_edificacion')
         // ===== Subselects para PUERTA/VÍA =====
         ->addSelect([
             'tf_uni_cat.*',
@@ -1379,6 +1396,23 @@ class FichaController extends Controller
         ])
         ->orderBy('l.id_mzna')
         ->orderBy('l.codi_lote')
+        ->orderByRaw("CASE WHEN e.codi_edificacion = '99' THEN 0 ELSE 1 END")
+        ->orderByRaw("
+            CASE WHEN e.codi_edificacion <> '99'
+                THEN LPAD(BTRIM(tf_uni_cat.codi_entrada), 2, '0')
+            END ASC NULLS LAST
+        ")
+        ->orderByRaw("
+            CASE WHEN e.codi_edificacion <> '99'
+                THEN LPAD(BTRIM(tf_uni_cat.codi_piso), 2, '0')
+            END ASC NULLS LAST
+        ")
+        ->orderByRaw("
+            CASE WHEN e.codi_edificacion <> '99'
+                THEN LPAD(BTRIM(tf_uni_cat.codi_unidad), 3, '0')
+            END ASC NULLS LAST
+        ")
+
         ->get();
 
         $numero = count($titulares);
