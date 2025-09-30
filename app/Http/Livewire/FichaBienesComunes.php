@@ -850,7 +850,8 @@ class FichaBienesComunes extends Component
             $ficha->save();
 
             foreach($this->puertass as $puerta){
-                $puerta->fichas()->attach(str_pad($ficha->id_ficha,19,'0',STR_PAD_LEFT));
+                $puertaReal = Puerta::find($puerta['id_puerta']);
+                $puertaReal->fichas()->attach(str_pad($ficha->id_ficha,19,'0',STR_PAD_LEFT));
             }
 
             $contpuertas=0;
