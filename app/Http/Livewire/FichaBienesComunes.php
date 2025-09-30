@@ -770,7 +770,9 @@ class FichaBienesComunes extends Component
             $ficha->tipo_ficha="04";
             $ficha->nume_ficha=str_pad($this->numeficha,7,'0',STR_PAD_LEFT);
             $ficha->id_lote=$lote->id_lote;
-            $ficha->dc=$this->dc;
+            $suma = array_sum(str_split($unicat->id_uni_cat)); 
+            $dc   = $suma % 9;
+            $ficha->dc=$dc;
             $ficha->nume_ficha_lote=$this->nume_ficha_lote.'-'.$this->nume_ficha_lote2;
             if($declarante==""){
             }else{

@@ -694,21 +694,21 @@ $('#deparamentoconductor{{$i}}').append("<option value='' >SELECCIONE</option>")
 <?php endforeach ?> 
 
 </script>
-    @if($fichaanterior->titulars[$i]->persona?->domiciliotitular($fichaanterior->id_ficha)!="")
+    @if($deparamentoconductor[$i]!="")
     <script>
         $('#provinciaconductor{{$i}}').append("<option value='' >SELECCIONE</option>");
         <?php foreach ($provincias  as $pro): ?>
-            if({{$pro->cod_dep}}=='{{$fichaanterior->titulars[$i]->persona?->domiciliotitular($fichaanterior->id_ficha)->codi_dep}}'){
+            if({{$pro->cod_dep}}=='{{$deparamentoconductor[$i]}}'){
                 $('#provinciaconductor{{$i}}').append("<option value='{{$pro->cod_pro}}' >{{$pro->descri}}</option>");
             }
         <?php endforeach ?> 
     </script>
     @endif
-    @if($fichaanterior->titulars[$i]->persona?->domiciliotitular($fichaanterior->id_ficha)!="")
+    @if($deparamentoconductor[$i]!="" && $provinciaconductor[$i]!="")
     <script>
         $('#distritoconductor{{$i}}').append("<option value='' >SELECCIONE</option>");
         <?php foreach ($distritos  as $dis): ?>
-            if({{$dis->cod_pro}}=='{{$fichaanterior->titulars[$i]->persona?->domiciliotitular($fichaanterior->id_ficha)->codi_pro}}' && {{$dis->cod_dep}}=='{{$fichaanterior->titulars[$i]->persona?->domiciliotitular($fichaanterior->id_ficha)->codi_dep}}')
+            if({{$dis->cod_pro}}=='{{$provinciaconductor[$i]}}' && {{$dis->cod_dep}}=='{{$deparamentoconductor[$i]}}')
             {
                 $('#distritoconductor{{$i}}').append("<option value='{{$dis->codi_dis}}' >{{$dis->descri}}</option>");
             }

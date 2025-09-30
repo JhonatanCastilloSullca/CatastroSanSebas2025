@@ -72,11 +72,11 @@ class Ficha extends Model
 
     public function titular()
     {
-        return $this->belongsTo('App\Models\Titular','id_ficha','id_ficha')->orderBy('nume_titular','asc');
+        return $this->belongsTo('App\Models\Titular','id_ficha','id_ficha')->orderByRaw('nume_titular::INT ASC');
     }
     public function titulars()
     {
-        return $this->hasMany('App\Models\Titular','id_ficha','id_ficha')->orderBy('nume_titular','asc');
+        return $this->hasMany('App\Models\Titular','id_ficha','id_ficha')->orderByRaw('nume_titular::INT ASC');
     }
 
     public function conductors()

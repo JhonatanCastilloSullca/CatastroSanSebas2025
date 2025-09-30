@@ -43,6 +43,12 @@ class Persona extends Model
         return $this->hasMany('App\Models\DomicilioTitular','id_persona','id_persona')->where('id_ficha',$id_ficha)->first();
     }
 
+    public function domiciliosTitulares()
+    {
+        return $this->hasMany(DomicilioTitular::class, 'id_persona', 'id_persona');
+    }
+
+
     public function exoneracion_titulars()
     {
         return $this->hasMany('App\Models\Persona');

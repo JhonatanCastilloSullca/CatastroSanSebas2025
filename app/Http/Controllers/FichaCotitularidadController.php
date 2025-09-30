@@ -78,7 +78,7 @@ class FichaCotitularidadController extends Controller
     {
         
 
-        $fichaanterior=Ficha::where('id_ficha',$request->fichaanterior)->first();
+        $fichaanterior=Ficha::with('fichacotitular','titulars','titulars.persona','titulars.exoneraciontitular','declarante','supervisor','tecnico','verificador')->where('id_ficha',$request->fichaanterior)->first();
         $total=$request->cantidad_cotitutal;
         return view('pages.fichas.editcotitularidad',compact('fichaanterior','total'));
     }

@@ -247,6 +247,8 @@ class FichaIndividualCreate extends Component
     public $distritos=[];
     public $vias;
 
+    public $puertass;
+
 
     public function mount()
     {
@@ -270,6 +272,12 @@ class FichaIndividualCreate extends Component
     }
     /* EMPIEZA CODIGO REFERENCIAL */
     
+    public function buscarPuertas()
+    {
+        $ubigeo=Institucion::first();
+        $idLote = $ubigeo.$this->sector.$this->mzna.$this->lote;
+        $this->puertass = Puerta::where('id_lote',$idLote)->get();
+    }
 
     public function mostrardc()
     {
@@ -574,6 +582,20 @@ class FichaIndividualCreate extends Component
     public function aumentarConstruccion()
     {
         $this->cont2++;
+        $this->num_piso[$this->cont2] = null;
+        $this->fecha[$this->cont2] = null;
+        $this->mep[$this->cont2] = null;
+        $this->ecs[$this->cont2] = null;
+        $this->ecc[$this->cont2] = null;
+        $this->estr_muro_col[$this->cont2] = null;
+        $this->estr_techo[$this->cont2] = null;
+        $this->acab_piso[$this->cont2] = null;
+        $this->acab_puerta_ven[$this->cont2] = null;
+        $this->acab_revest[$this->cont2] = null;
+        $this->acab_bano[$this->cont2] = null;
+        $this->inst_elect_sanita[$this->cont2] = null;
+        $this->area_verificada[$this->cont2] = null;
+        $this->uca[$this->cont2] = null;
     }
 
     public function reducirConstruccion()
@@ -623,6 +645,14 @@ class FichaIndividualCreate extends Component
     public function aumentarObras()
     {
         $this->cont3++;
+        $this->codiinstalacion[$this->cont3] = null;
+        $this->inst_fecha[$this->cont3] = null;
+        $this->inst_mep[$this->cont3] = null;
+        $this->inst_ecs[$this->cont3] = null;
+        $this->inst_ecc[$this->cont3] = null;
+        $this->inst_prod_total[$this->cont3] = null;
+        $this->inst_uni_med[$this->cont3] = null;
+        $this->inst_uca[$this->cont3] = null;
     }
 
     public function reducirObras()
@@ -1403,7 +1433,9 @@ class FichaIndividualCreate extends Component
             $ficha->tipo_ficha="01";
             $ficha->nume_ficha=str_pad($this->numeficha,7,'0',STR_PAD_LEFT);
             $ficha->id_lote=$lote->id_lote;
-            $ficha->dc=$this->dc;
+            $suma = array_sum(str_split($unicat->id_uni_cat)); 
+            $dc   = $suma % 9;
+            $ficha->dc=$dc;
             $ficha->nume_ficha_lote=$this->nume_ficha_lote.'-'.$this->nume_ficha_lote2;
             if($declarante==""){
             }else{

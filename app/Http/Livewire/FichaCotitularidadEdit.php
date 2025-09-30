@@ -93,6 +93,8 @@ class FichaCotitularidadEdit extends Component
     public $provincias;
     public $distritos;
 
+    public $docimiliotitulares =[];
+
     public function mount(Ficha $fichaanterior)
     {
 
@@ -141,28 +143,31 @@ class FichaCotitularidadEdit extends Component
             }
 
 
-
-            if($fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)!="")
+            $this->docimiliotitulares[$i] = $fichaanterior->titulars[$i]->persona->domiciliosTitulares()
+            ->where('id_ficha', $fichaanterior->id_ficha)
+            ->first();
+            
+            if($this->docimiliotitulares[$i])
             {
-                $this-> deparamentoconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->codi_dep;
-                $this-> provinciaconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->codi_pro;
-                $this-> distritoconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->codi_dis;
+                $this-> deparamentoconductor[$i] = $this->docimiliotitulares[$i]->codi_dep;
+                $this-> provinciaconductor[$i] = $this->docimiliotitulares[$i]->codi_pro;
+                $this-> distritoconductor[$i] = $this->docimiliotitulares[$i]->codi_dis;
                 $this-> telefonoconductor[$i] = $fichaanterior->titulars[$i]->telf;
                 $this-> anexoconductor[$i] = $fichaanterior->titulars[$i]->anexo;
                 $this-> faxconductor[$i] = $fichaanterior->titulars[$i]->fax;
                 $this-> emailconductor[$i] = $fichaanterior->titulars[$i]->email;
-                $this-> codigoviaconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->codi_via;
-                $this-> tipoviaconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->tipo_via;
-                $this-> nombreviaconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->nomb_via;
-                $this-> nmunicipalconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->nume_muni;
-                $this-> nomb_edificacionconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->nomb_edificacion;
-                $this-> ninteriorconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->nume_interior;
-                $this-> codigohurbanoconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->codi_hab_urba;
-                $this-> nombrehhurbanaconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->nomb_hab_urba;
-                $this-> zonaconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->sector;
-                $this-> manzanaconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->mzna;
-                $this-> loteconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->lote;
-                $this-> subloteconductor[$i] = $fichaanterior->titulars[$i]->persona->domiciliotitular($fichaanterior->id_ficha)->sublote;
+                $this-> codigoviaconductor[$i] = $this->docimiliotitulares[$i]->codi_via;
+                $this-> tipoviaconductor[$i] = $this->docimiliotitulares[$i]->tipo_via;
+                $this-> nombreviaconductor[$i] = $this->docimiliotitulares[$i]->nomb_via;
+                $this-> nmunicipalconductor[$i] = $this->docimiliotitulares[$i]->nume_muni;
+                $this-> nomb_edificacionconductor[$i] = $this->docimiliotitulares[$i]->nomb_edificacion;
+                $this-> ninteriorconductor[$i] = $this->docimiliotitulares[$i]->nume_interior;
+                $this-> codigohurbanoconductor[$i] = $this->docimiliotitulares[$i]->codi_hab_urba;
+                $this-> nombrehhurbanaconductor[$i] = $this->docimiliotitulares[$i]->nomb_hab_urba;
+                $this-> zonaconductor[$i] = $this->docimiliotitulares[$i]->sector;
+                $this-> manzanaconductor[$i] = $this->docimiliotitulares[$i]->mzna;
+                $this-> loteconductor[$i] = $this->docimiliotitulares[$i]->lote;
+                $this-> subloteconductor[$i] = $this->docimiliotitulares[$i]->sublote;
             }
 
         }
@@ -533,7 +538,20 @@ class FichaCotitularidadEdit extends Component
             $personas=$this->tipoTitular;
             while($cont<count($personas)){
                 if($this->tipoTitular[$cont]==1){
-                    $buscarpersona=Persona::where('tipo_persona',1)->where('tipo_funcion',1)->where('nume_doc',$this->numedoc1[$cont])->first();
+                    if($this->numedoc1[$cont]==NULL){
+                        $buscarpersona = Persona::where('tipo_persona', 1)
+                        ->where('tipo_funcion', 1)
+                        ->where('nume_doc', $this->numedoc1[$cont])
+                        ->whereRaw('LOWER(nombres) = ?', [strtolower($this->nombres1[$cont])])
+                        ->whereRaw('LOWER(ape_paterno) = ?', [strtolower($this->ape_paterno1[$cont])])
+                        ->whereRaw('LOWER(ape_materno) = ?', [strtolower($this->ape_materno1[$cont])])
+                        ->first();
+                    }else{
+                        $buscarpersona = Persona::where('tipo_persona', 1)
+                        ->where('tipo_funcion', 1)
+                        ->where('nume_doc', $this->numedoc1[$cont])
+                        ->first();
+                    }
                     if($buscarpersona!=""){
                         $persona=$buscarpersona;
                         $persona->tipo_doc=$this->tipo_doc1[$cont];
@@ -553,7 +571,12 @@ class FichaCotitularidadEdit extends Component
                             $titular->form_adquisicion=$this->form_adquisicion[$cont];
                         }
                         if(isset($this->fecha_adquisicion[$cont])){
-                            $titular->fecha_adquisicion=$this->fecha_adquisicion[$cont];
+                            if ($this->fecha_adquisicion[$cont] == "") {                                
+                                $titular->fecha_adquisicion = null;
+                            }
+                            else{
+                            $titular->fecha_adquisicion = $this->fecha_adquisicion[$cont];
+                            }
                         }
                         if(isset($this->porc_cotitular[$cont])){
                             $titular->porc_cotitular=$this->porc_cotitular[$cont];
@@ -644,7 +667,7 @@ class FichaCotitularidadEdit extends Component
                         $domicilio->save();
                     }else{
                         $persona= new Persona();
-                        if($this->numedoc1[$cont]==""){
+                        if($this->numedoc1[$cont]==NULL){
                             $cantidadpersona=Persona::where('tipo_persona',1)->count()+1;
                             $persona->id_persona=str_pad($cantidadpersona,8,'0',STR_PAD_LEFT).'11'.$this->tipo_doc1[$cont];
                             $persona->nume_doc="";
@@ -670,8 +693,14 @@ class FichaCotitularidadEdit extends Component
                         if(isset($this->form_adquisicion[$cont])){
                             $titular->form_adquisicion=$this->form_adquisicion[$cont];
                         }
+                        
                         if(isset($this->fecha_adquisicion[$cont])){
-                            $titular->fecha_adquisicion=$this->fecha_adquisicion[$cont];
+                            if ($this->fecha_adquisicion[$cont] == "") {                                
+                                $titular->fecha_adquisicion = null;
+                            }
+                            else{
+                            $titular->fecha_adquisicion = $this->fecha_adquisicion[$cont];
+                            }
                         }
                         if(isset($this->porc_cotitular[$cont])){
                             $titular->porc_cotitular=$this->porc_cotitular[$cont];
@@ -783,7 +812,12 @@ class FichaCotitularidadEdit extends Component
                             $titular->form_adquisicion=$this->form_adquisicion[$cont];
                         }
                         if(isset($this->fecha_adquisicion[$cont])){
-                            $titular->fecha_adquisicion=$this->fecha_adquisicion[$cont];
+                            if ($this->fecha_adquisicion[$cont] == "") {                                
+                                $titular->fecha_adquisicion = null;
+                            }
+                            else{
+                            $titular->fecha_adquisicion = $this->fecha_adquisicion[$cont];
+                            }
                         }
 
                         if(isset($this->porc_cotitular[$cont])){
@@ -874,9 +908,9 @@ class FichaCotitularidadEdit extends Component
                         }
                         $domicilio->save();
                     }else{
-                        $persona= new Persona();                        
+                        $persona= new Persona();
                         if($this->numedoc3[$cont]==""){
-                            $cantidadpersona=Persona::where('tipo_persona',2)->count()+1;
+                            $cantidadpersona=Persona::where('tipo_persona',1)->count()+1;
                             $persona->id_persona=str_pad($cantidadpersona,11,'0',STR_PAD_LEFT).'1200';
                             $persona->nume_doc="";
                         }else{
@@ -897,9 +931,14 @@ class FichaCotitularidadEdit extends Component
 
                         if(isset($this->form_adquisicion[$cont])){
                             $titular->form_adquisicion=$this->form_adquisicion[$cont];
-                        }
+                        }                        
                         if(isset($this->fecha_adquisicion[$cont])){
-                            $titular->fecha_adquisicion=$this->fecha_adquisicion[$cont];
+                            if ($this->fecha_adquisicion[$cont] == "") {                                
+                                $titular->fecha_adquisicion = null;
+                            }
+                            else{
+                            $titular->fecha_adquisicion = $this->fecha_adquisicion[$cont];
+                            }
                         }
                         if(isset($this->porc_cotitular[$cont])){
                             $titular->porc_cotitular=$this->porc_cotitular[$cont];
