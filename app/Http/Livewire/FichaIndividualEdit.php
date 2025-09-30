@@ -958,6 +958,20 @@ class FichaIndividualEdit extends Component
     public function aumentarConstruccion()
     {
         $this->cont2++;
+        $this->num_piso[$this->cont2] = null;
+        $this->fecha[$this->cont2] = null;
+        $this->mep[$this->cont2] = null;
+        $this->ecs[$this->cont2] = null;
+        $this->ecc[$this->cont2] = null;
+        $this->estr_muro_col[$this->cont2] = null;
+        $this->estr_techo[$this->cont2] = null;
+        $this->acab_piso[$this->cont2] = null;
+        $this->acab_puerta_ven[$this->cont2] = null;
+        $this->acab_revest[$this->cont2] = null;
+        $this->acab_bano[$this->cont2] = null;
+        $this->inst_elect_sanita[$this->cont2] = null;
+        $this->area_verificada[$this->cont2] = null;
+        $this->uca[$this->cont2] = null;
     }
 
     public function eliminarConstruccion($i)
@@ -1024,6 +1038,14 @@ class FichaIndividualEdit extends Component
     public function aumentarObras()
     {
         $this->cont3++;
+        $this->codiinstalacion[$this->cont3] = null;
+        $this->inst_fecha[$this->cont3] = null;
+        $this->inst_mep[$this->cont3] = null;
+        $this->inst_ecs[$this->cont3] = null;
+        $this->inst_ecc[$this->cont3] = null;
+        $this->inst_prod_total[$this->cont3] = null;
+        $this->inst_uni_med[$this->cont3] = null;
+        $this->inst_uca[$this->cont3] = null;
     }
 
     public function reducirObras()
