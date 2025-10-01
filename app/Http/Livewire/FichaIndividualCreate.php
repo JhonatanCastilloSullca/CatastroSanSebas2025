@@ -283,6 +283,7 @@ class FichaIndividualCreate extends Component
             {
                 $this->puertass[] = [
                     'id_puerta' => $puerta->id_puerta,
+                    'id_via' => $puerta->id_via,
                     'tipoVianombre' => $puerta->via->nomb_via,
                     'tipoViatipo' => $puerta->via->tipo_via,
                     'tipo_puerta' => $puerta->tipo_puerta,
@@ -532,63 +533,102 @@ class FichaIndividualCreate extends Component
     /* DOMILICIO TITULAR */
     public function updatedubicacionpersona($value){
         if($value=="01"){
-            for($i=0;$i<$this->cont;$i++){
-                $this->validate([
-                    'tipoVia.'.$i                     => 'required',
-                    'tipopuerta.'.$i                  => 'required',
-                    'nume_muni.'.$i                   => 'nullable|max:20',
-                    'cond_nume.'.$i                   => 'nullable',
-                ]);
-            }
             $this->departamentootros="08";
             $this->provinciaotros="01";
             $this->distritootros="05";
-            foreach($this->tipopuerta as $i => $tipovia){
-                if($tipovia=="P"){
-                    if(isset($this->tipoVia[$i])){
-                    if($this->tipoVia[$i]!=""){
-                        $this->codigoviaotros=str_replace('080105', '', $this->tipoVia[$i]);
+            if($this->puertass){
+                foreach($this->puertass as $i => $puertass){
+                    if($puertass['tipo_puerta']=="P"){
+                        if($puertass['id_via']){
+                            $this->codigoviaotros=str_replace('080105', '', $puertass['id_via']);
+                        }
+                        if($puertass['tipoViatipo']){
+                            $this->tipoviaotros=$puertass['tipoViatipo'];
+                        }
+                        if($puertass['tipoVianombre']){
+                            $this->nombreviaotros=$puertass['tipoVianombre'];
+                        }
+                        if($puertass['nume_muni']){
+                            $this->nmunicipalotros=$puertass['nume_muni'];
+                        }
+                        if($this->nume_interior!=""){
+                            $this->ninteriorotros=$this->nume_interior;
+                        }
+                        if($this->tipoHabi!=""){
+                            $this->codigohurbanootros=str_replace('080105', '', $this->tipoHabi);
+                        }
+                        if($this->nomb_hab_urba!=""){
+                            $this->nombrehhurbanaotros=$this->nomb_hab_urba;
+                        }
+                        if($this->zona_dist!=""){
+                            $this->zonaootros=$this->zona_dist;
+                        }
+                        if($this->mzna_dist!=""){
+                            $this->manzanaotros=$this->mzna_dist;
+                        }
+                        if($this->lote_dist!=""){
+                            $this->loteotros=$this->lote_dist;
+                        }
+                        if($this->sub_lote_dist!=""){
+                            $this->subloteotros=$this->sub_lote_dist;
+                        }
                     }
                 }
-                if(isset($this->tipoViatipo[$i])){
-                    if($this->tipoViatipo[$i]!=""){
-                        $this->tipoviaotros=$this->tipoViatipo[$i];
+            }else{
+                for($i=0;$i<$this->cont;$i++){
+                    $this->validate([
+                        'tipoVia.'.$i                     => 'required',
+                        'tipopuerta.'.$i                  => 'required',
+                        'nume_muni.'.$i                   => 'nullable|max:20',
+                        'cond_nume.'.$i                   => 'nullable',
+                    ]);
+                }
+                foreach($this->tipopuerta as $i => $tipovia){
+                    if($tipovia=="P"){
+                        if(isset($this->tipoVia[$i])){
+                            if($this->tipoVia[$i]!=""){
+                                $this->codigoviaotros=str_replace('080105', '', $this->tipoVia[$i]);
+                            }
+                        }
+                        if(isset($this->tipoViatipo[$i])){
+                            if($this->tipoViatipo[$i]!=""){
+                                $this->tipoviaotros=$this->tipoViatipo[$i];
+                            }
+                        }
+                        if(isset($this->tipoVianombre[$i])){
+                            if($this->tipoVianombre[$i]!=""){
+                                $this->nombreviaotros=$this->tipoVianombre[$i];
+                            }
+                        }
+                        if(isset($this->nume_muni[$i])){
+                            if($this->nume_muni[$i]!=""){
+                                $this->nmunicipalotros=$this->nume_muni[$i];
+                            }
+                        }
+                        if($this->nume_interior!=""){
+                            $this->ninteriorotros=$this->nume_interior;
+                        }
+                        if($this->tipoHabi!=""){
+                            $this->codigohurbanootros=str_replace('080105', '', $this->tipoHabi);
+                        }
+                        if($this->nomb_hab_urba!=""){
+                            $this->nombrehhurbanaotros=$this->nomb_hab_urba;
+                        }
+                        if($this->zona_dist!=""){
+                            $this->zonaootros=$this->zona_dist;
+                        }
+                        if($this->mzna_dist!=""){
+                            $this->manzanaotros=$this->mzna_dist;
+                        }
+                        if($this->lote_dist!=""){
+                            $this->loteotros=$this->lote_dist;
+                        }
+                        if($this->sub_lote_dist!=""){
+                            $this->subloteotros=$this->sub_lote_dist;
+                        }
                     }
-                }
-                if(isset($this->tipoVianombre[$i])){
-                    if($this->tipoVianombre[$i]!=""){
-                        $this->nombreviaotros=$this->tipoVianombre[$i];
-                    }
-                }
-                if(isset($this->nume_muni[$i])){
-                    if($this->nume_muni[$i]!=""){
-                        $this->nmunicipalotros=$this->nume_muni[$i];
-                    }
-                }
-                if($this->nume_interior!=""){
-                    $this->ninteriorotros=$this->nume_interior;
-                }
-                if($this->tipoHabi!=""){
-                    $this->codigohurbanootros=str_replace('080105', '', $this->tipoHabi);
-                }
-                if($this->nomb_hab_urba!=""){
-                    $this->nombrehhurbanaotros=$this->nomb_hab_urba;
-                }
-                if($this->zona_dist!=""){
-                    $this->zonaootros=$this->zona_dist;
-                }
-                if($this->mzna_dist!=""){
-                    $this->manzanaotros=$this->mzna_dist;
-                }
-                if($this->lote_dist!=""){
-                    $this->loteotros=$this->lote_dist;
-                }
-                if($this->sub_lote_dist!=""){
-                    $this->subloteotros=$this->sub_lote_dist;
                 }
             }
-        }
-
         }else{
             $this->departamentootros="";
             $this->provinciaotros="";

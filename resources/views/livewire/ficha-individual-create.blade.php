@@ -378,7 +378,7 @@
                             </div>
                         </div><!-- Col -->
                     </div><!-- Row -->
-                    <div class="row form-group" wire:ignore id="natural">
+                    <div class="row form-group" id="natural">
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <div wire:ignore>
