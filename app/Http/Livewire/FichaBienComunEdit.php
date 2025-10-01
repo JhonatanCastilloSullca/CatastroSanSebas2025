@@ -1220,6 +1220,7 @@ class FichaBienComunEdit extends Component
                     $puerta->id_lote=$lote->id_lote;
                     $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
                     $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
+                    $puerta->id_via == $this->tipoVia[$contpuertas];
                 }
                 if(isset($this->nume_muni[$contpuertas])){
                     $puerta->nume_muni=$this->nume_muni[$contpuertas];
