@@ -1457,3 +1457,16 @@
     </div>
     </form>
 </div>
+@push('custom-scripts')
+<script>
+  document.addEventListener('livewire:load', () => {
+    Livewire.on('alertPuerta', (cantidad) => {
+      Swal.fire(
+        'El lote cuenta con ' + cantidad + ' registrados.',
+        '¿Estás seguro de crear más puertas?',
+        'question'
+      )
+    });
+  });
+</script>
+@endpush

@@ -69,7 +69,7 @@ class FichaBienesComunes extends Component
     public $hab_urbanas;
     public $hab_urbanas2;
     public $hab_urbana2;
-    public $cont=1;
+    public $cont=0;
     public $via2=array([]);
     public $tipoVia;
     public $tipoVianombre;
@@ -380,6 +380,15 @@ class FichaBienesComunes extends Component
 
     public function aumentarUbicacion()
     {
+        $ubigeo=Institucion::first();
+        $idLote = $ubigeo->id_institucion.$this->sector.$this->mzna.$this->lote;
+        $puertas = [];
+        if($this->sector && $this->mzna && $this->lote){
+            $puertas = Puerta::with('via')->where('id_lote',$idLote)->get();
+        }
+        if(count($puertas)>0){
+            $this->emit('alertPuerta',count($puertas));
+        }  
         $this->tipoViatipo[$this->cont]="";
         $this->tipoVianombre[$this->cont]="";
         $this->tipopuerta[$this->cont] = null;

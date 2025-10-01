@@ -202,7 +202,6 @@
                                     </a>
                                     @endcan
                                 </td>
-                                <td></td>
                                  <td>
                                     @can('ficha.editbiencomun')
                                         <a href="{{route('ficha.editbiencomun',$ficha)}}" target="_blank">
@@ -212,6 +211,7 @@
                                         </a>
                                     @endcan
                                 </td>
+                                <td></td>
                                 <td>
                                     @can('ficha.destroybiencomun')
                                         <a onclick="return confirm('Seguro que desea eliminar la ficha')"  href="{{route('ficha.destroybiencomun',$ficha)}}" target="_blank">

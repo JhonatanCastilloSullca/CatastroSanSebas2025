@@ -1827,7 +1827,15 @@
 
 @push('custom-scripts')
 <script>
-
+document.addEventListener('livewire:load',function(){
+    Livewire.on('alertPuerta', (cantidad) => {
+      Swal.fire(
+        'El lote cuenta con ' + cantidad + ' registrados.',
+        '¿Estás seguro de crear más puertas?',
+        'question'
+      )
+    });
+})  
 
 
 

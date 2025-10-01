@@ -69,9 +69,10 @@ class FichaBienComunEdit extends Component
     public $hab_urbanas;
     public $hab_urbanas2;
     public $hab_urbana2;
-    public $cont=1;
+    public $cont=0;
     public $via2=array([]);
     public $tipoVia;
+    public $idPuertaEditar;
     public $tipoVianombre;
     public $tipoViatipo;
     public $tipopuerta;
@@ -250,6 +251,7 @@ class FichaBienComunEdit extends Component
         }
 
         foreach($fichaanterior->puertas as $i => $puerta){
+            $this->idPuertaEditar[$i]=$puerta->id_puerta;
             $this->tipoVia[$i]=$puerta->id_via;
             $this->tipoViatipo[$i]=$puerta->via->tipo_via;
             $this->tipoVianombre[$i]=$puerta->via->nomb_via;
@@ -624,6 +626,16 @@ class FichaBienComunEdit extends Component
 
     public function aumentarUbicacion()
     {
+        $ubigeo=Institucion::first();
+        $idLote = $ubigeo->id_institucion.$this->sector.$this->mzna.$this->lote;
+        $puertas = [];
+        if($this->sector && $this->mzna && $this->lote){
+            $puertas = Puerta::with('via')->where('id_lote',$idLote)->get();
+        }
+        if(count($puertas)>0){
+            $this->emit('alertPuerta',count($puertas));
+        }  
+        $this->idPuertaEditar[$this->cont]="";
         $this->tipoViatipo[$this->cont]="";
         $this->tipoVianombre[$this->cont]="";
         $this->tipopuerta[$this->cont] = null;
@@ -636,6 +648,7 @@ class FichaBienComunEdit extends Component
     public function reducirUbicacion()
     {
         $this->cont--;
+        array_splice($this->idPuertaEditar, $this->cont);
         array_splice($this->tipoVia, $this->cont);
         array_splice($this->tipopuerta, $this->cont);
         array_splice($this->nume_muni, $this->cont);
@@ -966,7 +979,6 @@ class FichaBienComunEdit extends Component
             }
 
             $this->fichaanterior = Ficha::find($this->idFichaa);
-            
             $mytime= Carbon::now('America/Lima');
 
             if($this->fichaanterior->recapbbcc!=""){
@@ -1197,20 +1209,24 @@ class FichaBienComunEdit extends Component
             $contpuertas=0;
             while($contpuertas<$this->cont)
             {
-                $buscarpuertas=0;
-                $idpuerta=$this->buscarpuerta($buscarpuertas,$this->tipopuerta[$contpuertas],$lote->id_lote);
-                $puerta= new Puerta();
-                $puerta->id_puerta=$idpuerta;
-                $puerta->id_lote=$lote->id_lote;
-                $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
-                $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
+                $puerta = Puerta::find($this->idPuertaEditar[$contpuertas]);
+                if($this->tipopuerta[$contpuertas] == $puerta->tipo_puerta && $puerta->id_via == $this->tipoVia[$contpuertas]){
+                    
+                }else{
+                    $buscarpuertas=0;
+                    $idpuerta=$this->buscarpuerta($buscarpuertas,$this->tipopuerta[$contpuertas],$lote->id_lote);
+                    $puerta= new Puerta();
+                    $puerta->id_puerta=$idpuerta;
+                    $puerta->id_lote=$lote->id_lote;
+                    $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
+                    $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
+                }
                 if(isset($this->nume_muni[$contpuertas])){
                     $puerta->nume_muni=$this->nume_muni[$contpuertas];
                 }
                 if(isset($this->cond_nume[$contpuertas])){
                     $puerta->cond_nume=$this->cond_nume[$contpuertas];
                 }
-                $puerta->id_via=$this->tipoVia[$contpuertas];
                 $puerta->save();
 
                 $contpuertas++;

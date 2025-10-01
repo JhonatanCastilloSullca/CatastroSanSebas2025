@@ -69,7 +69,7 @@ class FichaIndividualEdit extends Component
     public $hab_urbanas;
     public $hab_urbanas2;
     public $hab_urbana2;
-    public $cont=1;
+    public $cont=0;
     public $via2=array([]);
     public $tipoVia;
     public $tipoVianombre;
@@ -350,6 +350,7 @@ class FichaIndividualEdit extends Component
         }
 
         foreach($fichaanterior->puertas as $i => $puerta){
+            $this->idPuertaEditar[$i]=$puerta->id_puerta;
             $this->tipoVia[$i]=$puerta->id_via;
             $this->tipoViatipo[$i]=$puerta->via->tipo_via;
             $this->tipoVianombre[$i]=$puerta->via->nomb_via;
@@ -800,6 +801,16 @@ class FichaIndividualEdit extends Component
 
     public function aumentarUbicacion()
     {
+        $ubigeo=Institucion::first();
+        $idLote = $ubigeo->id_institucion.$this->sector.$this->mzna.$this->lote;
+        $puertas = [];
+        if($this->sector && $this->mzna && $this->lote){
+            $puertas = Puerta::with('via')->where('id_lote',$idLote)->get();
+        }
+        if(count($puertas)>0){
+            $this->emit('alertPuerta',count($puertas));
+        }  
+        $this->idPuertaEditar[$this->cont]=null;
         $this->tipoViatipo[$this->cont]="";
         $this->tipoVianombre[$this->cont]="";
         $this->tipopuerta[$this->cont] = null;
@@ -813,6 +824,7 @@ class FichaIndividualEdit extends Component
     {
         if($this->cont > 0){
             $this->cont--;
+            array_splice($this->idPuertaEditar, $this->cont);
             array_splice($this->tipoVia, $this->cont);
             array_splice($this->tipopuerta, $this->cont);
             array_splice($this->nume_muni, $this->cont);
@@ -1946,21 +1958,26 @@ class FichaIndividualEdit extends Component
             $contpuertas=0;
             while($contpuertas<$this->cont)
             {
-                $buscarpuertas=0;
-                $idpuerta=$this->buscarpuerta($buscarpuertas,$this->tipopuerta[$contpuertas],$lote->id_lote);
-                $puerta= new Puerta();
-                $puerta->id_puerta=$idpuerta;
-                $puerta->id_lote=$lote->id_lote;
-                $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
-                $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
+                $puerta = Puerta::find($this->idPuertaEditar[$contpuertas]);
+                if($this->tipopuerta[$contpuertas] == $puerta->tipo_puerta && $puerta->id_via == $this->tipoVia[$contpuertas]){
+                    
+                }else{
+                    $buscarpuertas=0;
+                    $idpuerta=$this->buscarpuerta($buscarpuertas,$this->tipopuerta[$contpuertas],$lote->id_lote);
+                    $puerta= new Puerta();
+                    $puerta->id_puerta=$idpuerta;
+                    $puerta->id_lote=$lote->id_lote;
+                    $puerta->codi_puerta=$this->tipopuerta[$contpuertas];
+                    $puerta->tipo_puerta=$this->tipopuerta[$contpuertas];
+                }
                 if(isset($this->nume_muni[$contpuertas])){
                     $puerta->nume_muni=$this->nume_muni[$contpuertas];
                 }
                 if(isset($this->cond_nume[$contpuertas])){
                     $puerta->cond_nume=$this->cond_nume[$contpuertas];
                 }
-                $puerta->id_via=$this->tipoVia[$contpuertas];
                 $puerta->save();
+
                 $contpuertas++;
                 $puerta->fichas()->attach(str_pad($ficha->id_ficha,19,'0',STR_PAD_LEFT));
             }
