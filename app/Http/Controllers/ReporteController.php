@@ -462,21 +462,51 @@ class ReporteController extends Controller
         ])
         ->orderBy('l.id_mzna')
         ->orderBy('l.codi_lote')
-        ->orderByRaw("CASE WHEN e.codi_edificacion = '99' THEN 0 ELSE 1 END")
+
+        /* 1) Que la edificación '99' vaya PRIMERO; el resto después */
         ->orderByRaw("
-            CASE WHEN e.codi_edificacion <> '99'
-                THEN LPAD(BTRIM(tf_uni_cat.codi_entrada), 2, '0')
-            END ASC NULLS LAST
+        CASE
+            WHEN COALESCE(NULLIF(e.codi_edificacion,''),'99') = '99' THEN 0
+            ELSE 1
+        END ASC
+        ")
+
+        /* 2) Para las edificaciones que NO son '99', orden ascendente numérico por edificación */
+        ->orderByRaw("
+        CASE
+            WHEN COALESCE(NULLIF(e.codi_edificacion,''),'99') <> '99'
+            THEN NULLIF(e.codi_edificacion,'')::int
+        END ASC NULLS LAST
+        ")
+
+        /* 3) Dentro de cada edificación, priorizar la BC (99/99/999) primero */
+        ->orderByRaw("
+        CASE
+            WHEN tf_uni_cat.codi_entrada = '99'
+            AND tf_uni_cat.codi_piso    = '99'
+            AND tf_uni_cat.codi_unidad  = '999'
+            THEN 0 ELSE 1
+        END ASC
+        ")
+
+        /* 4) Para el resto (no BC), ordenar por entrada → piso → unidad numéricamente */
+        ->orderByRaw("
+        CASE
+            WHEN NOT (tf_uni_cat.codi_entrada='99' AND tf_uni_cat.codi_piso='99' AND tf_uni_cat.codi_unidad='999')
+            THEN NULLIF(BTRIM(tf_uni_cat.codi_entrada),'')::int
+        END ASC NULLS LAST
         ")
         ->orderByRaw("
-            CASE WHEN e.codi_edificacion <> '99'
-                THEN LPAD(BTRIM(tf_uni_cat.codi_piso), 2, '0')
-            END ASC NULLS LAST
+        CASE
+            WHEN NOT (tf_uni_cat.codi_entrada='99' AND tf_uni_cat.codi_piso='99' AND tf_uni_cat.codi_unidad='999')
+            THEN NULLIF(BTRIM(tf_uni_cat.codi_piso),'')::int
+        END ASC NULLS LAST
         ")
         ->orderByRaw("
-            CASE WHEN e.codi_edificacion <> '99'
-                THEN LPAD(BTRIM(tf_uni_cat.codi_unidad), 3, '0')
-            END ASC NULLS LAST
+        CASE
+            WHEN NOT (tf_uni_cat.codi_entrada='99' AND tf_uni_cat.codi_piso='99' AND tf_uni_cat.codi_unidad='999')
+            THEN NULLIF(BTRIM(tf_uni_cat.codi_unidad),'')::int
+        END ASC NULLS LAST
         ")
 
 
