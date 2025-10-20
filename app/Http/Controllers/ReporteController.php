@@ -380,26 +380,42 @@ class ReporteController extends Controller
 
             // tipo_via / nomb_via / codi_via (desde tf_puertas + tf_vias) y nume_muni
             'tipo_via' => DB::table('tf_puertas as p')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
                 ->join('tf_vias as v', 'v.id_via', '=', 'p.id_via')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('v.tipo_via'),
 
             'nomb_via' => DB::table('tf_puertas as p')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
                 ->join('tf_vias as v', 'v.id_via', '=', 'p.id_via')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('v.nomb_via'),
 
             'codi_via' => DB::table('tf_puertas as p')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
                 ->join('tf_vias as v', 'v.id_via', '=', 'p.id_via')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('v.codi_via'),
 
             'nume_muni' => DB::table('tf_puertas as p')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('p.nume_muni'),
 
             // ===== Subselect USO más reciente (desc_uso) =====
