@@ -1086,13 +1086,16 @@ class FichaController extends Controller
         $mytime = Carbon::now('America/Lima');
         $fileName = 'anexoficha.pdf';
         $mpdf = new \Mpdf\Mpdf([
-            'format' => [297, 210],
-            'margin_left' => 10,
-            'margin_right' => 10,
-            'margin_top' => 10,
-            'margin_bottom' => 10,
-            'margin_header' => 10,
-            'margin_footer' => 10,
+            'mode'                 => 'utf-8',
+            'format'               => 'A4-L', // Landscape
+            'margin_left'          => 10,
+            'margin_right'         => 10,
+            'margin_top'           => 10,
+            'margin_bottom'        => 10,
+            'margin_header'        => 6,
+            'margin_footer'        => 6,
+            'shrink_tables_to_fit' => 1,
+            'tempDir'              => storage_path('app/mpdf-temp'),
         ]); $sectores = Sectore::orderby('codi_sector')->get();
 
         $sectores = Sectore::where('id_sector',$sector)->orderby('codi_sector')->first();
@@ -1301,6 +1304,8 @@ class FichaController extends Controller
         $hora = date("H:m:s", strtotime($mytime));
         $html = \View::make('pages.pdf.anexoficha', compact('titulares','sectores','sector2', 'numero', 'logos', 'fecha', 'hora'));
         $html = $html->render();
+        $mpdf->SetDisplayMode('fullwidth');
+        $mpdf->SetAutoPageBreak(true, 10);
         $mpdf->WriteHTML($html);
         $mpdf->Output($fileName, 'I');
     }
