@@ -10,7 +10,7 @@
         body {
             background-color: #FFF;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            font-size: 7px;
+            font-size: 11px;
             font-weight: normal;
             margin: 5px;
             color: #151b1e;
@@ -135,61 +135,61 @@
         .fz4 {
 
             font-weight: bolder;
-            font-size: 4px !important;
+            font-size: 8px !important;
         }
 
         .fz5 {
 
             font-weight: bolder;
-            font-size: 5px !important;
+            font-size: 9px !important;
         }
 
         .fz6 {
 
             font-weight: bolder;
-            font-size: 6px !important;
+            font-size: 10px !important;
         }
 
         .fz7 {
 
             font-weight: bolder;
-            font-size: 7px !important;
+            font-size: 11px !important;
         }
 
         .fz8 {
 
             font-weight: bolder;
-            font-size: 8px !important;
+            font-size: 12px !important;
         }
 
         .fz10 {
 
             font-weight: bolder;
-            font-size: 10px !important;
+            font-size: 14px !important;
         }
 
         .fz12 {
 
             font-weight: bolder;
-            font-size: 12px !important;
+            font-size: 16px !important;
         }
 
         .fz14 {
 
             font-weight: bolder;
-            font-size: 14px !important;
+            font-size: 18px !important;
         }
 
         .fz16 {
 
             font-weight: bolder;
-            font-size: 16px !important;
+            font-size: 20px !important;
         }
 
         .fz18 {
 
             font-weight: bolder;
-            font-size: 18px !important;
+            font-size: 22px !important;
         }
 
         .lh2 {
@@ -331,44 +331,58 @@
 
 <body>
 
-    <div style="width: 1080px;height:16px;margin: auto;border:none;">
+   <div style="width:100%; border:0;">
+
+        <table style="width:100%; border-collapse:collapse; table-layout:fixed; border:0;">
+            <tr>
+            <!-- Logo izquierda -->
+            <td style="width:120px; text-align:center; vertical-align:middle; border:0;">
+                @if($logos?->logo_institucion)
+                <img src="{{ $logos?->logo_institucion }}" alt="Logo izquierda"
+                    style="max-width:110px; height:auto; display:inline-block; border:0;">
+                @endif
+            </td>
+
+            <!-- Centro -->
+            <td style="text-align:center; vertical-align:middle; padding:4px 8px; border:0;">
+                <div style="font-family:Arial,Helvetica,sans-serif; font-size:22px; line-height:1.2; text-transform:uppercase; border:0;">
+                <b style="color:#195186; border:0;">Municipalidad Distrital de San Sebastián</b>
+                </div>
+
+                <div style="font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.2; text-transform:uppercase; border:0;">
+                Cusco – Perú
+                </div>
+
+                <div style="font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.4; text-transform:uppercase; margin-top:2px; border:0;">
+                Gerencia de Desarrollo Urbano y Rural<br>
+                Fecha: {{ $fecha }} / Hora: {{ $hora }}
+                </div>
+
+                <table style="width:100%; border-collapse:collapse;  border:0;">
+                    <tr>
+                        <td style="background:#195186; color:#fff; text-align:center; border:0;">
+                        <span style="font-family:Arial,Helvetica,sans-serif; font-size:22px; font-weight: bold;
+                                    text-transform:uppercase;">
+                            Reporte de Titulares Catastral
+                        </span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <!-- Logo derecha -->
+            <td style="width:120px; text-align:center; vertical-align:middle; border:0;">
+                @if($logos?->logo_catastro)
+                <img src="{{ $logos?->logo_catastro }}" alt="Logo derecha"
+                    style="max-width:110px; height:auto; display:inline-block; border:0;">
+                @endif
+            </td>
+            </tr>
+        </table>
+
     </div>
 
-    <div style="width: 1080px;height:16px;margin: auto;border:none; margin-bottom:5px;background-color:#fff;">
 
-        <div style="width: 120px;height: 120px;float:left;border:none;vertical-align:middle">
-            <img src="{{$logos?->logo_institucion}}" alt="Logo" style="width: 200px;">
-        </div>
-
-        <div style="width: 473px;height: 8px;float:left;border:none;">
-            <div style="width: 473px;height:16px;margin: auto;" class="bn">
-                <div class="texto fz18 lh14">
-                    <b style="color:#195186"> MUNICIPALIDAD DISTRITAL DE SAN SEBASTIAN</b>
-                </div>
-            </div>
-            <div style="width: 473px;height:16px;margin: auto;" class="bn">
-                <div class="texto fz12 lh14">
-                    CUSCO - PERÚ
-                </div>
-            </div>
-            <div style="width: 473px;height:16px;margin: auto;" class="bn">
-                <div class="texto fz8 lh14">
-                    GERENCIA DE DESARROLLO URBANO Y RURAL<br>
-                    FECHA: {{$fecha}} / HORA: {{$hora}}
-                </div>
-            </div>
-            <div style="width: 473px;height:16px;margin: auto; padding-top:5px;padding-bottom:5px; " class="bgfdc">
-                <div class="texto fz14 lh10">
-                    <b>REPORTE DE TITULARES CATASTRAL</b>
-                </div>
-            </div>
-
-        </div>
-
-        <div style="width: 120px;height: 120px;float:left;border:none;">
-            <img src="{{$logos?->logo_catastro}}" alt="">
-        </div>
-    </div>
     <br></br>
     <div style="width: 1080px;height:20px;  float:left;" class="bn">
         <div style="width: 1080px;height:20px;  float:left;text-align:left;" class="texto fz10 lh10">
