@@ -384,26 +384,32 @@
 
 
     <br></br>
-    <div style="width: 1080px;height:20px;  float:left;" class="bn">
-        <div style="width: 1080px;height:20px;  float:left;text-align:left;" class="texto fz10 lh10">
-            <b>DEPARTAMENTO:</b> CUSCO
-        </div>
-    </div>
-    <div style="width: 1080px;height:20px;  float:left;" class="bn">
-        <div style="width: 1080px;height:20px;  float:left;text-align:left;" class="texto fz10 lh10">
-            <b>PROVINCIA:</b> CUSCO
-        </div>
-    </div>
-    <div style="width: 1080px;height:20px;  float:left;" class="bn">
-        <div style="width: 1080px;height:20px;  float:left;text-align:left;" class="texto fz10 lh10">
-            <b>DISTRITO:</b> SAN SEBASTIAN
-        </div>
-    </div>
-    <div style="width: 1080px;height:20px;  float:left;" class="bn">
-        <div style="width: 1080px;height:20px;  float:left;text-align:left;" class="texto fz10 lh10">
-            <b>SECTOR:</b> {{$sectores?->nomb_sector}}
+    <div style="width: 100%;border: 0;">
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 25%;">
+                    <div style="text-align:left;" class="texto fz10 lh10">
+                        <b>DEPARTAMENTO:</b> CUSCO
+                    </div>
+                </td>
+                <td style="width: 25%;">
+                    <div style="text-align:left;" class="texto fz10 lh10">
+                            <b>PROVINCIA:</b> CUSCO
+                    </div>
+                </td>
+                <td style="width: 25%;">
+                    <div style="text-align:left;" class="texto fz10 lh10">
+                            <b>DISTRITO:</b> SAN SEBASTIAN
+                    </div>
+                </td>
+                <td style="width: 25%;">
+                    <div style="text-align:left;" class="texto fz10 lh10">
+                        <b>SECTOR:</b> {{$sectores?->nomb_sector}}
+                    </div>
+                </td>
+            </tr>
+        </table>
 
-        </div>
     </div>
 
 
