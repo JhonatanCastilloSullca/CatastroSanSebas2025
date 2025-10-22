@@ -1083,6 +1083,10 @@ class FichaController extends Controller
     
     public function anexoficha($sector)
     {
+        ini_set('pcre.backtrack_limit', '5000000');
+        ini_set('pcre.recursion_limit',  '500000');
+        ini_set('memory_limit', '1024M');
+
         $mytime = Carbon::now('America/Lima');
         $fileName = 'anexoficha.pdf';
         $mpdf = new \Mpdf\Mpdf([
@@ -1092,9 +1096,6 @@ class FichaController extends Controller
             'margin_right'         => 10,
             'margin_top'           => 10,
             'margin_bottom'        => 10,
-            'margin_header'        => 6,
-            'margin_footer'        => 6,
-            'shrink_tables_to_fit' => 1,
             'tempDir'              => storage_path('app/mpdf-temp'),
         ]); $sectores = Sectore::orderby('codi_sector')->get();
 
@@ -1186,6 +1187,12 @@ class FichaController extends Controller
                 ->where('f.tipo_ficha', '01')
                 ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('p.nume_muni'),
+
+            'cuc_ficha' => DB::table('tf_fichas as f')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->orderBy('f.fecha_grabado', 'desc')
+                ->limit(1)
+                ->select('f.cuc'),
 
             // ===== Subselect USO más reciente (desc_uso) =====
             'desc_uso' => DB::table('tf_fichas as f')
@@ -1411,6 +1418,12 @@ class FichaController extends Controller
                 ->where('f.tipo_ficha','01')
                 ->orderBy('f.fecha_grabado','desc')
                 ->limit(1)->select('u.desc_uso'),
+
+            'cuc_ficha' => DB::table('tf_fichas as f')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->orderBy('f.fecha_grabado', 'desc')
+                ->limit(1)
+                ->select('f.cuc'),
 
             // ===== Subselects TITULARES agregados (para no hacer 3 bucles en Blade) =====
             // NOMBRES (respeta persona natural / jurídica)

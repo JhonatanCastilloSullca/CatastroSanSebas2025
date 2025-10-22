@@ -427,6 +427,12 @@ class ReporteController extends Controller
                 ->orderBy('f.fecha_grabado','desc')
                 ->limit(1)->select('u.desc_uso'),
 
+            'cuc_ficha' => DB::table('tf_fichas as f')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->orderBy('f.fecha_grabado', 'desc')
+                ->limit(1)
+                ->select('f.cuc'),
+
             // ===== Subselects TITULARES agregados (para no hacer 3 bucles en Blade) =====
             // NOMBRES (respeta persona natural / jurídica)
             'titulares_nombres' => DB::table('tf_titulares as t')
