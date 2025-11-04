@@ -213,6 +213,10 @@ class FichaBienesComunes extends Component
     public $rbcfechaesc;
 
     public $puertass=[];
+    public $idPuertaEliminar;
+    public $idPuertaEditar;
+    
+    protected $listeners = ['puertaBorrarConfirmada' => 'borrarPuerta'];
 
     public function mount()
     {
@@ -261,6 +265,48 @@ class FichaBienesComunes extends Component
     {
         unset($this->puertass[$i]);
         $this->puertass = array_values($this->puertass);
+    }
+
+    public function borrarPuerta($id,?int $i = null,$n)
+    {
+        $puerta = Puerta::where('id_puerta',$id)->first();
+        $puerta->fichas()->detach();
+        $puerta->delete();
+        if($i !== null){
+            if($n==1){
+                unset($this->puertass[$i]);
+                $this->puertass = array_values($this->puertass);
+            }else{
+                unset($this->idPuertaEditar[$i]);
+                unset($this->tipoVia[$i]);
+                unset($this->tipopuerta[$i]);
+                unset($this->nume_muni[$i]);
+                unset($this->cond_nume[$i]);
+                $this->cont--;
+                $this->idPuertaEditar = array_values($this->idPuertaEditar);
+                $this->tipoVia = array_values($this->tipoVia);
+                $this->tipopuerta = array_values($this->tipopuerta);
+                $this->nume_muni = array_values($this->nume_muni);
+                $this->cond_nume = array_values($this->cond_nume);
+            }
+        }
+    }
+
+    public function votarPuertas(string $id,$i = null,$n)
+    {
+        $puerta = Puerta::where('id_puerta',$id)->first();
+        if($puerta->fichas){
+            $this->idPuertaEliminar = $puerta->id_puerta;
+            $mensaje = "La puerta tiene estas fichas relacionadas numeros: ";
+            foreach($puerta->fichas as $ficha){
+                $mensaje .= $ficha->nume_ficha.',';
+            }
+
+            $this->emit('alertPuertaBorrar',$mensaje,$id,$i,$n);
+        }else{
+            $puerta->delete();
+        }
+        
     }
 
     public function updatedsector($id_sector)

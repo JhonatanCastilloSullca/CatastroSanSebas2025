@@ -220,7 +220,7 @@
             <div style="width: 427px;height:16px;margin: auto;">
                 <div style="width: 211.9;height: 16px;float:left;">
                     <div class="texto fz8 lh14">
-                        {{$ficha->unicat->cuc}}
+                        {{$ficha->cuc}}
                     </div>
                 </div>
                 <div style="width: 211.9;height: 16px;float:left;">

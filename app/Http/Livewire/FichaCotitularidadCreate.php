@@ -397,6 +397,7 @@ class FichaCotitularidadCreate extends Component
             $ficha->id_usuario=\Auth::user()->id_usuario;
             $ficha->fecha_grabado=$mytime->toDateTimeString();
             $ficha->activo=1;
+            $ficha->cuc= $this->fichaanterior->cuc;
             $ficha->save();
 
             $cont=0;

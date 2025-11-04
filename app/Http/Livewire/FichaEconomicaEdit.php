@@ -770,6 +770,7 @@ class FichaEconomicaEdit extends Component
 
             $ficha->fecha_grabado=$fechaanterior;
             $ficha->activo=1;
+            $ficha->cuc= $this->fichaanterior->cuc;
             $ficha->save();
 
             $ficha->actividades()->sync($this->codi_actividad);

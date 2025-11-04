@@ -45,6 +45,6 @@ class Puerta extends Model
 
     public function fichas()
     {
-        return $this->belongsToMany('App\Models\Puerta','tf_ingresos','id_puerta','id_ficha');
+        return $this->belongsToMany('App\Models\Ficha','tf_ingresos','id_puerta','id_ficha');
     }
 }

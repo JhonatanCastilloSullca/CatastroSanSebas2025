@@ -873,6 +873,7 @@ class FichaController extends Controller
         $mpdf->Output($fileName,'I');
     }
     public function fichaEconomica(Ficha $ficha){
+        $ficha=Ficha::with('unicat','unicat.edificacion','unicat.edificacion.lote','unicat.edificacion.lote.manzana','unicat.edificacion.lote.manzana.sectore','conductor','conductor.persona','fichaeconomica','domiciliotitular','actividades','autorizacion_anuncios','autorizacion_anuncios.codigos','verificador','declarante','supervisor','tecnico')->where('id_ficha',$ficha->id_ficha)->first();
         $fileName = 'economica.pdf';
         $mpdf = new \Mpdf\Mpdf([
             'format' => [210, 297],
@@ -890,7 +891,9 @@ class FichaController extends Controller
         $mpdf->Output($fileName,'I');
     }
 
-    public function fichaCotitularidad(Ficha $ficha){
+    public function fichaCotitularidad(Ficha $ficha)
+    {
+        $ficha=Ficha::with('fichacotitular','titulars','titulars.persona','titulars.exoneraciontitular','declarante','supervisor','tecnico','verificador')->where('id_ficha',$ficha->id_ficha)->first();
         $fileName = 'cotitularidad.pdf';
         $mpdf = new \Mpdf\Mpdf([
             'format' => [210, 297],

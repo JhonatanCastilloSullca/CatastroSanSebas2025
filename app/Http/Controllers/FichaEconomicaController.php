@@ -57,7 +57,7 @@ class FichaEconomicaController extends Controller
 
     public function editeconomica(Request $request)
     {
-        $fichaanterior=Ficha::where('id_ficha',$request->fichaanterior)->first();
+        $fichaanterior=Ficha::with('unicat','unicat.edificacion','unicat.edificacion.lote','unicat.edificacion.lote.manzana','unicat.edificacion.lote.manzana.sectore','conductor','conductor.persona','fichaeconomica','domiciliotitular','actividades','autorizacion_anuncios','autorizacion_anuncios.codigos','verificador','declarante','supervisor','tecnico')->where('id_ficha',$request->fichaanterior)->first();
         return view('pages.fichas.editeconomica',compact('fichaanterior'));
     }
 

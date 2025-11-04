@@ -531,6 +531,7 @@ class FichaCotitularidadEdit extends Component
             $ficha->id_usuario=$usuario;
             $ficha->fecha_grabado=$fechaanterior;
             $ficha->activo=1;
+            $ficha->cuc= $this->fichaanterior->cuc;
             $ficha->save();
 
 

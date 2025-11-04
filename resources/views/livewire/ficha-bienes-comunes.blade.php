@@ -194,6 +194,7 @@
                                             <td>{{$puerta['nume_muni']}}</td>
                                             <td>{{$puerta['cond_nume']}}</td>
                                             <td><button type="button" class="btn btn-danger btn-icon" wire:click="eliminarPuertas({{$i}})">x</button></td>
+                                            <td><button type="button" class="btn btn-dark btn-icon" wire:click='votarPuertas(@json($puerta["id_puerta"]),{{$i}},1)'>x</button></td>
                                         </tr>
                                         @endforeach
                                         @for($i=0;$i<$cont;$i++)
@@ -246,6 +247,7 @@
                                             <td>
                                                 <button type="button" class="btn btn-success btn-icon" wire:click="aumentarUbicacion" tabindex="18">+</button>
                                                 <button type="button" class="btn btn-danger btn-icon" wire:click="reducirUbicacion" tabindex="18">-</button>
+                                                <button type="button" class="btn btn-dark btn-icon" wire:click='votarPuertas(@json($idPuertaEditar[$i] ?? null),{{$i}},0)'>x</button>
                                             </td>
                                         </tr>
                                         @endfor
@@ -1459,6 +1461,20 @@
         '¿Estás seguro de crear más puertas?',
         'question'
       )
+    });
+    Livewire.on('alertPuertaBorrar', (mensaje, id, i,n) => {
+        Swal.fire({
+            title: mensaje,
+            text: '¿Estás seguro de eliminar la puerta?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emit('puertaBorrarConfirmada', id, i,n);
+            }
+        });
     });
   });
 </script>
