@@ -15,7 +15,7 @@ class HabUrbana extends Model
 
     static $rules = [
         'grup_urba'     => 'nullable|max:100',
-        'tipo_hab_urba' => 'required|max:6',
+        'tipo_hab_urba' => 'required|max:15',
         'nomb_hab_urba' => 'required|max:100',
         'codi_hab_urba' => 'required|max:4|unique:tf_hab_urbana',
     ];

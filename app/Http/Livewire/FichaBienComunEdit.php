@@ -1210,7 +1210,7 @@ class FichaBienComunEdit extends Component
             while($contpuertas<$this->cont)
             {
                 $puerta = Puerta::find($this->idPuertaEditar[$contpuertas]);
-                if($this->tipopuerta[$contpuertas] == $puerta->tipo_puerta && $puerta->id_via == $this->tipoVia[$contpuertas]){
+                if($puerta && $this->tipopuerta[$contpuertas] == $puerta->tipo_puerta && $puerta->id_via == $this->tipoVia[$contpuertas]){
                     
                 }else{
                     $buscarpuertas=0;

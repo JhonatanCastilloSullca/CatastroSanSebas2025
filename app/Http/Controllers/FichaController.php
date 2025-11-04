@@ -1083,16 +1083,20 @@ class FichaController extends Controller
     
     public function anexoficha($sector)
     {
+        ini_set('pcre.backtrack_limit', '5000000');
+        ini_set('pcre.recursion_limit',  '500000');
+        ini_set('memory_limit', '1024M');
+
         $mytime = Carbon::now('America/Lima');
         $fileName = 'anexoficha.pdf';
         $mpdf = new \Mpdf\Mpdf([
-            'format' => [210, 297],
-            'margin_left' => 10,
-            'margin_right' => 10,
-            'margin_top' => 10,
-            'margin_bottom' => 10,
-            'margin_header' => 10,
-            'margin_footer' => 10,
+            'mode'                 => 'utf-8',
+            'format'               => 'A4-L', // Landscape
+            'margin_left'          => 10,
+            'margin_right'         => 10,
+            'margin_top'           => 10,
+            'margin_bottom'        => 10,
+            'tempDir'              => storage_path('app/mpdf-temp'),
         ]); $sectores = Sectore::orderby('codi_sector')->get();
 
         $sectores = Sectore::where('id_sector',$sector)->orderby('codi_sector')->first();
@@ -1146,27 +1150,49 @@ class FichaController extends Controller
 
             // tipo_via / nomb_via / codi_via (desde tf_puertas + tf_vias) y nume_muni
             'tipo_via' => DB::table('tf_puertas as p')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
                 ->join('tf_vias as v', 'v.id_via', '=', 'p.id_via')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('v.tipo_via'),
 
             'nomb_via' => DB::table('tf_puertas as p')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
                 ->join('tf_vias as v', 'v.id_via', '=', 'p.id_via')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('v.nomb_via'),
 
             'codi_via' => DB::table('tf_puertas as p')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
                 ->join('tf_vias as v', 'v.id_via', '=', 'p.id_via')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('v.codi_via'),
 
             'nume_muni' => DB::table('tf_puertas as p')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('p.nume_muni'),
+
+            'cuc_ficha' => DB::table('tf_fichas as f')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->orderBy('f.fecha_grabado', 'desc')
+                ->limit(1)
+                ->select('f.cuc'),
 
             // ===== Subselect USO más reciente (desc_uso) =====
             'desc_uso' => DB::table('tf_fichas as f')
@@ -1228,21 +1254,51 @@ class FichaController extends Controller
         ])
         ->orderBy('l.id_mzna')
         ->orderBy('l.codi_lote')
-        ->orderByRaw("CASE WHEN e.codi_edificacion = '99' THEN 0 ELSE 1 END")
+
+        /* 1) Que la edificación '99' vaya PRIMERO; el resto después */
         ->orderByRaw("
-            CASE WHEN e.codi_edificacion <> '99'
-                THEN LPAD(BTRIM(tf_uni_cat.codi_entrada), 2, '0')
-            END ASC NULLS LAST
+        CASE
+            WHEN COALESCE(NULLIF(e.codi_edificacion,''),'99') = '99' THEN 0
+            ELSE 1
+        END ASC
+        ")
+
+        /* 2) Para las edificaciones que NO son '99', orden ascendente numérico por edificación */
+        ->orderByRaw("
+        CASE
+            WHEN COALESCE(NULLIF(e.codi_edificacion,''),'99') <> '99'
+            THEN NULLIF(e.codi_edificacion,'')::int
+        END ASC NULLS LAST
+        ")
+
+        /* 3) Dentro de cada edificación, priorizar la BC (99/99/999) primero */
+        ->orderByRaw("
+        CASE
+            WHEN tf_uni_cat.codi_entrada = '99'
+            AND tf_uni_cat.codi_piso    = '99'
+            AND tf_uni_cat.codi_unidad  = '999'
+            THEN 0 ELSE 1
+        END ASC
+        ")
+
+        /* 4) Para el resto (no BC), ordenar por entrada → piso → unidad numéricamente */
+        ->orderByRaw("
+        CASE
+            WHEN NOT (tf_uni_cat.codi_entrada='99' AND tf_uni_cat.codi_piso='99' AND tf_uni_cat.codi_unidad='999')
+            THEN NULLIF(BTRIM(tf_uni_cat.codi_entrada),'')::int
+        END ASC NULLS LAST
         ")
         ->orderByRaw("
-            CASE WHEN e.codi_edificacion <> '99'
-                THEN LPAD(BTRIM(tf_uni_cat.codi_piso), 2, '0')
-            END ASC NULLS LAST
+        CASE
+            WHEN NOT (tf_uni_cat.codi_entrada='99' AND tf_uni_cat.codi_piso='99' AND tf_uni_cat.codi_unidad='999')
+            THEN NULLIF(BTRIM(tf_uni_cat.codi_piso),'')::int
+        END ASC NULLS LAST
         ")
         ->orderByRaw("
-            CASE WHEN e.codi_edificacion <> '99'
-                THEN LPAD(BTRIM(tf_uni_cat.codi_unidad), 3, '0')
-            END ASC NULLS LAST
+        CASE
+            WHEN NOT (tf_uni_cat.codi_entrada='99' AND tf_uni_cat.codi_piso='99' AND tf_uni_cat.codi_unidad='999')
+            THEN NULLIF(BTRIM(tf_uni_cat.codi_unidad),'')::int
+        END ASC NULLS LAST
         ")
 
         ->get();
@@ -1255,6 +1311,8 @@ class FichaController extends Controller
         $hora = date("H:m:s", strtotime($mytime));
         $html = \View::make('pages.pdf.anexoficha', compact('titulares','sectores','sector2', 'numero', 'logos', 'fecha', 'hora'));
         $html = $html->render();
+        $mpdf->SetDisplayMode('fullwidth');
+        $mpdf->SetAutoPageBreak(true, 10);
         $mpdf->WriteHTML($html);
         $mpdf->Output($fileName, 'I');
     }
@@ -1314,26 +1372,42 @@ class FichaController extends Controller
 
             // tipo_via / nomb_via / codi_via (desde tf_puertas + tf_vias) y nume_muni
             'tipo_via' => DB::table('tf_puertas as p')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
                 ->join('tf_vias as v', 'v.id_via', '=', 'p.id_via')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('v.tipo_via'),
 
             'nomb_via' => DB::table('tf_puertas as p')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
                 ->join('tf_vias as v', 'v.id_via', '=', 'p.id_via')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('v.nomb_via'),
 
             'codi_via' => DB::table('tf_puertas as p')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
                 ->join('tf_vias as v', 'v.id_via', '=', 'p.id_via')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('v.codi_via'),
 
             'nume_muni' => DB::table('tf_puertas as p')
-                ->whereColumn('p.id_lote','tf_uni_cat.id_lote')
-                ->where('p.tipo_puerta','P')
+                ->join('tf_ingresos as i', 'i.id_puerta', '=', 'p.id_puerta')
+                ->join('tf_fichas as f', 'f.id_ficha', '=', 'i.id_ficha')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->where('p.tipo_puerta', 'P')
+                ->where('f.tipo_ficha', '01')
+                ->orderBy('f.fecha_grabado', 'desc')
                 ->limit(1)->select('p.nume_muni'),
 
             // ===== Subselect USO más reciente (desc_uso) =====
@@ -1344,6 +1418,12 @@ class FichaController extends Controller
                 ->where('f.tipo_ficha','01')
                 ->orderBy('f.fecha_grabado','desc')
                 ->limit(1)->select('u.desc_uso'),
+
+            'cuc_ficha' => DB::table('tf_fichas as f')
+                ->whereColumn('f.id_uni_cat', 'tf_uni_cat.id_uni_cat')
+                ->orderBy('f.fecha_grabado', 'desc')
+                ->limit(1)
+                ->select('f.cuc'),
 
             // ===== Subselects TITULARES agregados (para no hacer 3 bucles en Blade) =====
             // NOMBRES (respeta persona natural / jurídica)
@@ -1396,21 +1476,51 @@ class FichaController extends Controller
         ])
         ->orderBy('l.id_mzna')
         ->orderBy('l.codi_lote')
-        ->orderByRaw("CASE WHEN e.codi_edificacion = '99' THEN 0 ELSE 1 END")
+
+        /* 1) Que la edificación '99' vaya PRIMERO; el resto después */
         ->orderByRaw("
-            CASE WHEN e.codi_edificacion <> '99'
-                THEN LPAD(BTRIM(tf_uni_cat.codi_entrada), 2, '0')
-            END ASC NULLS LAST
+        CASE
+            WHEN COALESCE(NULLIF(e.codi_edificacion,''),'99') = '99' THEN 0
+            ELSE 1
+        END ASC
+        ")
+
+        /* 2) Para las edificaciones que NO son '99', orden ascendente numérico por edificación */
+        ->orderByRaw("
+        CASE
+            WHEN COALESCE(NULLIF(e.codi_edificacion,''),'99') <> '99'
+            THEN NULLIF(e.codi_edificacion,'')::int
+        END ASC NULLS LAST
+        ")
+
+        /* 3) Dentro de cada edificación, priorizar la BC (99/99/999) primero */
+        ->orderByRaw("
+        CASE
+            WHEN tf_uni_cat.codi_entrada = '99'
+            AND tf_uni_cat.codi_piso    = '99'
+            AND tf_uni_cat.codi_unidad  = '999'
+            THEN 0 ELSE 1
+        END ASC
+        ")
+
+        /* 4) Para el resto (no BC), ordenar por entrada → piso → unidad numéricamente */
+        ->orderByRaw("
+        CASE
+            WHEN NOT (tf_uni_cat.codi_entrada='99' AND tf_uni_cat.codi_piso='99' AND tf_uni_cat.codi_unidad='999')
+            THEN NULLIF(BTRIM(tf_uni_cat.codi_entrada),'')::int
+        END ASC NULLS LAST
         ")
         ->orderByRaw("
-            CASE WHEN e.codi_edificacion <> '99'
-                THEN LPAD(BTRIM(tf_uni_cat.codi_piso), 2, '0')
-            END ASC NULLS LAST
+        CASE
+            WHEN NOT (tf_uni_cat.codi_entrada='99' AND tf_uni_cat.codi_piso='99' AND tf_uni_cat.codi_unidad='999')
+            THEN NULLIF(BTRIM(tf_uni_cat.codi_piso),'')::int
+        END ASC NULLS LAST
         ")
         ->orderByRaw("
-            CASE WHEN e.codi_edificacion <> '99'
-                THEN LPAD(BTRIM(tf_uni_cat.codi_unidad), 3, '0')
-            END ASC NULLS LAST
+        CASE
+            WHEN NOT (tf_uni_cat.codi_entrada='99' AND tf_uni_cat.codi_piso='99' AND tf_uni_cat.codi_unidad='999')
+            THEN NULLIF(BTRIM(tf_uni_cat.codi_unidad),'')::int
+        END ASC NULLS LAST
         ")
 
         ->get();

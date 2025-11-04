@@ -77,7 +77,7 @@
                     @foreach($titulares as $titular)
                     <tr>
                         <td>{{$titular->lote->cuc}}</td>
-                        <td>{{$titular->cuc}}</td>
+                        <td>{{$titular->cuc_ficha}}</td>
                         <td>
                             @foreach($titular->titularesPersonalizados() as $titular1)
                                 {{ $titular1->nombres }}<br>

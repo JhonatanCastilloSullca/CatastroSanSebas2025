@@ -1,6 +1,6 @@
 <div class="mb-3">
   <label for="recipient-name" class="form-label">Codigo de Sector:</label>
-  <input type="text" class="form-control codi_sector" id="codi_sector" name="codi_sector" value="{{str_pad($ultimo,2,'0',STR_PAD_LEFT)}}" readonly>
+  <input type="text" class="form-control codi_sector" id="codi_sector" name="codi_sector"  value="{{old('codi_sector')}}">
   @error('codi_sector')
     <span class="error-message" style="color:red">{{ $message }}</span>
   @enderror
