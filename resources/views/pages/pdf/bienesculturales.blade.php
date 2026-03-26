@@ -186,6 +186,11 @@
               </div>
           </div>
         </div>
+        <div style="width: 316px;height:16px;margin: auto;border:none;" class="">
+        <div class="texto fz12 lh14" style="font-weight:bold;">
+            FICHA CATASTRAL DE BIEN CULTURAL
+          </div>
+      </div>
         <div style="width: 716px;height:16px;margin: auto;border:none;">
         </div>
         <div style="width: 716px;height:16px;margin: auto;border:none; margin-bottom:5px;background-color:#fff;">
@@ -234,72 +239,72 @@
             </div>
             <!-- fila 02-->
             <!-- fila 03-->
-            <div style="width: 427px;height:16px;margin: auto;" class="fondoclaro bn">
-              <div style="width: 106px;height: 16px;float:left;border:none;" >
-                  <div style="width: 106px;height: 8px;float:left;">
-                    <div class="texto fz4 lh6">
-                        UBIGEO
-                    </div>
-                  </div>
-                  <div style="width: 106px;height: 8px;float:left;border:none;">
-                    <div style="width: 34px;height: 8px;float:left;">
-                        <div class="texto fz4 lh6">
-                          DPTO.
-                        </div>
-                    </div>
-                    <div style="width: 34px;height: 8px;float:left;">
-                        <div class="texto fz4 lh6">
-                          PROV.
-                        </div>
-                    </div>
-                    <div style="width: 34.9px;height: 8px;float:left;">
-                        <div class="texto fz4 lh6">
-                          DIST.
-                        </div>
-                    </div>
-                  </div>
+            <div style="width: 427px;height:16px;margin: auto;" class="fondoclaro">
+            <div style="width: 106px;height: 16px;float:left;border:none;" >
+              <div style="width: 106px;height: 8px;float:left;">                
+                <div class="texto fz4 lh6">
+                  UBIGEO
+                </div>
               </div>
-              <div style="width: 35px;height: 16px;float:left;">
-                  <div class="texto fz6 lh14">
-                    SECTOR
+              <div style="width: 106px;height: 8px;float:left;border:none;">
+                <div style="width: 34px;height: 8px;float:left;">
+                  <div class="texto fz4 lh6">
+                    DPTO.
                   </div>
-              </div>
-              <div style="width: 53px;height: 16px;float:left;">
-                  <div class="texto fz6 lh14">
-                    MANZANA
+                </div>
+                <div style="width: 34px;height: 8px;float:left;">
+                  <div class="texto fz4 lh6">
+                    PROV.
                   </div>
-              </div>
-              <div style="width: 51px;height: 16px;float:left;">
-                  <div class="texto fz6 lh14">
-                    LOTE
+                </div>
+                <div style="width: 34.9px;height: 8px;float:left;">
+                  <div class="texto fz4 lh6">
+                    DIST.
                   </div>
-              </div>
-              <div style="width: 35px;height: 16px;float:left;">
-                  <div class="texto fz6 lh14">
-                    EDIFICA
-                  </div>
-              </div>
-              <div style="width: 34px;height: 16px;float:left;">
-                  <div class="texto fz6 lh14">
-                    ENTRADA
-                  </div>
-              </div>
-              <div style="width: 35px;height: 16px;float:left;">
-                  <div class="texto fz6 lh14">
-                    PISO
-                  </div>
-              </div>
-              <div style="width: 52px;height: 16px;float:left;">
-                  <div class="texto fz6 lh14">
-                    UNIDAD
-                  </div>
-              </div>
-              <div style="width: 17.9px;height: 16px;float:left;">
-                  <div class="texto fz6 lh14">
-                    DC
-                  </div>
+                </div>
               </div>
             </div>
+            <div style="width: 35px;height: 16px;float:left;">
+              <div class="texto fz6 lh14">
+                SECTOR
+              </div>
+            </div>
+            <div style="width: 53px;height: 16px;float:left;">
+              <div class="texto fz6 lh14">
+                MANZANA
+              </div>
+            </div>
+            <div style="width: 51px;height: 16px;float:left;">
+              <div class="texto fz6 lh14">
+                LOTE
+              </div>
+            </div>
+            <div style="width: 35px;height: 16px;float:left;">
+              <div class="texto fz6 lh14">
+                EDIFICA
+              </div>
+            </div>
+            <div style="width: 34px;height: 16px;float:left;">
+              <div class="texto fz6 lh14">
+                ENTRADA
+              </div>
+            </div>
+            <div style="width: 35px;height: 16px;float:left;">
+              <div class="texto fz6 lh14">
+                PISO
+              </div>
+            </div>
+            <div style="width: 52px;height: 16px;float:left;">
+              <div class="texto fz6 lh14">
+                UNIDAD
+              </div>
+            </div>
+            <div style="width: 17.9px;height: 16px;float:left;">
+              <div class="texto fz6 lh14">
+                DC
+              </div>
+            </div>
+          </div> 
             <!-- fila 04-->
             <div style="width: 427px;height:16px;margin: auto;" class="bn">
               <div style="width: 106px;height: 16px;float:left;border:none;">

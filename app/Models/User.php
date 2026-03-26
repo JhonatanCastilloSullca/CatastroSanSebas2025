@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
 
-    protected $table = 'tf_usuarios';
+    protected $table = 'catastro.tf_usuarios';
 
     static $rules = [
         'codi_usuario' => 'required',
