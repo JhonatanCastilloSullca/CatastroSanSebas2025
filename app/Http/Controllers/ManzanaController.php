@@ -73,6 +73,12 @@ class ManzanaController extends Controller
             $lote->codi_lote = $lote->codi_lote;
             $lote->id_mzna = $manzana->id_mzna;
             $lote->save();
+            foreach($lote->puertas as $puerta)
+            {
+                $puerta->id_puerta = $puerta->codi_puerta.''.$lote->id_lote ;
+                $puerta->id_lote = $manzana->id_mzna.''.$lote->codi_lote;
+                $puerta->save();
+            }
             foreach($edificaciones as $edificacion)
             {
                 $edif_ant = $lote_ant.''.$edificacion->codi_edificacion;
