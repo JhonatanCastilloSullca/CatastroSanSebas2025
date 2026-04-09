@@ -76,9 +76,12 @@ class ManzanaController extends Controller
             $lote->save();
             foreach($lote->puertas as $puerta)
             {
-                $buscarPuerta = Puerta::where('id_puerta',$lote->id_lote.''.$puerta->codi_puerta)->first();
+                $valor = $puerta->id_puerta;
+
+                $resultado = substr($valor, 15);
+                $buscarPuerta = Puerta::where('id_puerta',$lote->id_lote.''.$puerta->codi_puerta.''.$resultado)->first();
                 if(!$buscarPuerta){
-                    $puerta->id_puerta = $lote->id_lote.''.$puerta->codi_puerta ;
+                    $puerta->id_puerta = $lote->id_lote.''.$puerta->codi_puerta.''.$resultado;
                     $puerta->id_lote = $manzana->id_mzna.''.$lote->codi_lote;
                     $puerta->save();
                 }
