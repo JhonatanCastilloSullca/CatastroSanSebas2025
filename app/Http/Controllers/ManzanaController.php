@@ -8,6 +8,7 @@ use App\Models\Sectore;
 use App\Models\Lote;
 use App\Models\Edificaciones;
 use App\Models\Ficha;
+use App\Models\Puerta;
 use App\Models\UniCat;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -75,9 +76,12 @@ class ManzanaController extends Controller
             $lote->save();
             foreach($lote->puertas as $puerta)
             {
-                $puerta->id_puerta = $lote->id_lote.''.$puerta->codi_puerta ;
-                $puerta->id_lote = $manzana->id_mzna.''.$lote->codi_lote;
-                $puerta->save();
+                $buscarPuerta = Puerta::where('id_puerta',$lote->id_lote.''.$puerta->codi_puerta)->first();
+                if(!$buscarPuerta){
+                    $puerta->id_puerta = $lote->id_lote.''.$puerta->codi_puerta ;
+                    $puerta->id_lote = $manzana->id_mzna.''.$lote->codi_lote;
+                    $puerta->save();
+                }
             }
             foreach($edificaciones as $edificacion)
             {
