@@ -57,7 +57,7 @@ class Lote extends Model
     }
     public function puertas()
     {
-        return $this->hasMany('App\Models\Puerta');
+        return $this->hasMany('App\Models\Puerta','id_lote','id_lote');
     }
 
     public function hab_urbana()
