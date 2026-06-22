@@ -500,14 +500,14 @@
     duplicarBinCultural.addEventListener('show.bs.modal', function(event) {
         var button = event.relatedTarget
 
-        var id = button.getAttribute('data-id')
-        var unicat = button.getAttribute('data-unicat')
+        var idCultural = button.getAttribute('data-id')
+        var unicatCultural = button.getAttribute('data-unicat')
 
-        var idModal = duplicarBinCultural.querySelector('#id_ficha_cotitular')
-        var unicatModal = duplicarBinCultural.querySelector('#unicat_cultural')
+        var idModalCultural = duplicarBinCultural.querySelector('#id_ficha_cotitular')
+        var unicatModalCultural = duplicarBinCultural.querySelector('#unicat_cultural')
 
-        idModal.value = id;
-        unicatModal.value = unicat;
+        idModalCultural.value = idCultural;
+        unicatModalCultural.value = unicatCultural;
     });
 </script>
 @if(count($errors)>0)
