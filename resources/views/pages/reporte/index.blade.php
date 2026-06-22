@@ -495,16 +495,16 @@
         unicatModal.value = unicat;
     });
 
-    var duplicarBinCultural = document.getElementById('DuplicarBienCultural');
+    var duplicarBienCultural = document.getElementById('DuplicarBienCultural');
 
-    duplicarBinCultural.addEventListener('show.bs.modal', function(event) {
+    duplicarBienCultural.addEventListener('show.bs.modal', function(event) {
         var button = event.relatedTarget
 
         var idCultural = button.getAttribute('data-id')
         var unicatCultural = button.getAttribute('data-unicat')
 
-        var idModalCultural = duplicarBinCultural.querySelector('#id_ficha_cotitular')
-        var unicatModalCultural = duplicarBinCultural.querySelector('#unicat_cultural')
+        var idModalCultural = duplicarBienCultural.querySelector('#id_ficha_cultural')
+        var unicatModalCultural = duplicarBienCultural.querySelector('#unicat_cultural')
 
         idModalCultural.value = idCultural;
         unicatModalCultural.value = unicatCultural;
