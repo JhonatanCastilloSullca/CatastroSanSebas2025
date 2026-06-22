@@ -32,10 +32,22 @@ use DB;
 use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LotesPropietariosExports;
+use App\Http\Requests\DuplicarCulturalRequest;
 use App\Http\Requests\DuplicarFichaRequest;
 use App\Http\Requests\FichaCodigoRequest;
+use App\Models\AfectacionAntropicas;
+use App\Models\AfectacionNatural;
+use App\Models\Colonial;
+use App\Models\ElementoArquitectonico;
+use App\Models\EstadoElemento;
 use App\Models\ExoneracionTitular;
+use App\Models\FichaBienCultural;
 use App\Models\FichaCotitularidad;
+use App\Models\Intervencion;
+use App\Models\Monumento;
+use App\Models\NormaLegal;
+use App\Models\TipoArquitectura;
+use App\Models\TipoMaterial;
 
 class FichaController extends Controller
 {
@@ -1642,6 +1654,215 @@ class FichaController extends Controller
         $fichaecotitularidad->observaciones=$fichaAnterior->fichacotitular->observaciones;
         $fichaecotitularidad->nume_ficha=str_pad($request->n_ficha_nuevo,7,'0',STR_PAD_LEFT);
         $fichaecotitularidad->save();
+
+
+        return redirect()->back()->with('success', 'Modificado Correctamente!');
+    }
+
+    public function duplicarCultural(DuplicarCulturalRequest $request)
+    {
+        $suma = array_sum(str_split($request->unicat_cultural_nuevo)); 
+        $dc   = $suma % 9;
+
+        $ubigeo=Institucion::first();
+        $mytime= Carbon::now('America/Lima');
+        $fichaAnterior = Ficha::find($request->id_ficha_cultural);
+
+        $unicat = UniCat::find($request->unicat_cultural_nuevo);
+
+        $date = $mytime->format('Y');
+
+        $ficha=new Ficha();
+        $ficha->id_ficha=$date.''.str_pad($ubigeo->id_institucion,6,'0',STR_PAD_LEFT).'05'.str_pad($request->n_ficha_nuevo_cultural,7,'0',STR_PAD_LEFT);
+        $ficha->tipo_ficha="05";
+        $ficha->nume_ficha=str_pad($request->n_ficha_nuevo_cultural,7,'0',STR_PAD_LEFT);
+        $ficha->id_lote=$unicat->id_lote;
+        $ficha->dc=$dc;
+        $ficha->nume_ficha_lote=$request->ficha_lote_cultural.'-'.$request->ficha_lote2_cultural;
+        $ficha->id_declarante=$fichaAnterior->id_declarante;
+        $ficha->fecha_declarante=$fichaAnterior->fecha_declarante;
+        $ficha->id_supervisor=$fichaAnterior->id_supervisor;
+        $ficha->fecha_supervision=$fichaAnterior->fecha_supervision;
+        $ficha->id_tecnico=$fichaAnterior->id_tecnico;
+        $ficha->fecha_levantamiento=$fichaAnterior->fecha_levantamiento;
+        $ficha->id_verificador=$fichaAnterior->id_verificador;
+        $ficha->fecha_verificacion=$fichaAnterior->fecha_verificacion;
+        $ficha->nume_registro=$fichaAnterior->nume_registro;
+        $ficha->id_uni_cat=$request->unicat_cultural_nuevo;
+        $ficha->id_usuario=\Auth::user()->id_usuario;
+        $ficha->fecha_grabado=$mytime->toDateTimeString();
+        $ficha->activo=1;
+        $ficha->save();
+
+        foreach($fichaAnterior->titulars as $titularAnterior)
+        {
+            $titular=new Titular();
+            $titular->id_ficha=$ficha->id_ficha;
+            $titular->id_persona=$titularAnterior->id_persona;
+            $titular->form_adquisicion=$titularAnterior->form_adquisicion;
+            $titular->fecha_adquisicion=$titularAnterior->fecha_adquisicion;
+            $titular->porc_cotitular=$titularAnterior->porc_cotitular;
+            $titular->fax=$titularAnterior->faxconductor;
+            $titular->telf=$titularAnterior->telefonoconductor;
+            $titular->anexo=$titularAnterior->anexoconductor;
+            $titular->email=$titularAnterior->emailconductor;
+            $titular->codi_contribuyente=$titularAnterior->codi_contribuyente;
+            $titular->cond_titular=$titularAnterior->condicion;
+            $titular->save();
+        }
+
+        $fichabiencultural=new FichaBienCultural();
+        $fichabiencultural->id_ficha=$ficha->id_ficha;
+        $fichabiencultural->crc_rural=$fichaAnterior->fichabiencultural?->crc_rural;
+        $fichabiencultural->area_titulo=$fichaAnterior->fichabiencultural?->area_titulo;
+        $fichabiencultural->area_construido=$fichaAnterior->fichabiencultural?->area_const;
+        $fichabiencultural->area_libre=$fichaAnterior->fichabiencultural?->area_libre;
+        $fichabiencultural->descripcion_fachada=$fichaAnterior->fichabiencultural?->descripcion_fachada;
+        $fichabiencultural->descripcion_interior=$fichaAnterior->fichabiencultural?->descripcion_interior;
+        $fichabiencultural->filiacion_estilistica=$fichaAnterior->fichabiencultural?->filiacion_estilistica;
+        $fichabiencultural->intervencion_inmueble=$fichaAnterior->fichabiencultural?->int_inmueble;
+        $fichabiencultural->resena_historica=$fichaAnterior->fichabiencultural?->resena_historica;
+        $fichabiencultural->cond_declarante=$fichaAnterior->fichabiencultural?->cond_declarante;
+        $fichabiencultural->esta_llenado=$fichaAnterior->fichabiencultural?->esta_llenado;
+        $fichabiencultural->nume_habitantes=$fichaAnterior->fichabiencultural?->nume_habitantes;
+        $fichabiencultural->nume_familias=$fichaAnterior->fichabiencultural?->nume_familias;
+        $fichabiencultural->nume_ficha=str_pad($request->n_ficha_nuevo,7,'0',STR_PAD_LEFT);
+        $fichabiencultural->save();
+
+        foreach($fichaAnterior?->tipoarquitecturas as $fi)
+        {
+            $arquitectura=new TipoArquitectura();
+            $arquitectura->id_ficha=$ficha->id_ficha;
+            $arquitectura->codigo=$fi->codigo;
+            $arquitectura->descripcion=$fi->descripcion;
+            $arquitectura->save();
+        }
+
+        foreach($fichaAnterior?->tipomaterials as $fa)
+        {
+            $material=new TipoMaterial();
+            $material->id_ficha=$ficha->id_ficha;
+            $material->codigo=$fa->codigo;
+            $material->descripcion=$fa->descripcion;
+            $material->save();
+        }
+        
+        foreach($fichaAnterior?->afectacionnaturals as $fe)
+        {
+            $afectacionnatural=new AfectacionNatural();
+            $afectacionnatural->id_ficha=$ficha->id_ficha;
+            $afectacionnatural->codigo=$fe->codigo;
+            $afectacionnatural->descripcion=$fe->descripcion;
+            $afectacionnatural->save();
+        }
+
+        foreach($fichaAnterior?->afectacionantropicas as $fu)
+        {
+            $afectacionnatural=new AfectacionAntropicas();
+            $afectacionnatural->id_ficha=$ficha->id_ficha;
+            $afectacionnatural->codigo=$fu->codigo;
+            $afectacionnatural->descripcion=$fu->descripcion;
+            $afectacionnatural->save();
+        }
+
+        foreach($fichaAnterior?->intervenciones as $fo)
+        {
+            $afectacionnatural=new Intervencion();
+            $afectacionnatural->id_ficha=$ficha->id_ficha;
+            $afectacionnatural->codigo=$fo->codigo;
+            $afectacionnatural->descripcion=$fo->descripcion;
+            $afectacionnatural->save();
+        }
+
+        foreach($fichaAnterior?->intervenciones as $fo)
+        {
+            $afectacionnatural=new Intervencion();
+            $afectacionnatural->id_ficha=$ficha->id_ficha;
+            $afectacionnatural->codigo=$fo->codigo;
+            $afectacionnatural->descripcion=$fo->descripcion;
+            $afectacionnatural->save();
+        }
+
+        $sunarpBienCultural = $fichaAnterior->sunarpbiencultural->first();
+        $sunarp=new Sunarp();
+        $sunarp->id_ficha=$ficha->id_ficha;
+        $sunarp->tipo_partida=$sunarpBienCultural->tipo_partida;
+        $sunarp->nume_partida=$sunarpBienCultural->nume_partida;
+        $sunarp->fojas=$sunarpBienCultural->fojas;
+        $sunarp->asiento=$sunarpBienCultural->asiento;
+        $sunarp->fecha_inscripcion=$sunarpBienCultural->fecha_inscripcion;
+        $sunarp->save();
+
+        foreach($fichaAnterior?->normalegals1 as $foo)
+        {
+            $normalegal=new NormaLegal();
+            $normalegal->id_ficha=$ficha->id_ficha;
+            $normalegal->normatividad=$foo->normatividad;
+            $normalegal->fecha_norma=$foo->fecha_norma;
+            $normalegal->numero_plano=$foo->numero_plano;
+            $normalegal->tipo_norma=1;
+            $normalegal->save();
+        }
+
+        $monumento=new Monumento();
+        $monumento->id_ficha=$ficha->id_ficha;
+        $monumento->cat_inmueble=$fichaAnterior->monumento?->cat_inmueble;
+        $monumento->nomb_monumento=strtoupper($fichaAnterior->monumento?->nombre_monumento);
+        $monumento->cod_monumento=$fichaAnterior->monumento?->cod_monumento;
+        $monumento->presencia_arquitectura=$fichaAnterior->monumento?->presencia_arquitectura;
+        $monumento->filiacion_cronologica=$fichaAnterior->monumento?->fil_crono;
+        $monumento->tipo_area=$fichaAnterior->monumento?->tipo_area;
+        $monumento->area_monu=$fichaAnterior->monumento?->area_monu;
+        $monumento->perimetro_monumento=$fichaAnterior->monumento?->perimetro_monumento;
+        $monumento->observaciones=$fichaAnterior->monumento?->observacion;
+        $monumento->save();
+
+        $colonial=new Colonial();
+        $colonial->id_ficha=$ficha->id_ficha;
+        $colonial->inmueble_declarado=$fichaAnterior->colonial?->inmueble_declarado;
+        $colonial->nombre_colonial=strtoupper($fichaAnterior->colonial?->nombre_colonial);
+        $colonial->tipo_arquitectura=$fichaAnterior->colonial?->tipo_arquitectura2;
+        $colonial->uso_actual=$fichaAnterior->colonial?->uso_actual;
+        $colonial->uso_original=$fichaAnterior->colonial?->uso_original;
+        $colonial->num_pisos=$fichaAnterior->colonial?->num_pisos;
+        $colonial->tipo_fecha=$fichaAnterior->colonial?->tipo_fecha;
+        $colonial->fecha_construccion=$fichaAnterior->colonial?->fecha_construccion;
+        $colonial->observaciones=$fichaAnterior->colonial?->observacion1;
+        $colonial->save();
+
+        foreach($fichaAnterior?->elementoarquitectonico as $fuo)
+        {
+            $elemento=new ElementoArquitectonico();
+            $elemento->id_ficha=$ficha->id_ficha;
+            $elemento->codigo=$fuo->codigo;
+            $elemento->descripcion=$fuo->descripcion;
+            $elemento->save();
+        }
+
+        foreach($fichaAnterior?->normalegals1 as $foe)
+        {
+            $normalegal=new NormaLegal();
+            $normalegal->id_ficha=$ficha->id_ficha;
+            $normalegal->normatividad=$foe->normatividad;
+            $normalegal->fecha_norma=$foe->fecha_norma;
+            $normalegal->numero_plano=$foe->numero_plano;
+            $normalegal->tipo_norma=2;
+            $normalegal->save();
+        }
+
+        $estadoe=new EstadoElemento();
+        $estadoe->id_ficha=$ficha->id_ficha;
+        $estadoe->cimientos=$fichaAnterior->estadoelemento?->cimientos;
+        $estadoe->muros=$fichaAnterior->estadoelemento?->muros;
+        $estadoe->pisos=$fichaAnterior->estadoelemento?->pisos;
+        $estadoe->techos=$fichaAnterior->estadoelemento?->techos;
+        $estadoe->pilastras=$fichaAnterior->estadoelemento?->pilastras;
+        $estadoe->revestimiento=$fichaAnterior->estadoelemento?->revestimiento;
+        $estadoe->balcones=$fichaAnterior->estadoelemento?->balcones;
+        $estadoe->puertas=$fichaAnterior->estadoelemento?->puertas;
+        $estadoe->ventanas=$fichaAnterior->estadoelemento?->ventanas;
+        $estadoe->rejas=$fichaAnterior->estadoelemento?->rejas;
+        $estadoe->save();
 
 
         return redirect()->back()->with('success', 'Modificado Correctamente!');

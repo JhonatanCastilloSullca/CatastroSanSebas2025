@@ -276,7 +276,13 @@
                                         </button>
                                     </a>
                                 </td>
-                                <td></td>
+                                <td>
+                                    <a data-bs-toggle="tooltip" data-bs-placement="top" title="Duplicar Bien Cultural">
+                                        <button type="button" class="btn btn-info btn-icon edit" data-bs-toggle="modal" data-bs-target="#DuplicarBienCultural" data-id="{{$ficha->id_ficha}}" data-unicat="{{$ficha->id_uni_cat}}">
+                                            <i data-feather="check"></i>
+                                        </button>
+                                    </a>
+                                </td>
                                 <td>
                                     <a onclick="return confirm('Seguro que desea eliminar la ficha')"  href="{{route('ficha.destroybiencultural',$ficha)}}">
                                         <button type="button" class="btn btn-danger btn-icon " >
@@ -400,6 +406,60 @@
   </div>
 </div>
 
+<div class="modal fade" id="DuplicarBienCultural" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Duplicar Bien Cultural</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('ficha.duplicarCultural','test')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+            {{csrf_field()}}
+            <div class="row">
+                <input type="hidden" name="id_ficha_cultural" id="id_ficha_cultural" class="id_ficha_cultural" value="{{old('id_ficha_cultural')}}">
+                <div class="col-md-12 mb-3">
+                    <label for="unicat_cultural" class="form-label">Codigo Antiguo:</label>
+                    <input type="text" class="form-control" id="unicat_cultural" name="unicat_cultural" value="{{old('unicat_cultural')}}" readonly>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label for="unicat_coti_nuevo" class="form-label">Codigo Nuevo:</label>
+                    <input type="text" class="form-control" id="unicat_coti_nuevo" name="unicat_coti_nuevo" value="{{old('unicat_coti_nuevo')}}">
+                    @error('unicat_coti_nuevo')
+                        <span class="error-message" style="color:red">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="n_ficha_nuevo" class="form-label">Nº Ficha:</label>
+                    <input type="text" class="form-control" id="n_ficha_nuevo" name="n_ficha_nuevo" value="{{old('n_ficha_nuevo_cultural')}}">
+                    @error('n_ficha_nuevo')
+                        <span class="error-message" style="color:red">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="ficha_lote_cultural" class="form-label">Ficha por </label>
+                    <input type="text" class="form-control" id="ficha_lote_cultural" name="ficha_lote" value="{{old('ficha_lote_cultural')}}">
+                    @error('ficha_lote_cultural')
+                        <span class="error-message" style="color:red">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="ficha_lote2_cultural" class="form-label">lote:</label>
+                    <input type="text" class="form-control" id="ficha_lote2_cultural" name="ficha_lote2_cultural" value="{{old('ficha_lote2_cultural')}}">
+                    @error('ficha_lote2_cultural')
+                        <span class="error-message" style="color:red">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 
@@ -430,6 +490,21 @@
 
         var idModal = duplicarCotitular.querySelector('#id_ficha_cotitular')
         var unicatModal = duplicarCotitular.querySelector('#unicat_cotitular')
+
+        idModal.value = id;
+        unicatModal.value = unicat;
+    });
+
+    var duplicarBinCultural = document.getElementById('DuplicarBienCultural');
+
+    duplicarBinCultural.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget
+
+        var id = button.getAttribute('data-id')
+        var unicat = button.getAttribute('data-unicat')
+
+        var idModal = duplicarBinCultural.querySelector('#id_ficha_cotitular')
+        var unicatModal = duplicarBinCultural.querySelector('#unicat_cultural')
 
         idModal.value = id;
         unicatModal.value = unicat;
