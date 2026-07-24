@@ -1333,7 +1333,7 @@ class FichaController extends Controller
         $ficha->activo=1;
         $ficha->save();
 
-        foreach($fichaAnterior->titulars as $titularAnterior)
+        foreach($fichaAnterior->titulars as $i => $titularAnterior)
         {
             $titular=new Titular();
             $titular->id_ficha=$ficha->id_ficha;
@@ -1347,6 +1347,7 @@ class FichaController extends Controller
             $titular->email=$titularAnterior->emailconductor;
             $titular->codi_contribuyente=$titularAnterior->codi_contribuyente;
             $titular->cond_titular=$titularAnterior->condicion;
+            $titular->nume_titular=$cont+1;
             $titular->save();
 
             $exoneracion= new ExoneracionTitular();
