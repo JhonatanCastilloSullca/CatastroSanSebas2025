@@ -97,7 +97,7 @@ class FichaCotitularidadController extends Controller
             $titular->delete();
         }
 
-        $fichaanterior->fichacotitular->delete();
+        $fichaanterior->fichacotitular?->delete();
 
         $fichaanterior->delete();
 
