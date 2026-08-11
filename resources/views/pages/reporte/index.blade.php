@@ -423,16 +423,16 @@
                     <input type="text" class="form-control" id="unicat_cultural" name="unicat_cultural" value="{{old('unicat_cultural')}}" readonly>
                 </div>
                 <div class="col-md-12 mb-3">
-                    <label for="unicat_coti_nuevo" class="form-label">Codigo Nuevo:</label>
-                    <input type="text" class="form-control" id="unicat_coti_nuevo" name="unicat_coti_nuevo" value="{{old('unicat_coti_nuevo')}}">
-                    @error('unicat_coti_nuevo')
+                    <label for="unicat_cultural_nuevo" class="form-label">Codigo Nuevo:</label>
+                    <input type="text" class="form-control" id="unicat_cultural_nuevo" name="unicat_cultural_nuevo" value="{{old('unicat_cultural_nuevo')}}">
+                    @error('unicat_cultural_nuevo')
                         <span class="error-message" style="color:red">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="n_ficha_nuevo" class="form-label">Nº Ficha:</label>
-                    <input type="text" class="form-control" id="n_ficha_nuevo" name="n_ficha_nuevo" value="{{old('n_ficha_nuevo_cultural')}}">
-                    @error('n_ficha_nuevo')
+                    <label for="n_ficha_nuevo_cultural" class="form-label">Nº Ficha:</label>
+                    <input type="text" class="form-control" id="n_ficha_nuevo_cultural" name="n_ficha_nuevo_cultural" value="{{old('n_ficha_nuevo_cultural')}}">
+                    @error('n_ficha_nuevo_cultural')
                         <span class="error-message" style="color:red">{{ $message }}</span>
                     @enderror
                 </div>
