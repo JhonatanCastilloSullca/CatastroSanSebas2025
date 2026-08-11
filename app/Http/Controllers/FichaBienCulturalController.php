@@ -117,6 +117,7 @@ class FichaBienCulturalController extends Controller
                 $titular->delete();
             }
         }
+        $fichaanterior->sunarp()->delete();
         $fichaanterior->delete();
         return redirect()->back()->with('success','Ficha Eliminado Correctamente!');
     }
