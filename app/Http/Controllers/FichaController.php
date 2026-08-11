@@ -1448,7 +1448,6 @@ class FichaController extends Controller
 
         $fichabiencultural=new FichaBienCultural();
         $fichabiencultural->id_ficha=$ficha->id_ficha;
-        $fichabiencultural->crc_rural=$fichaAnterior->fichabiencultural?->crc_rural;
         $fichabiencultural->area_titulo=$fichaAnterior->fichabiencultural?->area_titulo;
         $fichabiencultural->area_construido=$fichaAnterior->fichabiencultural?->area_const;
         $fichabiencultural->area_libre=$fichaAnterior->fichabiencultural?->area_libre;
