@@ -1396,6 +1396,7 @@ class FichaController extends Controller
 
     public function duplicarCultural(DuplicarCulturalRequest $request)
     {
+        dd($request->all());
         $suma = array_sum(str_split($request->unicat_cultural_nuevo)); 
         $dc   = $suma % 9;
 
@@ -1600,7 +1601,7 @@ class FichaController extends Controller
         $estadoe->save();
 
 
-        return redirect()->back()->with('success', 'Modificado Correctamente!');
+        return redirect()->back()->with('success', 'Agregado Correctamente Correctamente!');
     }
 
 }
