@@ -438,7 +438,7 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="ficha_lote_cultural" class="form-label">Ficha por </label>
-                    <input type="text" class="form-control" id="ficha_lote_cultural" name="ficha_lote" value="{{old('ficha_lote_cultural')}}">
+                    <input type="text" class="form-control" id="ficha_lote_cultural" name="ficha_lote_cultural" value="{{old('ficha_lote_cultural')}}">
                     @error('ficha_lote_cultural')
                         <span class="error-message" style="color:red">{{ $message }}</span>
                     @enderror
