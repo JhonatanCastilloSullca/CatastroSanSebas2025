@@ -25,7 +25,7 @@ class DuplicarCulturalRequest extends FormRequest
     public function rules()
     {
         $nume_ficha = str_pad($this->n_ficha_nuevo,7,'0',STR_PAD_LEFT);
-        $id = $this->id_ficha_cotitular;
+        $id = $this->id_ficha_cultural;
         return [
             'unicat_cultural_nuevo' => 'required|exists:tf_uni_cat,id_uni_cat',
             'n_ficha_nuevo_cultural' => ['required','max:7',
