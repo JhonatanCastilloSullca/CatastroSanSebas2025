@@ -29,7 +29,7 @@ class DuplicarCulturalRequest extends FormRequest
         return [
             'unicat_cultural_nuevo' => 'required|exists:tf_uni_cat,id_uni_cat',
             'n_ficha_nuevo_cultural' => ['required','max:7',
-                    Rule::unique('tf_fichas_cotitularidades', 'nume_ficha')->ignore($id, 'id_ficha')],
+                    Rule::unique('tf_ficha_bien_cultural', 'nume_ficha')->ignore($id, 'id_ficha')],
             'ficha_lote_cultural' => 'required|max:3',
             'ficha_lote2_cultural' => 'required|max:3'
         ];
