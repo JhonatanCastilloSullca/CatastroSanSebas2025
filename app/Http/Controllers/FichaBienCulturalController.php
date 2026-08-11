@@ -89,11 +89,24 @@ class FichaBienCulturalController extends Controller
         if($fichaanterior->monumento){
             $fichaanterior->monumento->delete();
         }
+        if($fichaanterior->estadoelemento){
+            $fichaanterior->estadoelemento->delete();
+        }
         if($fichaanterior->fichabiencultural){
             $fichaanterior->fichabiencultural->delete();
         }
+         if($fichaanterior->elementoarquitectonico!=""){
+            foreach($fichaanterior->elementoarquitectonico as $elementoarquitectonico){
+                $elementoarquitectonico->delete();
+            }
+        }
         if($fichaanterior->normalegals!=""){
             foreach($fichaanterior->normalegals as $normalegal){
+                $normalegal->delete();
+            }
+        }
+        if($fichaanterior->normalegals1!=""){
+            foreach($fichaanterior->normalegals1 as $normalegal){
                 $normalegal->delete();
             }
         }
