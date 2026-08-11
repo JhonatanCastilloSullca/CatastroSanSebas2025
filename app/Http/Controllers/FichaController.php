@@ -1396,7 +1396,6 @@ class FichaController extends Controller
 
     public function duplicarCultural(DuplicarCulturalRequest $request)
     {
-        dd($request->all());
         $suma = array_sum(str_split($request->unicat_cultural_nuevo)); 
         $dc   = $suma % 9;
 
