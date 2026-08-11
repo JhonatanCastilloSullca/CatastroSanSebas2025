@@ -1449,18 +1449,18 @@ class FichaController extends Controller
         $fichabiencultural=new FichaBienCultural();
         $fichabiencultural->id_ficha=$ficha->id_ficha;
         $fichabiencultural->area_titulo=$fichaAnterior->fichabiencultural?->area_titulo;
-        $fichabiencultural->area_construido=$fichaAnterior->fichabiencultural?->area_const;
+        $fichabiencultural->area_construido=$fichaAnterior->fichabiencultural?->area_construido;
         $fichabiencultural->area_libre=$fichaAnterior->fichabiencultural?->area_libre;
         $fichabiencultural->descripcion_fachada=$fichaAnterior->fichabiencultural?->descripcion_fachada;
         $fichabiencultural->descripcion_interior=$fichaAnterior->fichabiencultural?->descripcion_interior;
         $fichabiencultural->filiacion_estilistica=$fichaAnterior->fichabiencultural?->filiacion_estilistica;
-        $fichabiencultural->intervencion_inmueble=$fichaAnterior->fichabiencultural?->int_inmueble;
+        $fichabiencultural->intervencion_inmueble=$fichaAnterior->fichabiencultural?->intervencion_inmueble;
         $fichabiencultural->resena_historica=$fichaAnterior->fichabiencultural?->resena_historica;
         $fichabiencultural->cond_declarante=$fichaAnterior->fichabiencultural?->cond_declarante;
         $fichabiencultural->esta_llenado=$fichaAnterior->fichabiencultural?->esta_llenado;
         $fichabiencultural->nume_habitantes=$fichaAnterior->fichabiencultural?->nume_habitantes;
         $fichabiencultural->nume_familias=$fichaAnterior->fichabiencultural?->nume_familias;
-        $fichabiencultural->nume_ficha=str_pad($request->n_ficha_nuevo,7,'0',STR_PAD_LEFT);
+        $fichabiencultural->nume_ficha=str_pad($request->n_ficha_nuevo_cultural,7,'0',STR_PAD_LEFT);
         $fichabiencultural->save();
 
         foreach($fichaAnterior?->tipoarquitecturas as $fi)
@@ -1508,15 +1508,6 @@ class FichaController extends Controller
             $afectacionnatural->save();
         }
 
-        foreach($fichaAnterior?->intervenciones as $fo)
-        {
-            $afectacionnatural=new Intervencion();
-            $afectacionnatural->id_ficha=$ficha->id_ficha;
-            $afectacionnatural->codigo=$fo->codigo;
-            $afectacionnatural->descripcion=$fo->descripcion;
-            $afectacionnatural->save();
-        }
-
         $sunarpBienCultural = $fichaAnterior->sunarpbiencultural->first();
         $sunarp=new Sunarp();
         $sunarp->id_ficha=$ficha->id_ficha;
@@ -1541,10 +1532,10 @@ class FichaController extends Controller
         $monumento=new Monumento();
         $monumento->id_ficha=$ficha->id_ficha;
         $monumento->cat_inmueble=$fichaAnterior->monumento?->cat_inmueble;
-        $monumento->nomb_monumento=strtoupper($fichaAnterior->monumento?->nombre_monumento);
+        $monumento->nomb_monumento=strtoupper($fichaAnterior->monumento?->nomb_monumento);
         $monumento->cod_monumento=$fichaAnterior->monumento?->cod_monumento;
         $monumento->presencia_arquitectura=$fichaAnterior->monumento?->presencia_arquitectura;
-        $monumento->filiacion_cronologica=$fichaAnterior->monumento?->fil_crono;
+        $monumento->filiacion_cronologica=$fichaAnterior->monumento?->filiacion_cronologica;
         $monumento->tipo_area=$fichaAnterior->monumento?->tipo_area;
         $monumento->area_monu=$fichaAnterior->monumento?->area_monu;
         $monumento->perimetro_monumento=$fichaAnterior->monumento?->perimetro_monumento;

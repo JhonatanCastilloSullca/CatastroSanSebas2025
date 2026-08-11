@@ -773,7 +773,7 @@ class FichaBienCulturalEdit extends Component
 
                 'inmueble_declarado'                => 'required',
                 'nombre_colonial'                => 'nullable|max:150',
-                'tipoTitular'                   => 'required',
+                'tipoTitular'                   => 'nullable',
                 'esta_civil1'                     => 'nullable',
                 'tipo_doc1'                     => 'nullable',
                 'numedoc1'                     => 'nullable|max:17',
