@@ -771,7 +771,7 @@ class FichaBienCulturalEdit extends Component
                 'asiento'                       => 'nullable|max:18',
                 'fecha_inscripcion'             => 'nullable|date',
 
-                'inmueble_declarado'                => 'required',
+                'inmueble_declarado'                => 'nullable',
                 'nombre_colonial'                => 'nullable|max:150',
                 'tipoTitular'                   => 'nullable',
                 'esta_civil1'                     => 'nullable',
