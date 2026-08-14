@@ -1509,14 +1509,17 @@ class FichaController extends Controller
         }
 
         $sunarpBienCultural = $fichaAnterior->sunarpbiencultural->first();
-        $sunarp=new Sunarp();
-        $sunarp->id_ficha=$ficha->id_ficha;
-        $sunarp->tipo_partida=$sunarpBienCultural->tipo_partida;
-        $sunarp->nume_partida=$sunarpBienCultural->nume_partida;
-        $sunarp->fojas=$sunarpBienCultural->fojas;
-        $sunarp->asiento=$sunarpBienCultural->asiento;
-        $sunarp->fecha_inscripcion=$sunarpBienCultural->fecha_inscripcion;
-        $sunarp->save();
+        if($sunarpBienCultural)
+        {
+            $sunarp=new Sunarp();
+            $sunarp->id_ficha=$ficha->id_ficha;
+            $sunarp->tipo_partida=$sunarpBienCultural->tipo_partida;
+            $sunarp->nume_partida=$sunarpBienCultural->nume_partida;
+            $sunarp->fojas=$sunarpBienCultural->fojas;
+            $sunarp->asiento=$sunarpBienCultural->asiento;
+            $sunarp->fecha_inscripcion=$sunarpBienCultural->fecha_inscripcion;
+            $sunarp->save();
+        }
 
         foreach($fichaAnterior?->normalegals1 as $foo)
         {
