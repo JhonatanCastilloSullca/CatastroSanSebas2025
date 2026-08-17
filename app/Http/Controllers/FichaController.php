@@ -1528,7 +1528,7 @@ class FichaController extends Controller
             $normalegal->normatividad=$foo->normatividad;
             $normalegal->fecha_norma=$foo->fecha_norma;
             $normalegal->numero_plano=$foo->numero_plano;
-            $normalegal->tipo_norma=1;
+            $normalegal->tipo_norma=2;
             $normalegal->save();
         }
 
@@ -1574,7 +1574,7 @@ class FichaController extends Controller
             $normalegal->normatividad=$foe->normatividad;
             $normalegal->fecha_norma=$foe->fecha_norma;
             $normalegal->numero_plano=$foe->numero_plano;
-            $normalegal->tipo_norma=2;
+            $normalegal->tipo_norma=1;
             $normalegal->save();
         }
 

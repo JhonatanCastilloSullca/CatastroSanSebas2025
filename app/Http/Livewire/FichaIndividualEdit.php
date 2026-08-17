@@ -297,7 +297,7 @@ class FichaIndividualEdit extends Component
         #IDENTIFICACIÓN DEL TITULAR CATASTRAL
         if($fichaanterior->titular!="")
         {
-            $this-> tipoTitular = $fichaanterior->titulars[0]->persona->tipo_persona;
+            $this->tipoTitular = $fichaanterior->titulars[0]->persona->tipo_persona;
             if($fichaanterior->titulars[0]->persona->tipo_persona==1){
                 $this-> esta_civil1 = $fichaanterior->titulars[0]->esta_civil;
                 $this-> tipo_doc1 = $fichaanterior->titulars[0]->persona->tipo_doc;
