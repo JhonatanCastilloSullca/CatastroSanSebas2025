@@ -7,7 +7,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="row form-group">
-                        <h4 class="mb-4"> DATOS GENERALES</h4>
+                        <h4 class="mb-4"> DATOS GENERALES {{$tipoTitular}}</h4>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="form-label d-inline-flex" > NUMERO DE FICHA</label>
