@@ -1113,7 +1113,7 @@
               </div>
             </div>
             <div style="width: 105px;height: 16px;float:left;" class="texto2 fz8 lh14">          
-              {{date("d-m-Y", strtotime($normalegal?->fecha_norma))}}  
+              {{$normalegal?->fecha_norma ? date("d-m-Y", strtotime($normalegal?->fecha_norma)) : ""}}  
             </div>       
               
             <div style="width: 126px;height: 16px;float:left;" class="fondoclaro">
@@ -2690,7 +2690,7 @@
               </div>
             </div>
             <div style="width: 105px;height: 16px;float:left;" class="texto2 fz8 lh14">          
-              {{date("d-m-Y", strtotime($normalegal1?->fecha_norma))}}  
+              {{$normalegal1?->fecha_norma ? date("d-m-Y", strtotime($normalegal1?->fecha_norma)) : ""}}  
             </div>       
               
             <div style="width: 126px;height: 16px;float:left;" class="fondoclaro">
