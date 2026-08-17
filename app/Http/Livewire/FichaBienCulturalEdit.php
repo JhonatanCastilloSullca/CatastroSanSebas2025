@@ -248,13 +248,11 @@ class FichaBienCulturalEdit extends Component
             $this->fecha_inscripcion = "";
         }
 
-
-
-        $this->cont5 = count($fichaanterior?->normalegals1);
-        foreach ($fichaanterior?->normalegals1 as $j => $normalegal1) {
-            $this->normatividad[$j] = $normalegal1->normatividad;
-            $this->fecha_norma[$j]  = $normalegal1->fecha_norma;
-            $this->numero_plano[$j] = $normalegal1->numero_plano;
+        $this->cont5 = count($fichaanterior?->normalegals);
+        foreach ($fichaanterior?->normalegals as $j => $normalegal) {
+            $this->normatividad[$j] = $normalegal->normatividad;
+            $this->fecha_norma[$j]  = $normalegal->fecha_norma;
+            $this->numero_plano[$j] = $normalegal->numero_plano;
         }
         $this->observacion = $fichaanterior->monumento->observaciones;
 

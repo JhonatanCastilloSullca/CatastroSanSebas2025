@@ -13,7 +13,7 @@
                         <div class="col-md-2">
                             <div class="mb-3">
                                 <label class="form-label d-inline-flex" > NUMERO DE FICHA</label>
-                                <input type="text" class="form-control" placeholder="" name="nume_ficha" wire:model="numeficha" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="7">
+                                <input type="text" class="form-control" placeholder="" name="nume_ficha" wire:model.lazy="numeficha" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="7">
                                 @error('nume_ficha')
                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                 @enderror
@@ -585,19 +585,19 @@
                                         @for($i=0;$i<$cont5;$i++)
                                         <tr >
                                             <td>
-                                                <input type="text" class="form-control" placeholder="" name="normatividad" wire:model="normatividad.{{$i}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="20">
+                                                <input type="text" class="form-control" placeholder="" name="normatividad" wire:model.defer="normatividad.{{$i}}" maxlength="20">
                                                 @error('normatividad.'.$i)
                                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                                 @enderror
                                             </td>
                                             <td>
-                                                <input type="date" class="form-control" placeholder="" name="fecha_norma" wire:model="fecha_norma.{{$i}}">
+                                                <input type="date" class="form-control" placeholder="" name="fecha_norma" wire:model.defer="fecha_norma.{{$i}}">
                                                 @error('fecha_norma.'.$i)
                                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                                 @enderror
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" placeholder="" name="numero_plano" wire:model="numero_plano.{{$i}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="20">
+                                                <input type="text" class="form-control" placeholder="" name="numero_plano" wire:model.defer="numero_plano.{{$i}}" maxlength="20">
                                                 @error('numero_plano.'.$i)
                                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                                 @enderror
@@ -1551,19 +1551,19 @@
                                         @for($i=0;$i<$cont8;$i++)
                                         <tr>
                                             <td>
-                                                <input type="text" class="form-control" placeholder="" name="normatividad1" wire:model="normatividad1.{{$i}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="20">
+                                                <input type="text" class="form-control" placeholder="" name="normatividad1" wire:model.defer="normatividad1.{{$i}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="20">
                                                 @error('normatividad1.'.$i)
                                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                                 @enderror
                                             </td>
                                             <td>
-                                                <input type="date" class="form-control" placeholder="" name="fecha_norma1" wire:model="fecha_norma1.{{$i}}">
+                                                <input type="date" class="form-control" placeholder="" name="fecha_norma1" wire:model.defer="fecha_norma1.{{$i}}">
                                                 @error('fecha_norma1.'.$i)
                                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                                 @enderror
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" placeholder="" name="numero_plano1" wire:model="numero_plano1.{{$i}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="20">
+                                                <input type="text" class="form-control" placeholder="" name="numero_plano1" wire:model.defer="numero_plano1.{{$i}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="20">
                                                 @error('numero_plano1.'.$i)
                                                     <span class="error-message" style="color:red">{{ $message }}</span>
                                                 @enderror
