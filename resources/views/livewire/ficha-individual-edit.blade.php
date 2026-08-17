@@ -1841,7 +1841,7 @@ document.addEventListener('livewire:load',function(){
 })  
 </script>
 @if($fichaanterior->titular!="")
-    @if($fichaanterior->titular->persona->tipo_persona==1)
+    @if($tipoTitular==1)
     <script>
         $('#juridica').hide();
     </script>
@@ -1852,7 +1852,7 @@ document.addEventListener('livewire:load',function(){
             </script>
         @endif
     @endif
-    @if($fichaanterior->titular->persona->tipo_persona==2)
+    @if($tipoTitular==2)
     <script>
         $('#natural').hide();
     </script>
