@@ -1567,7 +1567,7 @@ class FichaController extends Controller
             $elemento->save();
         }
 
-        foreach($fichaAnterior?->normalegals1 as $foe)
+        foreach($fichaAnterior?->normalegals as $foe)
         {
             $normalegal=new NormaLegal();
             $normalegal->id_ficha=$ficha->id_ficha;
