@@ -1911,8 +1911,8 @@
           <div style="width: 56PX;height: 32px;float:left;border:none;" class="">             
             <div style="width: 56PX;height: 32px;float:left;">
               <div class="texto fz6 lh6">
-                @foreach($ficha?->intervenciones as $intervencion)
-                  {{$intervencion?->codigo}}, &nbsp;
+                @foreach($ficha?->elementoarquitectonico as $elementoarquitectonico)
+                  {{$elementoarquitectonico?->codigo}}, &nbsp;
                 @endforeach
               </div>
             </div> 
