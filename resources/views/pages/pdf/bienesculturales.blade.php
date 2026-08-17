@@ -1071,17 +1071,17 @@
             @endif
           </div>
           <div style="width: 37px;height: 16px;float:left;" class="texto2 fz8 lh14">
-            @if(isset($ficha?->sunarpbiencultural[0]))
+            @if(isset($ficha?->sunarpbiencultural[0]->fecha_inscripcion))
               {{date("d", strtotime($ficha?->sunarpbiencultural[0]?->fecha_inscripcion))}}
             @endif
           </div>
           <div style="width: 36px;height: 16px;float:left;" class="texto2 fz8 lh14">
-            @if(isset($ficha?->sunarpbiencultural[0]))
+            @if(isset($ficha?->sunarpbiencultural[0]->fecha_inscripcion))
               {{date("m", strtotime($ficha?->sunarpbiencultural[0]?->fecha_inscripcion))}}
             @endif
           </div>
           <div style="width: 36px;height: 16px;float:left;" class="texto2 fz8 lh14">
-            @if(isset($ficha?->sunarpbiencultural[0]))
+            @if(isset($ficha?->sunarpbiencultural[0]->fecha_inscripcion))
               {{date("Y", strtotime($ficha?->sunarpbiencultural[0]?->fecha_inscripcion))}}
             @endif
           </div>
