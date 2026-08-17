@@ -1855,6 +1855,7 @@ document.addEventListener('livewire:load',function(){
     @if($tipoTitular==2)
     <script>
         $('#natural').hide();
+        $('#casado').hide();
     </script>
     @endif
 @else
