@@ -1906,7 +1906,8 @@ class FichaIndividualCreate extends Component
                         $persona= new Persona();
                         if($this->numedoc3==""){
                             $cantidadpersona=Persona::where('tipo_persona',2)->count()+1;
-                            $persona->id_persona=str_pad($cantidadpersona,11,'0',STR_PAD_LEFT).'1200';
+                            $nume_ficha = "N".$ficha->nume_ficha;
+                            $persona->id_persona=str_pad($nume_ficha,11,'0',STR_PAD_LEFT).'1200';
                             $persona->nume_doc="";
                         }else{
                             $persona->id_persona=str_pad($this->numedoc3,11,'0',STR_PAD_LEFT).'1200';
