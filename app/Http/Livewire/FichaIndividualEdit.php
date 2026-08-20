@@ -2342,7 +2342,7 @@ class FichaIndividualEdit extends Component
 
                     }else{
                         $persona= new Persona();
-                        if($this->numedoc3==""){
+                        if($this->numedoc3=="" || $this->numedoc3==null){
                             $cantidadpersona=Persona::where('tipo_persona',2)->count()+1;
                             $nume_ficha = "N".$ficha->nume_ficha;
                             $persona->id_persona=str_pad($nume_ficha,11,'0',STR_PAD_LEFT).'1200';
