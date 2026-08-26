@@ -912,6 +912,10 @@ class FichaBienCulturalEdit extends Component
                 $normalegals1->delete();
             }
 
+             foreach ($this->fichaanterior->normalegals as $normalegals) {
+                $normalegals->delete();
+            }
+
 
             foreach ($this->fichaanterior->sunarpbiencultural as $sunarpbiencultural) {
                 $sunarpbiencultural->delete();

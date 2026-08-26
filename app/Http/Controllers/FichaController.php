@@ -1542,7 +1542,7 @@ class FichaController extends Controller
         $monumento->tipo_area=$fichaAnterior->monumento?->tipo_area;
         $monumento->area_monu=$fichaAnterior->monumento?->area_monu;
         $monumento->perimetro_monumento=$fichaAnterior->monumento?->perimetro_monumento;
-        $monumento->observaciones=$fichaAnterior->monumento?->observacion;
+        $monumento->observaciones=$fichaAnterior->monumento?->observaciones;
         $monumento->save();
 
         $colonial=new Colonial();
@@ -1555,7 +1555,7 @@ class FichaController extends Controller
         $colonial->num_pisos=$fichaAnterior->colonial?->num_pisos;
         $colonial->tipo_fecha=$fichaAnterior->colonial?->tipo_fecha;
         $colonial->fecha_construccion=$fichaAnterior->colonial?->fecha_construccion;
-        $colonial->observaciones=$fichaAnterior->colonial?->observacion1;
+        $colonial->observaciones=$fichaAnterior->colonial?->observaciones;
         $colonial->save();
 
         foreach($fichaAnterior?->elementoarquitectonico as $fuo)
