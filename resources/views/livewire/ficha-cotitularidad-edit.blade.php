@@ -37,7 +37,7 @@
                 <div class="col-md-5">
                     <div class="mb-3">
                         <label class="form-label d-inline-flex" > <div class="divcuadro">1</div> CÓDIGO ÚNICO CATASTRAL - CUC</label>
-                        <input type="text" class="form-control" placeholder="" name="cuc" value="{{$fichaanterior->unicat->cuc}}">
+                        <input type="text" class="form-control" placeholder="" name="cuc" value="{{$fichaanterior->cuc}}">
                         @error('cuc')
                             <span class="error-message" style="color:red">{{ $message }}</span>
                         @enderror
