@@ -497,7 +497,7 @@ if($('#ordersChart').length) {
       type: 'bar',
       data: {
         labels: [<?php foreach($fichascalificacion as $ficha)
-                  {echo '"'.$ficha->clasificacions->desc_codigo.'",';} ?>],
+                  {echo '"'.$ficha->clasificacions?->desc_codigo.'",';} ?>],
         datasets: [
           {
             label: "",
